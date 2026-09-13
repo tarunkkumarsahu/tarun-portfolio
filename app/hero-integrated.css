@@ -1,0 +1,286 @@
+/* HERO V4 — typography and WebGL share one white stage. */
+
+.home-hero--integrated {
+  height: 186svh;
+  background: #e9e5dc;
+}
+
+.home-hero--integrated .home-hero__sticky {
+  isolation: isolate;
+}
+
+.home-hero__stage--integrated {
+  position: relative;
+  display: block !important;
+  min-height: 0;
+  height: 100%;
+  padding-top: clamp(62px, 7vh, 96px);
+}
+
+.home-hero__copy--integrated {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  transform-origin: left center;
+  pointer-events: none;
+}
+
+.home-hero__copy--integrated .eyebrow,
+.home-hero__copy--integrated .hero-v2__manifesto,
+.home-hero__copy--integrated .home-hero__identity-question {
+  pointer-events: auto;
+}
+
+.home-hero--integrated .hero-title-v2 {
+  width: min(1070px, 76vw);
+  max-width: none;
+  margin-top: clamp(10px, 1.5vw, 22px);
+  position: relative;
+}
+
+.home-hero--integrated .hero-title-v2 > span {
+  font-size: clamp(104px, 11.8vw, 202px);
+  line-height: .72;
+  letter-spacing: -.09em;
+  font-weight: 620;
+}
+
+.home-hero--integrated .hero-title-v2 > em {
+  width: max-content;
+  max-width: none;
+  margin-left: clamp(72px, 8vw, 142px);
+  font-size: clamp(92px, 10.6vw, 184px);
+  line-height: .72;
+  letter-spacing: -.075em;
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 400;
+  white-space: nowrap;
+}
+
+.hero-title--depth-back {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-title--depth-front {
+  position: absolute !important;
+  z-index: 5;
+  left: 0;
+  top: clamp(62px, 7vh, 96px);
+  margin: 0 !important;
+  width: min(1070px, 76vw) !important;
+  pointer-events: none;
+  clip-path: polygon(0 45%, 100% 45%, 100% 100%, 0 100%);
+}
+
+.hero-title--depth-front > span {
+  visibility: hidden;
+}
+
+.hero-title--depth-front > em {
+  color: #0b0b0b;
+  text-shadow: 0 1px 0 rgba(233,229,220,.1);
+}
+
+.home-hero__entity-wrap--integrated {
+  position: absolute !important;
+  z-index: 3 !important;
+  right: clamp(-40px, 1vw, 24px);
+  top: 1.5%;
+  width: min(54vw, 850px);
+  height: min(75vh, 780px);
+  transform-origin: center 46%;
+  pointer-events: auto;
+}
+
+.home-hero__entity-wrap--integrated::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 8%;
+  width: 58%;
+  height: 11%;
+  transform: translateX(-50%);
+  background: radial-gradient(ellipse at center, rgba(11,11,11,.16), rgba(11,11,11,0) 72%);
+  filter: blur(16px);
+  pointer-events: none;
+}
+
+.home-hero--integrated .tarun-entity3d {
+  height: 100%;
+  min-height: 0;
+  width: 100%;
+  overflow: visible;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  clip-path: none;
+}
+
+.home-hero--integrated .tarun-entity3d::before,
+.home-hero--integrated .tarun-entity3d::after {
+  display: none;
+}
+
+.home-hero--integrated .tarun-entity3d canvas {
+  filter: drop-shadow(0 28px 28px rgba(11,11,11,.12));
+}
+
+.home-hero--integrated .tarun-entity3d:focus-visible {
+  box-shadow: none;
+  outline: 1px solid rgba(255,74,56,.5);
+  outline-offset: 6px;
+}
+
+.home-hero--integrated .tarun-entity3d__chrome,
+.home-hero--integrated .tarun-entity3d__prompt,
+.home-hero--integrated .tarun-entity3d__layers {
+  color: #5f5b55;
+}
+
+.home-hero--integrated .tarun-entity3d__chrome {
+  top: 10%;
+  left: 13%;
+  right: 12%;
+  opacity: .78;
+}
+
+.home-hero--integrated .tarun-entity3d__chrome span:first-child {
+  color: #ff4a38;
+}
+
+.home-hero--integrated .tarun-entity3d__prompt {
+  left: 18%;
+  bottom: 11%;
+  color: #59554f;
+}
+
+.home-hero--integrated .tarun-entity3d__layers {
+  right: 9%;
+  bottom: 10%;
+  color: #5b5751;
+}
+
+.home-hero--integrated .tarun-entity3d__layers span {
+  color: #5f5b55;
+  border-color: rgba(11,11,11,.16);
+}
+
+.home-hero--integrated .hero-v2__manifesto {
+  position: relative;
+  z-index: 6;
+  margin-top: clamp(26px, 3vw, 48px);
+}
+
+.home-hero--integrated .home-hero__identity-question {
+  position: relative;
+  z-index: 6;
+  width: min(450px, 34vw);
+  margin-top: clamp(36px, 4vw, 58px);
+}
+
+.hero-depth-note {
+  position: absolute;
+  z-index: 6;
+  right: clamp(20px, 2vw, 36px);
+  top: 48%;
+  width: min(340px, 25vw);
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 6px;
+  letter-spacing: .14em;
+  color: #746f68;
+  pointer-events: none;
+}
+
+.hero-depth-note i {
+  height: 1px;
+  background: linear-gradient(90deg, rgba(11,11,11,.1), #ff4a38, rgba(11,11,11,.1));
+}
+
+.home-hero--integrated .hero-explosion-transition {
+  background: radial-gradient(circle at center, rgba(11,11,11,.2) 0 1%, #0b0b0b 18%, #0b0b0b 48%);
+}
+
+@media (max-width: 1100px) {
+  .home-hero--integrated .hero-title-v2,
+  .hero-title--depth-front {
+    width: 86vw !important;
+  }
+
+  .home-hero__entity-wrap--integrated {
+    right: -13vw;
+    width: 68vw;
+    opacity: .96;
+  }
+
+  .hero-depth-note {
+    display: none;
+  }
+}
+
+@media (max-width: 780px) {
+  .home-hero--integrated {
+    height: 195svh;
+  }
+
+  .home-hero__stage--integrated {
+    padding-top: 86px;
+  }
+
+  .home-hero--integrated .hero-title-v2,
+  .hero-title--depth-front {
+    width: 100% !important;
+  }
+
+  .home-hero--integrated .hero-title-v2 > span {
+    font-size: clamp(82px, 23vw, 150px);
+  }
+
+  .home-hero--integrated .hero-title-v2 > em {
+    margin-left: 0;
+    font-size: clamp(58px, 16vw, 108px);
+    white-space: normal;
+    max-width: 8ch;
+  }
+
+  .hero-title--depth-front {
+    top: 86px;
+    clip-path: polygon(0 40%, 100% 40%, 100% 100%, 0 100%);
+  }
+
+  .home-hero__entity-wrap--integrated {
+    top: 15%;
+    right: -34vw;
+    width: 108vw;
+    height: 57vh;
+    opacity: .88;
+  }
+
+  .home-hero--integrated .tarun-entity3d__chrome,
+  .home-hero--integrated .tarun-entity3d__layers {
+    display: none;
+  }
+
+  .home-hero--integrated .tarun-entity3d__prompt {
+    left: 22%;
+    bottom: 7%;
+  }
+
+  .home-hero--integrated .hero-v2__manifesto {
+    margin-top: 30vh;
+  }
+
+  .home-hero--integrated .home-hero__identity-question {
+    width: min(92vw, 430px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-hero--integrated .tarun-entity3d canvas {
+    filter: none;
+  }
+}
