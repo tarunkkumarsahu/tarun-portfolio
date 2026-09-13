@@ -3,6 +3,7 @@
 import { FormEvent, useState } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { inquiryTypes } from "@/data/platform";
+import { TurnstileField } from "@/components/TurnstileField";
 
 type State = "idle" | "sending" | "success" | "error";
 
@@ -77,6 +78,8 @@ export function ContactForm() {
           placeholder="Tell me what you are thinking about."
         />
       </label>
+
+      <TurnstileField />
 
       <div className="platform-form__submit">
         <p>Messages are private and are never published automatically.</p>
