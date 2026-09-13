@@ -7,9 +7,9 @@ import { HomeProjectShowcase } from "@/components/HomeProjectShowcase";
 import { IntroLoader } from "@/components/IntroLoader";
 import { LabScene } from "@/components/LabScene";
 import { ManifestoScene } from "@/components/ManifestoScene";
-import { NowScene } from "@/components/NowScene";
 import { ProcessScene } from "@/components/ProcessScene";
 import { SiteNav } from "@/components/SiteNav";
+import { StationPreview } from "@/components/StationPreview";
 import { profile } from "@/data/portfolio";
 
 export default function Home() {
@@ -42,7 +42,7 @@ export default function Home() {
       </section>
 
       <ProcessScene />
-      <NowScene />
+      <StationPreview />
       <LabScene />
 
       <section className="editorial-section stack-section final-protocol-section" id="stack">
@@ -72,8 +72,14 @@ export default function Home() {
         </h2>
 
         <div className="contact-bottom">
-          <p>Open to collaborations, technical conversations and interesting engineering problems.</p>
+          <p>Ask a question, discuss a system, start a collaboration or send something you are building.</p>
           <div className="contact-links">
+            <a href="/contact" data-cursor="OPEN">
+              <span aria-hidden="true">01</span> OPEN CHANNEL <ArrowUpRight size={15} />
+            </a>
+            <a href="/share" data-cursor="SEND">
+              <span aria-hidden="true">02</span> SHARE WORK <ArrowUpRight size={15} />
+            </a>
             <a href={profile.links.github} target="_blank" rel="noreferrer" data-cursor="OPEN">
               <span aria-hidden="true">GH</span> GITHUB <ArrowUpRight size={15} />
             </a>
