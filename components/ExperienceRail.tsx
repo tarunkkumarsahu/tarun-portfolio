@@ -9,7 +9,7 @@ const chapters = [
   ["02", "IDENTITY", "about"],
   ["03", "WORK", "projects"],
   ["04", "PROCESS", "process"],
-  ["05", "NOW", "now"],
+  ["05", "STATION", "station"],
   ["06", "LAB", "lab"],
   ["07", "PROTOCOL", "stack"],
   ["08", "CONTACT", "contact"],
