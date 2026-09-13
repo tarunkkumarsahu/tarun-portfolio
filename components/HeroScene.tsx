@@ -14,61 +14,63 @@ export function HeroScene() {
     offset: ["start start", "end end"],
   });
 
-  const titleY = useTransform(scrollYProgress, [0, 0.68, 1], [0, -28, -104]);
-  const titleScale = useTransform(scrollYProgress, [0, 0.68, 1], [1, 0.985, 0.88]);
-  const titleOpacity = useTransform(scrollYProgress, [0, 0.78, 0.94], [1, 1, 0]);
-  const artifactScale = useTransform(scrollYProgress, [0, 0.62, 1], [1, 1.035, 1.16]);
-  const artifactX = useTransform(scrollYProgress, [0, 1], [0, 28]);
-  const artifactY = useTransform(scrollYProgress, [0, 0.68, 1], [0, -8, -26]);
-  const artifactOpacity = useTransform(scrollYProgress, [0, 0.88, 1], [1, 1, 0.1]);
-  const footerOpacity = useTransform(scrollYProgress, [0, 0.34, 0.68], [1, 1, 0]);
-  const gridOpacity = useTransform(scrollYProgress, [0, 1], [0.34, 0.05]);
-  const questionX = useTransform(scrollYProgress, [0, 1], [0, -58]);
-  const transitionOpacity = useTransform(scrollYProgress, [0.84, 1], [0, 1]);
-  const transitionScale = useTransform(scrollYProgress, [0.84, 1], [0.72, 1.35]);
+  const titleY = useTransform(scrollYProgress, [0, 0.68, 1], [0, -22, -118]);
+  const titleScale = useTransform(scrollYProgress, [0, 0.68, 1], [1, 0.99, 0.9]);
+  const titleOpacity = useTransform(scrollYProgress, [0, 0.8, 0.95], [1, 1, 0]);
+  const artifactScale = useTransform(scrollYProgress, [0, 0.62, 1], [1, 1.04, 1.24]);
+  const artifactX = useTransform(scrollYProgress, [0, 0.7, 1], [0, 18, 84]);
+  const artifactY = useTransform(scrollYProgress, [0, 0.7, 1], [0, -5, -36]);
+  const artifactOpacity = useTransform(scrollYProgress, [0, 0.91, 1], [1, 1, 0.08]);
+  const footerOpacity = useTransform(scrollYProgress, [0, 0.34, 0.7], [1, 1, 0]);
+  const gridOpacity = useTransform(scrollYProgress, [0, 1], [0.28, 0.04]);
+  const questionX = useTransform(scrollYProgress, [0, 1], [0, -62]);
+  const transitionOpacity = useTransform(scrollYProgress, [0.86, 1], [0, 1]);
+  const transitionScale = useTransform(scrollYProgress, [0.86, 1], [0.58, 1.4]);
+
+  const titleMotion = reducedMotion ? undefined : {
+    y: titleY,
+    scale: titleScale,
+    opacity: titleOpacity,
+  };
 
   return (
-    <section ref={ref} className="home-hero home-hero--entity" id="top">
+    <section ref={ref} className="home-hero home-hero--entity home-hero--integrated" id="top">
       <div className="home-hero__sticky">
         <motion.div
           className="hero-grid-lines"
           aria-hidden="true"
           style={reducedMotion ? undefined : { opacity: gridOpacity }}
         />
-        <div className="hero-v3__signal" aria-hidden="true">SYSTEM / 2026</div>
 
         <div className="hero-topline">
           <span>PORTFOLIO / 2026</span>
-          <span>SOFTWARE · AI · SYSTEMS</span>
+          <span>SOFTWARE · AI · SYSTEMS · MACHINES</span>
           <span>{profile.location}</span>
         </div>
 
-        <div className="home-hero__stage">
-          <motion.div
-            className="home-hero__copy"
-            style={reducedMotion ? undefined : { y: titleY, scale: titleScale, opacity: titleOpacity }}
-          >
+        <div className="home-hero__stage home-hero__stage--integrated">
+          <motion.div className="home-hero__copy home-hero__copy--integrated" style={titleMotion}>
             <motion.p
               className="eyebrow"
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.15, duration: 0.55 }}
+              transition={{ delay: 0.12, duration: 0.5 }}
             >
               {profile.role}
             </motion.p>
 
-            <h1 className="hero-title hero-title-v2" aria-label={profile.name}>
+            <h1 className="hero-title hero-title-v2 hero-title--depth-back" aria-label={profile.name}>
               <motion.span
                 initial={{ opacity: 0, y: 70 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.04, duration: 0.92, ease: [0.22, 1, 0.36, 1] }}
+                transition={{ delay: 0.02, duration: 0.92, ease: [0.22, 1, 0.36, 1] }}
               >
                 TARUN
               </motion.span>
               <motion.em
                 initial={{ opacity: 0, y: 70 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.14, duration: 0.92, ease: [0.22, 1, 0.36, 1] }}
+                transition={{ delay: 0.12, duration: 0.92, ease: [0.22, 1, 0.36, 1] }}
               >
                 KUMAR SAHU
               </motion.em>
@@ -78,7 +80,7 @@ export function HeroScene() {
               className="hero-v2__manifesto"
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.48, duration: 0.65 }}
+              transition={{ delay: 0.46, duration: 0.65 }}
             >
               I BUILD SYSTEMS THAT
               <span>THINK, CONNECT AND ACT.</span>
@@ -94,11 +96,31 @@ export function HeroScene() {
           </motion.div>
 
           <motion.div
-            className="home-hero__core home-hero__artifact-wrap home-hero__entity-wrap"
-            style={reducedMotion ? undefined : { scale: artifactScale, x: artifactX, y: artifactY, opacity: artifactOpacity }}
+            className="home-hero__entity-wrap home-hero__entity-wrap--integrated"
+            style={reducedMotion ? undefined : {
+              scale: artifactScale,
+              x: artifactX,
+              y: artifactY,
+              opacity: artifactOpacity,
+            }}
           >
             <TarunEntity3D scrollProgress={scrollYProgress} />
           </motion.div>
+
+          <motion.div
+            className="hero-title hero-title-v2 hero-title--depth-front"
+            aria-hidden="true"
+            style={titleMotion}
+          >
+            <span>TARUN</span>
+            <em>KUMAR SAHU</em>
+          </motion.div>
+
+          <div className="hero-depth-note" aria-hidden="true">
+            <span>ENTITY / TS-01</span>
+            <i />
+            <span>HUMAN SYSTEM / UNRESOLVED ROLE</span>
+          </div>
         </div>
 
         <motion.div
@@ -112,7 +134,7 @@ export function HeroScene() {
           </div>
 
           <a className="scroll-cue" href="#manifesto" data-cursor="ENTER">
-            <span>SCROLL TO EXPLODE</span>
+            <span>SCROLL TO UNFOLD</span>
             <ArrowDown size={17} strokeWidth={1.4} />
           </a>
         </motion.div>
