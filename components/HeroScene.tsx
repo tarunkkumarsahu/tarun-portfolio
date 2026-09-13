@@ -3,7 +3,7 @@
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { ArrowDown } from "lucide-react";
 import { useRef } from "react";
-import { TheTarunArtifact } from "@/components/TheTarunArtifact";
+import { TarunEntity3D } from "@/components/TarunEntity3D";
 import { profile } from "@/data/portfolio";
 
 export function HeroScene() {
@@ -14,15 +14,18 @@ export function HeroScene() {
     offset: ["start start", "end end"],
   });
 
-  const titleY = useTransform(scrollYProgress, [0, 0.72, 1], [0, -26, -74]);
-  const titleScale = useTransform(scrollYProgress, [0, 0.72, 1], [1, 0.98, 0.92]);
-  const titleOpacity = useTransform(scrollYProgress, [0, 0.84, 1], [1, 1, 0]);
-  const artifactScale = useTransform(scrollYProgress, [0, 0.68, 1], [1, 1.035, 0.86]);
-  const artifactX = useTransform(scrollYProgress, [0, 1], [0, 54]);
-  const artifactY = useTransform(scrollYProgress, [0, 0.72, 1], [0, -8, 42]);
-  const footerOpacity = useTransform(scrollYProgress, [0, 0.35, 0.72], [1, 1, 0]);
-  const gridOpacity = useTransform(scrollYProgress, [0, 1], [0.34, 0.08]);
-  const questionX = useTransform(scrollYProgress, [0, 1], [0, -42]);
+  const titleY = useTransform(scrollYProgress, [0, 0.68, 1], [0, -28, -104]);
+  const titleScale = useTransform(scrollYProgress, [0, 0.68, 1], [1, 0.985, 0.88]);
+  const titleOpacity = useTransform(scrollYProgress, [0, 0.78, 0.94], [1, 1, 0]);
+  const artifactScale = useTransform(scrollYProgress, [0, 0.62, 1], [1, 1.035, 1.16]);
+  const artifactX = useTransform(scrollYProgress, [0, 1], [0, 28]);
+  const artifactY = useTransform(scrollYProgress, [0, 0.68, 1], [0, -8, -26]);
+  const artifactOpacity = useTransform(scrollYProgress, [0, 0.88, 1], [1, 1, 0.1]);
+  const footerOpacity = useTransform(scrollYProgress, [0, 0.34, 0.68], [1, 1, 0]);
+  const gridOpacity = useTransform(scrollYProgress, [0, 1], [0.34, 0.05]);
+  const questionX = useTransform(scrollYProgress, [0, 1], [0, -58]);
+  const transitionOpacity = useTransform(scrollYProgress, [0.84, 1], [0, 1]);
+  const transitionScale = useTransform(scrollYProgress, [0.84, 1], [0.72, 1.35]);
 
   return (
     <section ref={ref} className="home-hero home-hero--entity" id="top">
@@ -91,10 +94,10 @@ export function HeroScene() {
           </motion.div>
 
           <motion.div
-            className="home-hero__core home-hero__artifact-wrap"
-            style={reducedMotion ? undefined : { scale: artifactScale, x: artifactX, y: artifactY }}
+            className="home-hero__core home-hero__artifact-wrap home-hero__entity-wrap"
+            style={reducedMotion ? undefined : { scale: artifactScale, x: artifactX, y: artifactY, opacity: artifactOpacity }}
           >
-            <TheTarunArtifact />
+            <TarunEntity3D scrollProgress={scrollYProgress} />
           </motion.div>
         </div>
 
@@ -109,7 +112,7 @@ export function HeroScene() {
           </div>
 
           <a className="scroll-cue" href="#manifesto" data-cursor="ENTER">
-            <span>SCROLL TO ENTER</span>
+            <span>SCROLL TO EXPLODE</span>
             <ArrowDown size={17} strokeWidth={1.4} />
           </a>
         </motion.div>
@@ -121,8 +124,16 @@ export function HeroScene() {
         >
           <span>WHO IS TARUN?</span>
           <i />
-          <span>THE ANSWER UNFOLDS BELOW</span>
+          <span>CLICK TO INSPECT · SCROLL TO UNFOLD</span>
         </motion.div>
+
+        {!reducedMotion ? (
+          <motion.div
+            className="hero-explosion-transition"
+            aria-hidden="true"
+            style={{ opacity: transitionOpacity, scale: transitionScale }}
+          />
+        ) : null}
       </div>
     </section>
   );
