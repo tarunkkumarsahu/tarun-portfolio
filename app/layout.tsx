@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { ExperienceRail } from "@/components/ExperienceRail";
+import { SmoothScroll } from "@/components/SmoothScroll";
 import "./globals.css";
 import "./experience.css";
 import "./media.css";
@@ -59,6 +60,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${geistSans.variable} ${geistMono.variable} antialiased`}
     >
       <body>
+        <SmoothScroll />
         <ExperienceRail />
         {children}
       </body>
