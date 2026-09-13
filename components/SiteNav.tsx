@@ -7,31 +7,29 @@ import { profile } from "@/data/portfolio";
 const items = [
   ["01", "INDEX", "/"],
   ["02", "WORK", "/work"],
-  ["03", "LAB", "/lab"],
-  ["04", "ABOUT", "/about"],
+  ["03", "STATION", "/station"],
+  ["04", "LAB", "/lab"],
+  ["05", "ABOUT", "/about"],
 ] as const;
 
 export function SiteNav() {
-  const [contactOpen, setContactOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const overlayOpen = contactOpen || menuOpen;
 
   useEffect(() => {
-    if (!overlayOpen) return;
+    if (!menuOpen) return;
     const previous = document.body.style.overflow;
     document.body.style.overflow = "hidden";
+
     const onKey = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        setContactOpen(false);
-        setMenuOpen(false);
-      }
+      if (event.key === "Escape") setMenuOpen(false);
     };
+
     window.addEventListener("keydown", onKey);
     return () => {
       document.body.style.overflow = previous;
       window.removeEventListener("keydown", onKey);
     };
-  }, [overlayOpen]);
+  }, [menuOpen]);
 
   return (
     <>
@@ -56,15 +54,9 @@ export function SiteNav() {
           >
             MENU
           </button>
-          <button
-            type="button"
-            className="site-nav__contact"
-            onClick={() => setContactOpen(true)}
-            aria-expanded={contactOpen}
-            aria-controls="contact-overlay"
-          >
-            CONTACT <ArrowUpRight size={13} strokeWidth={1.5} />
-          </button>
+          <a className="site-nav__contact" href="/contact">
+            OPEN CHANNEL <ArrowUpRight size={13} strokeWidth={1.5} />
+          </a>
         </div>
       </header>
 
@@ -90,45 +82,14 @@ export function SiteNav() {
           ))}
         </nav>
 
+        <div className="mobile-menu-overlay__secondary">
+          <a href="/contact" onClick={() => setMenuOpen(false)}>OPEN CHANNEL ↗</a>
+          <a href="/share" onClick={() => setMenuOpen(false)}>SHARE YOUR WORK ↗</a>
+        </div>
+
         <div className="mobile-menu-overlay__foot">
-          <span>SOFTWARE · AI · SYSTEMS</span>
+          <span>SOFTWARE · AI · SYSTEMS · MACHINES</span>
           <span>{profile.location}</span>
-        </div>
-      </div>
-
-      <div
-        className={`contact-overlay ${contactOpen ? "contact-overlay--open" : ""}`}
-        id="contact-overlay"
-        aria-hidden={!contactOpen}
-      >
-        <div className="contact-overlay__top">
-          <span>OPEN CHANNEL / TS26</span>
-          <button type="button" onClick={() => setContactOpen(false)} aria-label="Close contact overlay">
-            CLOSE <X size={14} strokeWidth={1.4} />
-          </button>
-        </div>
-
-        <div className="contact-overlay__body">
-          <span className="contact-overlay__index">008 / CONTACT</span>
-          <h2>
-            HAVE AN IDEA?
-            <em>let&apos;s talk.</em>
-          </h2>
-          <p>Open to collaborations, technical conversations and interesting engineering problems.</p>
-        </div>
-
-        <div className="contact-overlay__links">
-          <a href={profile.links.github} target="_blank" rel="noreferrer" data-cursor="OPEN">
-            GITHUB <ArrowUpRight size={17} />
-          </a>
-          <a href={profile.links.linkedin} target="_blank" rel="noreferrer" data-cursor="OPEN">
-            LINKEDIN <ArrowUpRight size={17} />
-          </a>
-        </div>
-
-        <div className="contact-overlay__foot">
-          <span>{profile.location}</span>
-          <span>ESC TO CLOSE</span>
         </div>
       </div>
     </>
