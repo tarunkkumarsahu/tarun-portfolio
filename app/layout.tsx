@@ -23,6 +23,7 @@ import "./process-photo.css";
 import "./lab-photo.css";
 import "./lab-page-final.css";
 import "./hero-3d.css";
+import "./platform.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
