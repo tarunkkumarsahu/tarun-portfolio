@@ -18,11 +18,10 @@ export function AboutScene() {
     offset: ["start end", "end start"],
   });
 
-  const mediaY = useTransform(scrollYProgress, [0, 1], [64, -64]);
+  const mediaY = useTransform(scrollYProgress, [0, 1], [70, -70]);
   const textY = useTransform(scrollYProgress, [0.1, 0.8], [42, -20]);
   const trackX = useTransform(scrollYProgress, [0, 1], ["0%", "-14%"]);
-  const markScale = useTransform(scrollYProgress, [0, .5, 1], [1.04, 1, 1.035]);
-  const scanY = useTransform(scrollYProgress, [0.15, .85], ["18%", "82%"]);
+  const portraitScale = useTransform(scrollYProgress, [0, .5, 1], [1.08, 1, 1.06]);
 
   return (
     <section ref={ref} className="about-scene" id="about">
@@ -33,31 +32,19 @@ export function AboutScene() {
 
       <div className="about-scene__stage">
         <motion.div className="about-scene__media" style={reducedMotion ? undefined : { y: mediaY }}>
-          <div className="identity-system-visual" data-cursor="EXPLORE" role="img" aria-label="Tarun identity system map">
-            <div className="identity-system-visual__grid" aria-hidden="true" />
+          <div className="about-portrait-art" data-cursor="LOOK">
             <motion.div
-              className="identity-system-visual__mark"
-              style={reducedMotion ? undefined : { scale: markScale }}
-              aria-hidden="true"
-            >
-              <span>T</span><span>S</span>
-            </motion.div>
-            <motion.i
-              className="identity-system-visual__scan"
-              style={reducedMotion ? undefined : { top: scanY }}
-              aria-hidden="true"
+              className="about-portrait-art__image"
+              style={reducedMotion ? undefined : { scale: portraitScale }}
+              aria-label="Portrait of Tarun"
+              role="img"
             />
-            <div className="identity-system-visual__coordinates" aria-hidden="true">
-              <span>SOFTWARE / 01</span>
-              <span>INTELLIGENCE / 02</span>
-              <span>MACHINES / 03</span>
-              <span>EXPERIMENTS / 04</span>
-            </div>
-            <div className="identity-system-visual__index">
-              <span>IDENTITY / TS-01</span>
+            <div className="about-portrait-art__veil" aria-hidden="true" />
+            <div className="about-portrait-art__index">
+              <span>FRAME / 02</span>
               <strong>VISIBLE PERSON.<br />UNRESOLVED ROLE.</strong>
             </div>
-            <div className="identity-system-visual__axis" aria-hidden="true">
+            <div className="about-portrait-art__axis" aria-hidden="true">
               <i /><i /><i /><i />
             </div>
           </div>
