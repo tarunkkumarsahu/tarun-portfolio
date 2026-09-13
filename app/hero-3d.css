@@ -1,0 +1,366 @@
+/* THE TARUN / 3D ENTRY LAYER */
+
+.home-hero {
+  height: 178svh;
+}
+
+.home-hero__entity-wrap {
+  min-width: 0;
+}
+
+.tarun-entity3d {
+  position: relative;
+  width: 100%;
+  height: min(72svh, 760px);
+  min-height: 520px;
+  overflow: hidden;
+  cursor: pointer;
+  outline: none;
+  background:
+    radial-gradient(circle at 52% 48%, rgba(255,74,56,.08), transparent 24%),
+    radial-gradient(circle at 78% 36%, rgba(54,94,190,.10), transparent 28%),
+    linear-gradient(145deg, #100d0c 0%, #0a0d10 55%, #091015 100%);
+  border: 1px solid rgba(11,11,11,.12);
+  clip-path: polygon(0 0, 92% 0, 100% 8%, 100% 100%, 8% 100%, 0 92%);
+  box-shadow: 0 28px 70px rgba(11,11,11,.14);
+  isolation: isolate;
+}
+
+.tarun-entity3d::before,
+.tarun-entity3d::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.tarun-entity3d::before {
+  inset: 0;
+  opacity: .19;
+  background-image:
+    linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
+  background-size: 42px 42px;
+  mask-image: linear-gradient(to bottom, transparent, #000 18%, #000 82%, transparent);
+}
+
+.tarun-entity3d::after {
+  inset: 12px;
+  border-top: 1px solid rgba(255,74,56,.5);
+  border-right: 1px solid rgba(233,229,220,.13);
+  clip-path: polygon(0 0, 76px 0, 76px 1px, 0 1px, 0 46px, 1px 46px, 1px 0, 100% 0, 100% 100%, 99.9% 100%, 99.9% 55%, 100% 55%);
+}
+
+.tarun-entity3d canvas {
+  position: absolute !important;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+  z-index: 1;
+}
+
+.tarun-entity3d:focus-visible {
+  box-shadow: 0 0 0 2px #ff4a38, 0 28px 70px rgba(11,11,11,.14);
+}
+
+.tarun-entity3d__chrome {
+  position: absolute;
+  z-index: 4;
+  top: 18px;
+  left: 20px;
+  right: 20px;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  color: rgba(233,229,220,.58);
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 6px;
+  letter-spacing: .15em;
+  pointer-events: none;
+}
+
+.tarun-entity3d__chrome span:first-child {
+  color: #ff6a59;
+}
+
+.tarun-entity3d__prompt {
+  position: absolute;
+  z-index: 4;
+  left: 22px;
+  bottom: 22px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: rgba(233,229,220,.68);
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 6px;
+  letter-spacing: .15em;
+  pointer-events: none;
+}
+
+.tarun-entity3d__prompt i {
+  width: 34px;
+  height: 1px;
+  background: #ff4a38;
+  transform-origin: left;
+  animation: tarunPrompt 1.8s ease-in-out infinite;
+}
+
+.tarun-entity3d__layers {
+  position: absolute;
+  z-index: 4;
+  right: 18px;
+  bottom: 20px;
+  display: grid;
+  width: min(170px, 35%);
+  opacity: .28;
+  transform: translateX(6px);
+  transition: opacity 320ms ease, transform 480ms cubic-bezier(.22,1,.36,1);
+  pointer-events: none;
+}
+
+.tarun-entity3d__layers span {
+  padding: 7px 0;
+  border-top: 1px solid rgba(233,229,220,.14);
+  color: rgba(233,229,220,.58);
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 5px;
+  letter-spacing: .14em;
+}
+
+.tarun-entity3d.is-inspected .tarun-entity3d__layers {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.tarun-entity3d.is-inspected {
+  box-shadow: inset 0 0 0 1px rgba(255,74,56,.22), 0 35px 90px rgba(11,11,11,.18);
+}
+
+.hero-explosion-transition {
+  position: absolute;
+  z-index: 8;
+  left: 50%;
+  top: 50%;
+  width: 145vmax;
+  height: 145vmax;
+  margin: -72.5vmax 0 0 -72.5vmax;
+  border-radius: 50%;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at center, rgba(255,74,56,.12) 0 1%, rgba(11,11,11,.96) 17%, #0b0b0b 42%);
+  transform-origin: center;
+}
+
+@keyframes tarunPrompt {
+  0%, 100% { transform: scaleX(.4); opacity: .45; }
+  50% { transform: scaleX(1); opacity: 1; }
+}
+
+/* 3D boot loader */
+.intro-loader--entity {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  padding: clamp(20px, 2.6vw, 38px);
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  background: #0b0b0b;
+  color: #e9e5dc;
+  overflow: hidden;
+}
+
+.intro-loader--entity::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: .18;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
+  background-size: 54px 54px;
+  mask-image: radial-gradient(circle at center, black, transparent 72%);
+}
+
+.intro-loader3d__top,
+.intro-loader3d__bottom {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 6px;
+  letter-spacing: .16em;
+  color: rgba(233,229,220,.58);
+}
+
+.intro-loader3d__top {
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(233,229,220,.12);
+}
+
+.intro-loader3d__top span:first-child {
+  color: #ff5b49;
+}
+
+.intro-loader3d__stage {
+  position: relative;
+  z-index: 2;
+  min-height: 0;
+  display: grid;
+  place-items: center;
+}
+
+.loader-entity3d {
+  position: absolute;
+  inset: 4% 15% 2%;
+  min-height: 420px;
+}
+
+.loader-entity3d canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.intro-loader3d__copy {
+  position: absolute;
+  z-index: 4;
+  left: 4%;
+  bottom: 11%;
+  display: grid;
+  pointer-events: none;
+}
+
+.intro-loader3d__copy > span,
+.intro-loader3d__copy p {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 6px;
+  letter-spacing: .15em;
+}
+
+.intro-loader3d__copy > span {
+  color: #ff5b49;
+}
+
+.intro-loader3d__copy strong {
+  margin: 8px 0 10px;
+  font-size: clamp(48px, 7vw, 118px);
+  line-height: .82;
+  letter-spacing: -.065em;
+  font-weight: 580;
+}
+
+.intro-loader3d__copy p {
+  margin: 0;
+  color: rgba(233,229,220,.48);
+}
+
+.intro-loader3d__bottom {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+}
+
+.intro-loader3d__progress {
+  height: 1px;
+  overflow: hidden;
+  background: rgba(233,229,220,.14);
+}
+
+.intro-loader3d__progress i {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, #ff4a38, #e9e5dc);
+  transform-origin: left;
+}
+
+@media (max-width: 980px) {
+  .home-hero {
+    height: 190svh;
+  }
+
+  .home-hero__entity-wrap {
+    width: min(100%, 760px);
+    margin-inline: auto;
+  }
+
+  .tarun-entity3d {
+    height: min(58svh, 650px);
+    min-height: 440px;
+  }
+
+  .loader-entity3d {
+    inset: 8% 2% 8%;
+  }
+
+  .intro-loader3d__copy {
+    left: 0;
+    bottom: 7%;
+  }
+}
+
+@media (max-width: 640px) {
+  .home-hero {
+    height: 200svh;
+  }
+
+  .tarun-entity3d {
+    min-height: 390px;
+    height: 49svh;
+    clip-path: polygon(0 0, 90% 0, 100% 10%, 100% 100%, 10% 100%, 0 90%);
+  }
+
+  .tarun-entity3d__layers {
+    display: none;
+  }
+
+  .tarun-entity3d__chrome {
+    top: 14px;
+    left: 14px;
+    right: 14px;
+  }
+
+  .tarun-entity3d__prompt {
+    left: 15px;
+    bottom: 15px;
+  }
+
+  .intro-loader--entity {
+    padding: 18px;
+  }
+
+  .intro-loader3d__top span:last-child {
+    display: none;
+  }
+
+  .loader-entity3d {
+    inset: 5% -16% 8%;
+    min-height: 330px;
+  }
+
+  .intro-loader3d__copy strong {
+    font-size: clamp(46px, 17vw, 76px);
+  }
+
+  .intro-loader3d__copy p {
+    max-width: 34ch;
+    line-height: 1.6;
+  }
+
+  .intro-loader3d__bottom {
+    grid-template-columns: auto 1fr;
+  }
+
+  .intro-loader3d__bottom > span:last-child {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tarun-entity3d__prompt i {
+    animation: none;
+  }
+}
