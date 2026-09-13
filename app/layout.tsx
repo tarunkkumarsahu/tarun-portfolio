@@ -26,6 +26,7 @@ import "./lab-page-final.css";
 import "./hero-3d.css";
 import "./platform.css";
 import "./hero-integrated.css";
+import "./hero-refinement.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
