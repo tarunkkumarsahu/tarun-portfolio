@@ -3,6 +3,7 @@
 import { FormEvent, useState } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { workCategories } from "@/data/platform";
+import { TurnstileField } from "@/components/TurnstileField";
 
 type State = "idle" | "sending" | "success" | "error";
 
@@ -102,6 +103,8 @@ export function ShareWorkForm() {
           <input name="githubUrl" type="url" maxLength={500} placeholder="https://github.com/…" />
         </label>
       </div>
+
+      <TurnstileField />
 
       <div className="platform-form__submit">
         <p>Nothing is published automatically. Every submission stays pending until reviewed.</p>
