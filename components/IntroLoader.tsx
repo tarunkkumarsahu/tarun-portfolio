@@ -2,26 +2,20 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
-
-const bootLines = [
-  ["CORE", "ONLINE"],
-  ["WORK", "04 SYSTEMS"],
-  ["LAB", "READY"],
-];
+import { LoaderEntity3D } from "@/components/LoaderEntity3D";
 
 export function IntroLoader() {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    const hasBooted = sessionStorage.getItem("tarun-portfolio-booted");
-
+    const hasBooted = sessionStorage.getItem("tarun-portfolio-booted-v2");
     if (hasBooted) return;
 
     setVisible(true);
     const timer = window.setTimeout(() => {
-      sessionStorage.setItem("tarun-portfolio-booted", "true");
+      sessionStorage.setItem("tarun-portfolio-booted-v2", "true");
       setVisible(false);
-    }, 1550);
+    }, 1950);
 
     return () => window.clearTimeout(timer);
   }, []);
@@ -30,57 +24,61 @@ export function IntroLoader() {
     <AnimatePresence>
       {visible ? (
         <motion.div
-          className="intro-loader"
+          className="intro-loader intro-loader--entity"
           initial={{ opacity: 1 }}
-          exit={{ y: "-100%" }}
-          transition={{ duration: 0.72, ease: [0.76, 0, 0.24, 1] }}
+          exit={{ clipPath: "inset(0 0 100% 0)" }}
+          transition={{ duration: 0.82, ease: [0.76, 0, 0.24, 1] }}
         >
-          <div className="intro-loader__top">
-            <span className="intro-loader__mark">T/26</span>
-            <span>PERSONAL SYSTEM</span>
+          <div className="intro-loader3d__top">
+            <span>THE TARUN / BOOT 00</span>
+            <span>IDENTITY SYSTEM / 2026</span>
           </div>
 
-          <div className="intro-loader__center">
-            <motion.p
-              initial={{ opacity: 0, y: 14 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.35 }}
-            >
-              INITIALIZING
-            </motion.p>
+          <div className="intro-loader3d__stage">
+            <LoaderEntity3D />
 
-            <div className="intro-loader__status">
-              {bootLines.map(([label, value], index) => (
-                <motion.div
-                  key={label}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.2 + index * 0.14 }}
-                >
-                  <span>{label}</span>
-                  <span>{value}</span>
-                </motion.div>
-              ))}
-            </div>
-
-            <div className="intro-loader__progress" aria-hidden="true">
+            <div className="intro-loader3d__copy">
               <motion.span
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.14, duration: 0.4 }}
+              >
+                INITIALIZING ENTITY
+              </motion.span>
+              <motion.strong
+                initial={{ opacity: 0, y: 18 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.28, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+              >
+                TARUN_01
+              </motion.strong>
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.74, duration: 0.35 }}
+              >
+                CODE / INTELLIGENCE / SYSTEMS / MACHINES
+              </motion.p>
+            </div>
+          </div>
+
+          <div className="intro-loader3d__bottom">
+            <span>ASSEMBLING LAYERS</span>
+            <div className="intro-loader3d__progress" aria-hidden="true">
+              <motion.i
                 initial={{ scaleX: 0 }}
                 animate={{ scaleX: 1 }}
-                transition={{ duration: 1.05, ease: [0.22, 1, 0.36, 1] }}
+                transition={{ duration: 1.62, ease: [0.22, 1, 0.36, 1] }}
               />
             </div>
+            <motion.span
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1.42, duration: 0.25 }}
+            >
+              SYSTEM ONLINE
+            </motion.span>
           </div>
-
-          <motion.div
-            className="intro-loader__bottom"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.08, duration: 0.25 }}
-          >
-            <span className="status-pulse" />
-            SYSTEM ONLINE
-          </motion.div>
         </motion.div>
       ) : null}
     </AnimatePresence>
