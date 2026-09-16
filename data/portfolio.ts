@@ -102,6 +102,6 @@ export const now = {
     ["BUILDING", "JARVIS OS"],
     ["RESEARCHING", "Precision weed-removal robotics"],
     ["EXPLORING", "Agentic AI systems"],
-    ["STATUS", "BUILDING"],
+    ["ACHIEVEMENT", "Cyber Verse 2026 — 1st Prize"],
   ],
 };
