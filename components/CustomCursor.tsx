@@ -12,10 +12,9 @@ export function CustomCursor() {
   const [enabled, setEnabled] = useState(false);
 
   useEffect(() => {
-    const finePointer = window.matchMedia("(pointer: fine)").matches;
-    if (!finePointer) return;
-
-    setEnabled(true);
+    const pointerQuery = window.matchMedia("(pointer: fine)");
+    const syncPointer = () => setEnabled(pointerQuery.matches);
+    const initialSync = window.requestAnimationFrame(syncPointer);
 
     const onMove = (event: MouseEvent) => {
       x.set(event.clientX);
@@ -33,10 +32,13 @@ export function CustomCursor() {
       setLabel(interactive.dataset.cursor ?? "OPEN");
     };
 
+    pointerQuery.addEventListener("change", syncPointer);
     window.addEventListener("mousemove", onMove);
     document.addEventListener("mouseover", onOver);
 
     return () => {
+      window.cancelAnimationFrame(initialSync);
+      pointerQuery.removeEventListener("change", syncPointer);
       window.removeEventListener("mousemove", onMove);
       document.removeEventListener("mouseover", onOver);
     };
