@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import { notFound } from "next/navigation";
 import { CaseStudyVisual } from "@/components/CaseStudyVisual";
@@ -143,9 +144,9 @@ export default async function ProjectPage({ params }: Props) {
         <div className="contact-bottom">
           <p>Explore the rest of the work archive.</p>
           <div className="contact-links">
-            <a href="/work" data-cursor="BACK">
+            <Link href="/work" data-cursor="BACK">
               <ArrowLeft size={15} /> WORK
-            </a>
+            </Link>
           </div>
         </div>
       </section>
