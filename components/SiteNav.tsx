@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { ArrowUpRight, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { profile } from "@/data/portfolio";
@@ -34,13 +35,13 @@ export function SiteNav() {
   return (
     <>
       <header className="site-nav">
-        <a className="site-nav__brand" href="/" aria-label="Back to index">
+        <Link className="site-nav__brand" href="/" aria-label="Back to index">
           TS<span>/26</span>
-        </a>
+        </Link>
 
         <nav className="site-nav__links" aria-label="Primary navigation">
           {items.map(([, label, href]) => (
-            <a key={label} href={href}>{label}</a>
+            <Link key={label} href={href}>{label}</Link>
           ))}
         </nav>
 
@@ -54,9 +55,9 @@ export function SiteNav() {
           >
             MENU
           </button>
-          <a className="site-nav__contact" href="/contact">
+          <Link className="site-nav__contact" href="/contact">
             OPEN CHANNEL <ArrowUpRight size={13} strokeWidth={1.5} />
-          </a>
+          </Link>
         </div>
       </header>
 
@@ -74,17 +75,17 @@ export function SiteNav() {
 
         <nav className="mobile-menu-overlay__links" aria-label="Mobile navigation">
           {items.map(([number, label, href]) => (
-            <a key={label} href={href} onClick={() => setMenuOpen(false)}>
+            <Link key={label} href={href} onClick={() => setMenuOpen(false)}>
               <span>{number}</span>
               <strong>{label}</strong>
               <i>↗</i>
-            </a>
+            </Link>
           ))}
         </nav>
 
         <div className="mobile-menu-overlay__secondary">
-          <a href="/contact" onClick={() => setMenuOpen(false)}>OPEN CHANNEL ↗</a>
-          <a href="/share" onClick={() => setMenuOpen(false)}>SHARE YOUR WORK ↗</a>
+          <Link href="/contact" onClick={() => setMenuOpen(false)}>OPEN CHANNEL ↗</Link>
+          <Link href="/share" onClick={() => setMenuOpen(false)}>SHARE YOUR WORK ↗</Link>
         </div>
 
         <div className="mobile-menu-overlay__foot">
