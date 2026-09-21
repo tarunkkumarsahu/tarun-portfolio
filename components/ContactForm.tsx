@@ -16,7 +16,8 @@ export function ContactForm() {
     setState("sending");
     setMessage("");
 
-    const form = new FormData(event.currentTarget);
+    const formElement = event.currentTarget;
+    const form = new FormData(formElement);
     const payload = Object.fromEntries(form.entries());
 
     try {
@@ -29,7 +30,7 @@ export function ContactForm() {
 
       if (!response.ok) throw new Error(data.error || "Could not send the message.");
 
-      event.currentTarget.reset();
+      formElement.reset();
       setState("success");
       setMessage("Signal received. I’ll review it from the control desk.");
     } catch (error) {

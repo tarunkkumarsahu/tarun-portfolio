@@ -16,7 +16,8 @@ export function ShareWorkForm() {
     setState("sending");
     setMessage("");
 
-    const form = new FormData(event.currentTarget);
+    const formElement = event.currentTarget;
+    const form = new FormData(formElement);
     const payload = Object.fromEntries(form.entries());
 
     try {
@@ -29,7 +30,7 @@ export function ShareWorkForm() {
 
       if (!response.ok) throw new Error(data.error || "Could not submit the work.");
 
-      event.currentTarget.reset();
+      formElement.reset();
       setState("success");
       setMessage("Submission received. It will stay private until it has been reviewed.");
     } catch (error) {
