@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";\nimport type { CSSProperties } from "react";
 
 type Node = {
   angle: number;
