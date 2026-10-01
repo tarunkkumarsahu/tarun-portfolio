@@ -1,4 +1,5 @@
-import type { CSSProperties } from "react";\nimport { LiquidOrbitBackground } from "@/components/LiquidOrbitBackground";
+import type { CSSProperties } from "react";
+import { LiquidOrbitBackground } from "@/components/LiquidOrbitBackground";
 import { FlipLinks } from "@/components/ui/flip-links";
 
 export function IntroducingTarun() {
@@ -16,10 +17,10 @@ export function IntroducingTarun() {
           <span className="thoughtLabel">LIVE THOUGHT STREAM</span>
           <div className="thoughtCloud">
             <i style={{ "--x": "18%", "--y": "33%", "--d": "0s" } as CSSProperties} />
-            <i style={{ "--x": "48%", "--y": "12%", "--d": ".8s" } as React.CSSProperties} />
-            <i style={{ "--x": "76%", "--y": "38%", "--d": "1.6s" } as React.CSSProperties} />
-            <i style={{ "--x": "39%", "--y": "66%", "--d": "2.4s" } as React.CSSProperties} />
-            <i style={{ "--x": "70%", "--y": "78%", "--d": "3.2s" } as React.CSSProperties} />
+            <i style={{ "--x": "48%", "--y": "12%", "--d": ".8s" } as CSSProperties} />
+            <i style={{ "--x": "76%", "--y": "38%", "--d": "1.6s" } as CSSProperties} />
+            <i style={{ "--x": "39%", "--y": "66%", "--d": "2.4s" } as CSSProperties} />
+            <i style={{ "--x": "70%", "--y": "78%", "--d": "3.2s" } as CSSProperties} />
             <svg viewBox="0 0 400 280" preserveAspectRatio="none">
               <path d="M60 92 C140 30 210 64 298 108 S330 214 160 208" />
               <path d="M82 190 C146 160 188 128 310 94" />
