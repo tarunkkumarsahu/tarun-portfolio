@@ -1,99 +1,92 @@
+import { IntroExperience } from "@/components/IntroExperience";
+import { IntroducingTarun } from "@/components/sections/IntroducingTarun";
+import { LivingSystem } from "@/components/sections/LivingSystem";
+
 export default function Home() {
   return (
-    <main>
-      <section className="hero" id="top">
-        <header className="nav wrap">
-          <a className="brand" href="#top">TS<span>26</span></a>
-          <nav>
-            <a href="#work">WORK</a>
-            <a href="#station">STATION</a>
-            <a href="#lab">LAB</a>
-            <a href="#contact">CONTACT</a>
-          </nav>
-          <span className="status">INDIA / BUILDING</span>
-        </header>
+    <main className="portfolioRoot">
+      <aside className="siteRail" aria-label="Portfolio navigation" data-liquid-exclude>
+        <a href="#about">01</a>
+        <a href="#system">02</a>
+        <a href="#method">03</a>
+        <a href="#side-quests">04</a>
+        <a href="#resume">05</a>
+        <a href="#response">06</a>
+        <a href="#workstation">WS</a>
+      </aside>
 
-        <div className="heroStage wrap">
-          <p className="eyebrow">SOFTWARE ENGINEER · AI & BACKEND DEVELOPER</p>
-          <h1>
-            <span>TARUN</span>
-            <em>KUMAR SAHU</em>
-          </h1>
-          <div className="heroBottom">
-            <div><small>THE TARUN / 01</small><p>I build systems that think, connect and act.</p></div>
-            <div><strong>NOT ONE ROLE.</strong><p>Software → intelligence → machines → experiments.</p></div>
-            <a href="#manifesto">ENTER ↘</a>
+      <IntroExperience />
+      <IntroducingTarun />
+      <LivingSystem />
+
+      <section className="chapterPlaceholder methodChapter" id="method">
+        <div className="pageChrome">
+          <span>03 / METHOD</span>
+          <span>RESEARCH → BUILD → BREAK → REBUILD</span>
+        </div>
+        <div className="placeholderInner">
+          <p className="kicker">NEXT CHAPTER / STRUCTURE LOCKED</p>
+          <h2>I DON&apos;T START<br />WITH CODE.</h2>
+          <h3>I START WITH A PROBLEM.</h3>
+          <div className="methodRail" aria-hidden="true">
+            {["PROBLEM", "OBSERVE", "RESEARCH", "PROTOTYPE", "TEST", "REBUILD", "SYSTEM"].map((item, index) => (
+              <span key={item}><i>{String(index + 1).padStart(2, "0")}</i>{item}</span>
+            ))}
           </div>
         </div>
       </section>
 
-      <section className="manifesto dark" id="manifesto">
-        <div className="wrap manifestoGrid">
-          <span className="index">001 / MANIFESTO</span>
-          <div>
-            <p className="micro">I&apos;M INTERESTED IN THE POINT WHERE</p>
-            <h2>SOFTWARE<br/>STOPS<br/>BEING <em>just software.</em></h2>
-          </div>
-          <p className="aside">The interface matters. The architecture matters more. I care about the point where code becomes a real system.</p>
+      <section className="chapterPlaceholder sideQuestChapter" id="side-quests">
+        <div className="pageChrome">
+          <span>04 / SIDE QUESTS</span>
+          <span>CURIOSITY OUTSIDE THE MAIN THREAD</span>
+        </div>
+        <div className="placeholderInner">
+          <p className="kicker">PERSONAL CREATIVE SYSTEM / CONTENT TO FINALISE</p>
+          <h2>SIDE<br /><em>QUESTS.</em></h2>
+          <p className="placeholderCopy">
+            A spatial playground for the things that do not need to become products.
+          </p>
         </div>
       </section>
 
-      <section className="work dark" id="work">
-        <div className="wrap">
-          <div className="sectionHead">
-            <span className="index">002 / SELECTED SYSTEMS</span>
-            <h2>Work in <em>motion.</em></h2>
-            <p>Four systems. Different problems. One obsession: making ideas behave in the real world.</p>
-          </div>
-
-          <div className="projects">
-            <article><span>01</span><div><small>PERSONAL AI SYSTEM</small><h3>JARVIS OS</h3><p>Agents, context and tool execution inside a personal AI environment.</p></div><b>J</b><a href="#contact">↗</a></article>
-            <article><span>02</span><div><small>AGRI ROBOTICS</small><h3>WEED REMOVAL ROBOT</h3><p>Perception, navigation and mechanical action for precision weed removal.</p></div><b>W</b><a href="#contact">↗</a></article>
-            <article><span>03</span><div><small>SENSOR FUSION</small><h3>FRESHFUSION</h3><p>Image, gas and environmental sensing combined into one quality decision layer.</p></div><b>F</b><a href="#contact">↗</a></article>
-            <article><span>04</span><div><small>CONNECTED SAFETY</small><h3>SMART SAFETY WRISTBAND</h3><p>Emergency signalling, location and response in a connected wearable system.</p></div><b>S</b><a href="#contact">↗</a></article>
-          </div>
+      <section className="chapterPlaceholder resumeChapter" id="resume">
+        <div className="pageChrome">
+          <span>05 / SYSTEM FILE</span>
+          <span>RESUME / FACTS PENDING</span>
+        </div>
+        <div className="resumeBoard">
+          <div className="paper paperHero"><small>FILE / TS-26</small><h2>RESUME</h2><p>ABOUT ME / SYSTEM FILE</p></div>
+          <div className="paper paperEducation"><small>EDUCATION</small><strong>CONTENT SLOT</strong></div>
+          <div className="paper paperExperience"><small>EXPERIENCE</small><strong>CONTENT SLOT</strong></div>
+          <div className="paper paperSkills"><small>SYSTEMS / SKILLS</small><strong>CONTENT SLOT</strong></div>
         </div>
       </section>
 
-      <section className="station" id="station">
-        <div className="wrap stationGrid">
-          <div><span className="index">003 / WORKSTATION</span><h2>Still<br/><em>building.</em></h2></div>
-          <div className="board">
-            <p><span>NOW BUILDING</span><strong>JARVIS OS</strong></p>
-            <p><span>RESEARCHING</span><strong>PRECISION WEED REMOVAL</strong></p>
-            <p><span>EXPLORING</span><strong>AGENTIC AI SYSTEMS</strong></p>
-            <p><span>STATUS</span><strong>BUILDING</strong></p>
-          </div>
+      <section className="chapterPlaceholder responseChapter" id="response">
+        <div className="codeCeiling" aria-hidden="true">
+          <span>01</span><span>&amp;&amp;</span><span>{"{}"}</span><span>!=</span><span>101</span><span>&lt;/&gt;</span>
         </div>
-      </section>
-
-      <section className="lab dark" id="lab">
-        <div className="wrap">
-          <div className="sectionHead">
-            <span className="index">004 / THE LAB</span>
-            <h2>Small ideas.<br/><em>Strange tests.</em></h2>
-            <p>Not everything needs to become a product. Some things exist to answer a question.</p>
-          </div>
-          <div className="labList">
-            <p><span>01</span><strong>MOTION CONTROLLER</strong><small>EXPERIMENT</small><b>↗</b></p>
-            <p><span>02</span><strong>PLAY WITH YOUR MIND</strong><small>EXPERIMENT</small><b>↗</b></p>
-            <p><span>03</span><strong>RAMADAN PEN</strong><small>EXPERIMENT</small><b>↗</b></p>
-            <p><span>04</span><strong>EMBEDDED LAB</strong><small>EXPERIMENT</small><b>↗</b></p>
+        <div className="responsePanel" data-liquid-exclude>
+          <span className="kicker">06 / RESPONSE</span>
+          <h2>LEAVE YOUR<br />TRACE.</h2>
+          <p>You&apos;ve seen the system. Leave a thought, critique, idea or link behind.</p>
+          <div className="responseMock">
+            <span>NAME / RESPONSE / LINK</span>
+            <button type="button">SUBMIT RESPONSE ↗</button>
           </div>
         </div>
       </section>
 
-      <section className="contact dark" id="contact">
-        <div className="wrap">
-          <span className="index">005 / OPEN CHANNEL</span>
-          <h2>LET&apos;S BUILD<br/><em>SOMETHING AMBITIOUS.</em></h2>
-          <footer>
-            <p>Open to collaborations, technical conversations and interesting engineering problems.</p>
-            <div>
-              <a href="https://github.com/tarunkkumarsahu">GITHUB ↗</a>
-              <a href="https://www.linkedin.com/in/tarunnsahuu/">LINKEDIN ↗</a>
-            </div>
-          </footer>
+      <section className="workstationChapter" id="workstation">
+        <div className="pageChrome lightChrome">
+          <span>WORKSTATION / ONLINE</span>
+          <span>PROJECT INDEX / NEXT BUILD PASS</span>
+        </div>
+        <div className="workstationTitle">
+          <span>ENTER</span>
+          <h2>WORKSTATION</h2>
+          <p>Main systems will open here through the 3D Works Wheel. Lab experiments sit behind it as a second layer.</p>
         </div>
       </section>
     </main>
