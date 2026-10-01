@@ -106,7 +106,7 @@ export function LivingSystem() {
             "--pointer-x": `${pointer.x}%`,
             "--pointer-y": `${pointer.y}%`,
             "--pointer-energy": pointer.energy,
-          } as React.CSSProperties
+          } as CSSProperties
         }
       />
 
@@ -188,7 +188,7 @@ export function LivingSystem() {
                 left: `${packet.left}%`,
                 top: `${packet.top}%`,
                 animationDelay: `${packet.delay}s`,
-              } as React.CSSProperties
+              } as CSSProperties
             }
           >
             {packet.id % 3 === 0 ? "01" : packet.id % 3 === 1 ? "{x}" : "↗"}
