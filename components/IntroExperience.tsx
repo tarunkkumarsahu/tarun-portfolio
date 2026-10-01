@@ -168,7 +168,7 @@ export function IntroExperience() {
         <canvas ref={canvasRef} className="neuralTunnel" aria-hidden="true" />
 
         <div className="loaderScene" aria-hidden={ready}>
-          <div className="loaderOrbit" style={{ "--boot": boot } as React.CSSProperties}>
+          <div className="loaderOrbit" style={{ "--boot": boot } as CSSProperties}>
             <div
               className="runnerOrbit"
               style={{ transform: `rotate(${boot * 3.6}deg)` }}
