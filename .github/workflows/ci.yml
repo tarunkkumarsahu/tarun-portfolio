@@ -2,7 +2,7 @@ name: Scratch Build
 
 on:
   push:
-    branches: [main]
+    branches: [main, rebuild/cinematic-foundation]
 
 permissions:
   contents: read
