@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";\nimport type { CSSProperties } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import type { CSSProperties } from "react";
 import { GooeyMarquee } from "@/components/ui/gooey-marquee";
 import { MagicTextReveal } from "@/components/ui/magic-text-reveal";
 
