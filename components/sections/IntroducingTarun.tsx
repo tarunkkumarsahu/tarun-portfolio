@@ -15,7 +15,7 @@ export function IntroducingTarun() {
         <div className="thoughtField" aria-hidden="true">
           <span className="thoughtLabel">LIVE THOUGHT STREAM</span>
           <div className="thoughtCloud">
-            <i style={{ "--x": "18%", "--y": "33%", "--d": "0s" } as React.CSSProperties} />
+            <i style={{ "--x": "18%", "--y": "33%", "--d": "0s" } as CSSProperties} />
             <i style={{ "--x": "48%", "--y": "12%", "--d": ".8s" } as React.CSSProperties} />
             <i style={{ "--x": "76%", "--y": "38%", "--d": "1.6s" } as React.CSSProperties} />
             <i style={{ "--x": "39%", "--y": "66%", "--d": "2.4s" } as React.CSSProperties} />
