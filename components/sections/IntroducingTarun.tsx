@@ -1,4 +1,4 @@
-import { LiquidOrbitBackground } from "@/components/LiquidOrbitBackground";
+import type { CSSProperties } from "react";\nimport { LiquidOrbitBackground } from "@/components/LiquidOrbitBackground";
 import { FlipLinks } from "@/components/ui/flip-links";
 
 export function IntroducingTarun() {
