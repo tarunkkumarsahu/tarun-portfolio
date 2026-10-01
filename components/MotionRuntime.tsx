@@ -9,9 +9,16 @@ gsap.registerPlugin(ScrollTrigger);
 
 export function MotionRuntime() {
   useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduced) return;
 
-    const lenis = new Lenis({ duration: 1.05, smoothWheel: true, wheelMultiplier: 0.85 });
+    const lenis = new Lenis({
+      duration: 1.05,
+      smoothWheel: true,
+      wheelMultiplier: 0.85,
+      touchMultiplier: 1,
+    });
+
     lenis.on("scroll", ScrollTrigger.update);
 
     let raf = 0;
@@ -22,39 +29,62 @@ export function MotionRuntime() {
     raf = requestAnimationFrame(tick);
 
     const ctx = gsap.context(() => {
-      gsap.from(".hero h1 > *", {
-        yPercent: 110,
+      gsap.from(".thoughtField", {
+        xPercent: -10,
         opacity: 0,
-        rotate: 2,
-        duration: 1.15,
-        stagger: 0.08,
-        ease: "power4.out",
-      });
-
-      gsap.from(".heroBottom > *", {
-        y: 18,
-        opacity: 0,
-        duration: 0.7,
-        stagger: 0.08,
-        delay: 0.45,
+        duration: 1.1,
         ease: "power3.out",
+        scrollTrigger: { trigger: ".introducing", start: "top 68%" },
       });
 
-      gsap.utils.toArray<HTMLElement>(".sectionHead, .manifestoGrid > *, .stationGrid > *, .projects article, .labList p").forEach((el) => {
-        gsap.from(el, {
-          y: 46,
-          opacity: 0,
-          duration: 0.9,
-          ease: "power3.out",
-          scrollTrigger: { trigger: el, start: "top 88%" },
-        });
+      gsap.from(".modelDock", {
+        y: 70,
+        scale: 0.94,
+        opacity: 0,
+        duration: 1.25,
+        ease: "power4.out",
+        scrollTrigger: { trigger: ".introducing", start: "top 66%" },
       });
+
+      gsap.from(".aboutCopy, .socialPanel", {
+        x: 34,
+        opacity: 0,
+        duration: 0.9,
+        stagger: 0.14,
+        ease: "power3.out",
+        scrollTrigger: { trigger: ".introducing", start: "top 62%" },
+      });
+
+      gsap.from(".systemRig, .systemCore", {
+        y: 44,
+        opacity: 0,
+        scale: 0.97,
+        duration: 0.9,
+        stagger: 0.08,
+        ease: "power3.out",
+        scrollTrigger: { trigger: ".systemStage", start: "top 78%" },
+      });
+
+      gsap.utils
+        .toArray<HTMLElement>(".placeholderInner, .resumeBoard .paper, .responsePanel, .workstationTitle")
+        .forEach((el) => {
+          gsap.from(el, {
+            y: 56,
+            opacity: 0,
+            duration: 1,
+            ease: "power3.out",
+            scrollTrigger: { trigger: el, start: "top 86%" },
+          });
+        });
     });
+
+    ScrollTrigger.refresh();
 
     return () => {
       cancelAnimationFrame(raf);
       lenis.destroy();
       ctx.revert();
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
     };
   }, []);
 
