@@ -4,8 +4,13 @@ import { FlipLinks } from "@/components/ui/flip-links";
 
 export function IntroducingTarun() {
   return (
-    <section className="introducing" id="about">
+    <section className="introducing" id="about" data-chapter>
       <LiquidOrbitBackground />
+
+      <div className="introducingBackTitle" aria-hidden="true">
+        <span>INTRODUCING</span>
+        <strong>TARUN</strong>
+      </div>
 
       <div className="pageChrome">
         <span>01 / INTRODUCING TARUN</span>
@@ -84,6 +89,8 @@ export function IntroducingTarun() {
           </div>
         </div>
       </div>
+
+      <div className="page1ExitSignal" aria-hidden="true"><i /><i /><i /></div>
 
       <div className="introducingFooter">
         <span>MOVE THROUGH THE FIELD</span>
