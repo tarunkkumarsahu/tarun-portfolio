@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter_Tight, Cormorant_Garamond, IBM_Plex_Mono } from "next/font/google";
 import { MotionRuntime } from "@/components/MotionRuntime";
-import "./globals.css";
+import "./globals.css";\nimport "./portfolio-interactions.css";
 
 const interTight = Inter_Tight({
   subsets: ["latin"],
