@@ -4,12 +4,12 @@ import { useEffect, useState } from "react";
 
 const CHAPTERS = [
   { id: "about", code: "01", label: "INTRO" },
-  { id: "system", code: "02", label: "SYSTEM" },
+  { id: "system", code: "02", label: "SIGNAL" },
   { id: "method", code: "03", label: "METHOD" },
-  { id: "side-quests", code: "04", label: "SIDE QUESTS" },
+  { id: "side-quests", code: "04", label: "OFF CLOCK" },
   { id: "resume", code: "05", label: "SYSTEM FILE" },
-  { id: "response", code: "06", label: "TRACE" },
-  { id: "workstation", code: "WS", label: "WORKSTATION" },
+  { id: "workstation", code: "06", label: "PROJECTS" },
+  { id: "response", code: "07", label: "TRACE" },
 ];
 
 export function ChapterRail() {
