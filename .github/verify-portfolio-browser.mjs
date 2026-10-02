@@ -1,4 +1,4 @@
-// Verification revision: immediate project selection sync.
+// Verification revision: intended wheel selection sync.
 import { chromium } from "playwright";
 
 const browser = await chromium.launch({ headless: true });
