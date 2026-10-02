@@ -17,7 +17,7 @@ const CAPABILITIES = [
 
 export function SystemFile() {
   return (
-    <section className="systemFile systemFileV4" id="resume" data-chapter>
+    <section className="systemFile systemFileV3 systemFileV4" id="resume" data-chapter>
       <div className="pageChrome">
         <span>05 / SYSTEM FILE</span>
         <span>TARUN KUMAR SAHU / 2026</span>
