@@ -24,7 +24,7 @@ export function ChapterRail() {
         ([entry]) => {
           if (entry.isIntersecting) setActive(id);
         },
-        { threshold: 0.42 },
+        { threshold: 0, rootMargin: "-46% 0px -46% 0px" },
       );
 
       observer.observe(el);
