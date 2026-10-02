@@ -97,7 +97,7 @@ export function LivingSystem() {
   );
 
   return (
-    <section ref={sectionRef} className="livingSystem" id="system">
+    <section ref={sectionRef} className="livingSystem" id="system" data-chapter>
       <div className="livingGrid" aria-hidden="true" />
       <div
         className="cursorField"
