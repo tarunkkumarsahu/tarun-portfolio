@@ -5105,3 +5105,325 @@ body {
     border-left: 0;
   }
 }
+
+
+/* =========================================================
+   WORLD-CLASS PASS — HERO / CTA / TRANSITION
+   ========================================================= */
+
+.editorialButton {
+  position: relative;
+  min-width: 178px;
+  min-height: 48px;
+  display: inline-grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 24px;
+  border: 0;
+  padding: 0 16px;
+  color: inherit;
+  background: transparent;
+  font: 600 8px/1 var(--mono);
+  letter-spacing: .14em;
+  text-align: left;
+  cursor: pointer;
+  isolation: isolate;
+}
+
+.editorialButton::before,
+.editorialButton::after {
+  content: "";
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  height: 1px;
+  background: currentColor;
+  opacity: .35;
+  transform-origin: left;
+  transition: transform .35s cubic-bezier(.2,.8,.2,1), opacity .25s ease;
+}
+
+.editorialButton::before { top: 7px; transform: scaleX(.28); }
+.editorialButton::after { bottom: 7px; transform: scaleX(1); }
+
+.editorialButton:hover::before {
+  transform: scaleX(1);
+  opacity: .75;
+}
+
+.editorialButton:hover::after {
+  transform: scaleX(.28);
+  transform-origin: right;
+  opacity: .75;
+}
+
+.editorialButtonCorners {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(currentColor,currentColor) left top/12px 1px no-repeat,
+    linear-gradient(currentColor,currentColor) left top/1px 12px no-repeat,
+    linear-gradient(currentColor,currentColor) right top/12px 1px no-repeat,
+    linear-gradient(currentColor,currentColor) right top/1px 12px no-repeat,
+    linear-gradient(currentColor,currentColor) left bottom/12px 1px no-repeat,
+    linear-gradient(currentColor,currentColor) left bottom/1px 12px no-repeat,
+    linear-gradient(currentColor,currentColor) right bottom/12px 1px no-repeat,
+    linear-gradient(currentColor,currentColor) right bottom/1px 12px no-repeat;
+  opacity: .58;
+  transition: inset .25s ease, opacity .25s ease;
+}
+
+.editorialButton:hover .editorialButtonCorners {
+  inset: -3px;
+  opacity: 1;
+}
+
+.editorialButtonText {
+  position: relative;
+  z-index: 2;
+}
+
+.editorialButtonArrow {
+  position: relative;
+  z-index: 2;
+  font-size: 16px;
+  transition: transform .3s cubic-bezier(.2,.8,.2,1);
+}
+
+.editorialButton:hover .editorialButtonArrow {
+  transform: translate(3px,-3px);
+}
+
+/* Page 1 */
+
+.introducingGrid {
+  grid-template-columns: minmax(230px,.82fr) minmax(390px,1.08fr) minmax(310px,.86fr);
+}
+
+.thoughtField {
+  min-height: 410px;
+}
+
+.thoughtCloud {
+  position: relative;
+  height: 310px !important;
+  overflow: visible !important;
+  border: 0 !important;
+  background: transparent !important;
+  backdrop-filter: none !important;
+  isolation: isolate;
+}
+
+.thoughtCloud::before,
+.thoughtCloud::after {
+  display: block !important;
+  content: "";
+  position: absolute;
+  z-index: -2;
+  border: 0 !important;
+  border-radius: 50%;
+  filter: blur(12px);
+  background:
+    radial-gradient(circle at 42% 38%, rgba(255,255,255,.5), rgba(143,163,192,.17) 38%, rgba(86,104,132,.08) 63%, transparent 76%);
+}
+
+.thoughtCloud::before {
+  left: 3%;
+  top: 9%;
+  width: 78%;
+  height: 72%;
+}
+
+.thoughtCloud::after {
+  right: -2%;
+  bottom: 5%;
+  width: 58%;
+  height: 58%;
+  opacity: .82;
+}
+
+.thoughtBlob {
+  position: absolute;
+  z-index: -1;
+  border-radius: 50%;
+  border: 1px solid rgba(8,9,11,.09);
+  background: rgba(233,238,245,.08);
+  backdrop-filter: blur(5px);
+}
+
+.thoughtBlob.b1 {
+  left: 6%;
+  top: 13%;
+  width: 86px;
+  height: 86px;
+  animation: cloudDriftA 7s ease-in-out infinite alternate;
+}
+
+.thoughtBlob.b2 {
+  right: 9%;
+  top: 3%;
+  width: 118px;
+  height: 118px;
+  animation: cloudDriftB 9s ease-in-out infinite alternate;
+}
+
+.thoughtBlob.b3 {
+  left: 33%;
+  bottom: 2%;
+  width: 132px;
+  height: 132px;
+  animation: cloudDriftA 11s ease-in-out infinite alternate-reverse;
+}
+
+.thoughtCloud svg {
+  opacity: .56;
+  stroke: rgba(8,9,11,.24) !important;
+}
+
+.thoughtStatement {
+  position: absolute;
+  z-index: 4;
+  left: 7%;
+  top: 28%;
+  width: 86%;
+  font-size: clamp(30px, 3.1vw, 56px);
+  line-height: .82;
+  letter-spacing: -.065em;
+  font-weight: 760;
+}
+
+.thoughtStatement em {
+  font-family: var(--serif);
+  font-weight: 500;
+  color: var(--signal);
+}
+
+.thoughtWords {
+  z-index: 5;
+}
+
+.thoughtWords span {
+  border: 0 !important;
+  background: transparent !important;
+  backdrop-filter: none !important;
+  color: rgba(8,9,11,.58);
+  text-transform: uppercase;
+}
+
+.thoughtWords span::before {
+  width: 12px !important;
+}
+
+.heroFallbackClean {
+  filter: none;
+}
+
+.heroFallbackPortrait {
+  top: 11% !important;
+  width: min(58%, 350px) !important;
+  aspect-ratio: 4 / 5 !important;
+  border-radius: 42% 42% 18% 18% !important;
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow:
+    0 38px 70px rgba(15,23,38,.15),
+    0 0 0 1px rgba(8,9,11,.08) !important;
+  mask-image: linear-gradient(to bottom, black 0 78%, transparent 100%);
+}
+
+.heroFallbackPortrait img {
+  object-position: 50% 36%;
+  filter: saturate(.9) contrast(1.03);
+}
+
+.heroModelComing {
+  position: absolute;
+  bottom: 9%;
+  color: rgba(8,9,11,.38);
+  font: 600 6px/1 var(--mono);
+  letter-spacing: .15em;
+}
+
+.heroFallbackLaptopClean {
+  display: none !important;
+}
+
+/* Hero -> system transition */
+
+.signalBridge {
+  position: relative;
+  min-height: 48svh;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  background:
+    linear-gradient(180deg, #b5c4d8 0%, #8699b4 24%, #27303f 72%, #070809 100%);
+  color: var(--ivory);
+}
+
+.signalBridgeTrack {
+  position: absolute;
+  left: 4vw;
+  right: 4vw;
+  top: 50%;
+  height: 1px;
+  display: grid;
+  grid-template-columns: 1fr minmax(160px, 18vw) 1fr;
+  align-items: center;
+}
+
+.signalBridgeTrack i {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(243,240,232,.34));
+}
+
+.signalBridgeTrack i:last-child {
+  background: linear-gradient(90deg, rgba(243,240,232,.34), transparent);
+}
+
+.signalBridgeTrack b {
+  height: 1px;
+  background: var(--signal);
+  transform-origin: center;
+  box-shadow: 0 0 18px rgba(255,74,56,.32);
+}
+
+.signalBridgeWords {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  display: grid;
+  text-align: center;
+  pointer-events: none;
+}
+
+.signalBridgeWords span,
+.signalBridgeWords strong {
+  display: block;
+  font-size: clamp(70px, 10vw, 172px);
+  line-height: .67;
+  letter-spacing: -.09em;
+}
+
+.signalBridgeWords em {
+  margin: 6px 0;
+  font: italic 500 clamp(24px, 2.5vw, 42px)/1 var(--serif);
+  color: var(--signal);
+}
+
+.signalBridge > small {
+  position: absolute;
+  bottom: 24px;
+  font: 500 7px/1 var(--mono);
+  letter-spacing: .16em;
+  color: rgba(243,240,232,.42);
+}
+
+@keyframes cloudDriftA {
+  to { transform: translate(13px,-9px) scale(1.04); }
+}
+
+@keyframes cloudDriftB {
+  to { transform: translate(-12px,11px) scale(.96); }
+}
