@@ -14,6 +14,7 @@ export function IntroExperience() {
   const sectionRef = useRef<HTMLElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const progressRef = useRef(0);
+  const bootProgressRef = useRef(0);
   const [boot, setBoot] = useState(0);
   const [ready, setReady] = useState(false);
 
@@ -24,14 +25,14 @@ export function IntroExperience() {
     const ramp = (target: number, duration = 420) =>
       new Promise<void>((resolve) => {
         const from = performance.now();
-        const startValue = progressRef.current;
+        const startValue = bootProgressRef.current;
 
         const frame = (now: number) => {
           if (cancelled) return resolve();
           const t = Math.min(1, (now - from) / duration);
           const eased = 1 - Math.pow(1 - t, 3);
           const value = Math.round(startValue + (target - startValue) * eased);
-          progressRef.current = value;
+          bootProgressRef.current = value;
           setBoot(value);
 
           if (t >= 1) resolve();
