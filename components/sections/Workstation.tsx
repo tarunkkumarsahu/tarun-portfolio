@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { WorksWheel, type WorksWheelItem } from "@/components/ui/works-wheel";
-import { EditorialButton } from "@/components/ui/editorial-button";
+import { ProjectGlassGate } from "@/components/ProjectGlassGate";
 
 type Project = WorksWheelItem & {
   summary: string;
@@ -173,9 +173,7 @@ export function Workstation() {
           Ten builds. One interaction. Turn the wheel, bring a system to the
           front, then inspect the story behind it.
         </p>
-        <EditorialButton type="button" onClick={() => setOpen(true)}>
-          ENTER PROJECTS
-        </EditorialButton>
+        <ProjectGlassGate onEnter={() => setOpen(true)} />
       </div>
 
       <div className="projectGatewayFooter">
