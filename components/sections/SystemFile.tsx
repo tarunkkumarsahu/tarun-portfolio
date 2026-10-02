@@ -1,7 +1,3 @@
-"use client";
-
-import { LiquidMetalButton } from "@/components/ui/liquid-metal-button";
-
 const SYSTEMS = [
   "JARVIS OS",
   "EXOCORTEX",
@@ -19,16 +15,13 @@ const CAPABILITIES = [
 
 export function SystemFile() {
   return (
-    <section className="systemFile" id="resume" data-chapter>
+    <section className="systemFile systemFileV3" id="resume" data-chapter>
       <div className="pageChrome">
         <span>05 / SYSTEM FILE</span>
         <span>TARUN KUMAR SAHU / 2026</span>
       </div>
 
-      <div className="systemFileDesk">
-        <div className="paperShadow paperShadowA" aria-hidden="true" />
-        <div className="paperShadow paperShadowB" aria-hidden="true" />
-
+      <div className="systemFileGrid">
         <article className="systemPaper mainPaper">
           <span className="paperClip" aria-hidden="true" />
           <span className="paperTape tapeA" aria-hidden="true" />
@@ -37,7 +30,7 @@ export function SystemFile() {
           <header>
             <small>FILE / TS-26 / INDIA</small>
             <h2>TARUN<br />KUMAR SAHU</h2>
-            <p>Software Engineer · AI & Backend Developer</p>
+            <p>Software Engineer · AI &amp; Backend Developer</p>
           </header>
 
           <div className="paperProfile">
@@ -66,31 +59,36 @@ export function SystemFile() {
           </div>
         </article>
 
-        <aside className="systemPaper capabilityPaper">
-          <span className="paperTape tapeB" aria-hidden="true" />
-          <small>CAPABILITY INDEX</small>
-          {CAPABILITIES.map(([group, value]) => (
-            <div key={group}>
-              <span>{group}</span>
-              <p>{value}</p>
-            </div>
-          ))}
-        </aside>
+        <div className="systemFileStack">
+          <aside className="systemPaper capabilityPaper">
+            <span className="paperTape tapeB" aria-hidden="true" />
+            <small>CAPABILITY INDEX</small>
+            {CAPABILITIES.map(([group, value]) => (
+              <div key={group}>
+                <span>{group}</span>
+                <p>{value}</p>
+              </div>
+            ))}
+          </aside>
 
-        <aside className="systemPaper currentlyPaper">
-          <small>CURRENT THREAD</small>
-          <h3>Building systems that remember, reason, perceive and act.</h3>
-          <p>
-            The Workstation below opens the repositories and experiments behind
-            that direction.
-          </p>
-          <LiquidMetalButton
-            label="OPEN GITHUB"
-            onClick={() =>
-              window.open("https://github.com/tarunkkumarsahu", "_blank", "noopener,noreferrer")
-            }
-          />
-        </aside>
+          <aside className="systemPaper currentlyPaper">
+            <small>CURRENT THREAD</small>
+            <h3>Building systems that remember, reason, perceive and act.</h3>
+            <p>
+              The Workstation below opens the repositories and experiments behind
+              that direction.
+            </p>
+            <a
+              className="systemFileGithub"
+              href="https://github.com/tarunkkumarsahu"
+              target="_blank"
+              rel="noreferrer"
+              data-cursor-hot
+            >
+              OPEN GITHUB <span>↗</span>
+            </a>
+          </aside>
+        </div>
       </div>
     </section>
   );
