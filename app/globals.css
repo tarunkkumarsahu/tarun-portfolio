@@ -3894,3 +3894,157 @@ body {
     flex-direction: column;
   }
 }
+
+
+/* Workstation Lab */
+
+.workstationV2 {
+  min-height: 315svh;
+}
+
+.workstationLab {
+  position: relative;
+  z-index: 4;
+  width: min(100% - 64px, 1500px);
+  margin: 0 auto;
+  padding: 28vh 0 16vh;
+}
+
+.labHeading {
+  display: grid;
+  grid-template-columns: .38fr 1fr;
+  gap: 4vw;
+  align-items: end;
+  margin-bottom: 70px;
+}
+
+.labHeading h3 {
+  margin: 0;
+  font-size: clamp(58px, 7.6vw, 138px);
+  line-height: .72;
+  letter-spacing: -.085em;
+}
+
+.labHeading h3 em {
+  font-family: var(--serif);
+  font-weight: 400;
+  color: var(--signal);
+}
+
+.labRows {
+  border-top: 1px solid rgba(243,240,232,.15);
+}
+
+.labRow {
+  position: relative;
+  display: grid;
+  grid-template-columns: 40px minmax(190px, .55fr) 180px minmax(280px, 1fr) 24px;
+  gap: 24px;
+  align-items: center;
+  min-height: 118px;
+  border-bottom: 1px solid rgba(243,240,232,.12);
+  color: rgba(243,240,232,.52);
+  overflow: hidden;
+  transition: color .28s ease, padding .28s cubic-bezier(.2,.8,.2,1);
+}
+
+.labRow::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(90deg, rgba(255,74,56,.16), rgba(143,163,192,.06) 42%, transparent 78%);
+  transform: translateX(-102%);
+  transition: transform .45s cubic-bezier(.2,.8,.2,1);
+}
+
+.labRow:hover {
+  color: rgba(243,240,232,.95);
+  padding-left: 12px;
+}
+
+.labRow:hover::before {
+  transform: translateX(0);
+}
+
+.labRow > span,
+.labRow > small {
+  font: 500 7px/1 var(--mono);
+  letter-spacing: .12em;
+}
+
+.labRow > span {
+  color: var(--signal);
+}
+
+.labRow > strong {
+  font-size: clamp(24px, 2.5vw, 42px);
+  line-height: .9;
+  letter-spacing: -.055em;
+}
+
+.labRow > small {
+  color: rgba(243,240,232,.33);
+}
+
+.labRow > p {
+  margin: 0;
+  max-width: 560px;
+  color: rgba(243,240,232,.4);
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.labRow > i {
+  justify-self: end;
+  font-style: normal;
+  font-size: 18px;
+}
+
+/* physical paper response */
+
+.systemPaper {
+  transition:
+    transform .42s cubic-bezier(.2,.8,.2,1),
+    box-shadow .42s ease;
+}
+
+.mainPaper:hover {
+  transform: rotate(-1deg) translateY(-8px);
+  box-shadow: 0 42px 84px rgba(28,21,15,.18);
+}
+
+.capabilityPaper:hover {
+  transform: rotate(2.7deg) translateY(-7px);
+}
+
+.currentlyPaper:hover {
+  transform: rotate(-2.2deg) translateY(-7px);
+}
+
+@media (max-width: 900px) {
+  .workstationLab {
+    width: calc(100% - 32px);
+  }
+
+  .labHeading {
+    grid-template-columns: 1fr;
+  }
+
+  .labRow {
+    grid-template-columns: 34px 1fr 24px;
+    gap: 10px 16px;
+    padding: 18px 0;
+  }
+
+  .labRow > small,
+  .labRow > p {
+    grid-column: 2 / 3;
+  }
+
+  .labRow > i {
+    grid-column: 3;
+    grid-row: 1;
+  }
+}
