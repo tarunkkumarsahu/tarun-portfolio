@@ -5765,3 +5765,313 @@ body {
     grid-template-columns: 1fr;
   }
 }
+
+
+/* =========================================================
+   WORLD-CLASS PASS — PROJECT GATEWAY / FINAL TRACE
+   ========================================================= */
+
+.projectsGateway {
+  position: relative;
+  min-height: 100svh;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(circle at 50% 46%, rgba(143,163,192,.09), transparent 27%),
+    #060708;
+  color: var(--ivory);
+}
+
+.projectGatewayGhost {
+  position: absolute;
+  inset: 9% 3%;
+  display: grid;
+  align-content: space-between;
+  pointer-events: none;
+  opacity: .08;
+  overflow: hidden;
+}
+
+.projectGatewayGhost span {
+  display: block;
+  font-size: clamp(54px, 7vw, 124px);
+  line-height: .68;
+  letter-spacing: -.08em;
+  font-weight: 760;
+  white-space: nowrap;
+  transform: translateX(calc((var(--ghost-index) - 2.5) * 3vw));
+}
+
+.projectGatewayGhost span:nth-child(even) {
+  text-align: right;
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+}
+
+.projectGatewayCenter {
+  position: relative;
+  z-index: 3;
+  width: min(980px, 86vw);
+  text-align: center;
+}
+
+.projectGatewayCenter .kicker {
+  color: var(--signal);
+}
+
+.projectGatewayCenter h2 {
+  margin: 28px 0 22px;
+  font-size: clamp(78px, 10vw, 170px);
+  line-height: .68;
+  letter-spacing: -.09em;
+}
+
+.projectGatewayCenter h2 em {
+  font-family: var(--serif);
+  font-weight: 400;
+  color: var(--signal);
+}
+
+.projectGatewayCenter p {
+  width: min(520px, 86%);
+  margin: 0 auto 34px;
+  color: rgba(243,240,232,.46);
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.projectGatewayCenter .editorialButton {
+  color: var(--ivory);
+}
+
+.projectGatewayFooter {
+  position: absolute;
+  left: 28px;
+  right: 28px;
+  bottom: 22px;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  color: rgba(243,240,232,.34);
+  font: 500 7px/1 var(--mono);
+  letter-spacing: .13em;
+}
+
+.projectArchive {
+  position: fixed;
+  z-index: 14000;
+  inset: 0;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(143,163,192,.075), transparent 30%),
+    #050607;
+  color: var(--ivory);
+  animation: archiveEnter .44s cubic-bezier(.2,.8,.2,1) both;
+}
+
+.projectArchiveChrome {
+  position: absolute;
+  z-index: 20;
+  left: 24px;
+  right: 24px;
+  top: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font: 600 7px/1 var(--mono);
+  letter-spacing: .14em;
+  color: rgba(243,240,232,.5);
+}
+
+.projectArchiveChrome button {
+  border: 0;
+  padding: 10px 0 10px 20px;
+  color: rgba(243,240,232,.72);
+  background: transparent;
+  font: inherit;
+  letter-spacing: inherit;
+  cursor: pointer;
+}
+
+.projectArchiveChrome button:hover {
+  color: var(--signal);
+}
+
+.projectArchiveWheel {
+  position: absolute;
+  inset: 0;
+}
+
+.projectArchiveWheel > section {
+  background: transparent !important;
+}
+
+.projectArchiveHint {
+  position: absolute;
+  z-index: 20;
+  left: 24px;
+  right: 24px;
+  bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  color: rgba(243,240,232,.34);
+  font: 500 7px/1 var(--mono);
+  letter-spacing: .13em;
+  pointer-events: none;
+}
+
+@keyframes archiveEnter {
+  from {
+    opacity: 0;
+    transform: scale(.985);
+    clip-path: inset(48% 0 48% 0);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+/* Final Trace */
+
+.traceFinal {
+  min-height: 120svh;
+  grid-template-rows: auto auto;
+  align-content: center;
+  row-gap: 84px;
+  padding-bottom: 90px;
+}
+
+.traceFinal .traceCopy h2 em {
+  font-family: var(--serif);
+  font-weight: 400;
+  color: var(--signal);
+}
+
+.traceFinal .traceCopy p {
+  color: rgba(243,240,232,.54);
+}
+
+.traceFinal .traceSubmit .editorialButton {
+  color: var(--ivory);
+}
+
+.traceChannels {
+  position: relative;
+  z-index: 4;
+  grid-column: 1 / -1;
+  width: 100%;
+  padding-top: 26px;
+  border-top: 1px solid rgba(243,240,232,.12);
+}
+
+.traceChannelsHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 14px;
+}
+
+.traceChannelsHead > span {
+  color: rgba(243,240,232,.4);
+  font: 600 7px/1 var(--mono);
+  letter-spacing: .14em;
+}
+
+.traceChannelsHead .editorialButton {
+  color: var(--ivory);
+}
+
+.traceChannels .flipLinks {
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  border-top: 1px solid rgba(243,240,232,.12);
+}
+
+.traceChannels .flipLink {
+  min-height: 78px;
+  padding: 0 20px 0 0;
+  border-bottom: 1px solid rgba(243,240,232,.12);
+  color: var(--ivory);
+}
+
+.traceChannels .flipLink + .flipLink {
+  padding-left: 20px;
+  border-left: 1px solid rgba(243,240,232,.12);
+}
+
+.traceChannels .flipLinkMeta {
+  color: rgba(243,240,232,.34);
+}
+
+.traceChannels .flipLinkWord {
+  font-size: clamp(28px, 3vw, 50px);
+}
+
+/* Fix signal moving dot across full rail */
+.signalLane > i b {
+  transform: none !important;
+  animation: signalLanePulsePosition 2.8s linear infinite;
+}
+
+@keyframes signalLanePulsePosition {
+  from { left: 0; }
+  to { left: calc(100% - 5px); }
+}
+
+@media (max-width: 760px) {
+  .signalBridge {
+    min-height: 38svh;
+  }
+
+  .signalBridgeWords span,
+  .signalBridgeWords strong {
+    font-size: 18vw;
+  }
+
+  .projectGatewayCenter {
+    width: calc(100% - 32px);
+  }
+
+  .projectGatewayCenter h2 {
+    font-size: 19vw;
+  }
+
+  .projectGatewayFooter {
+    left: 16px;
+    right: 16px;
+  }
+
+  .projectGatewayFooter span:last-child {
+    display: none;
+  }
+
+  .projectArchiveChrome,
+  .projectArchiveHint {
+    left: 14px;
+    right: 14px;
+  }
+
+  .traceFinal {
+    min-height: auto;
+    padding-top: 100px;
+  }
+
+  .traceChannels .flipLinks {
+    grid-template-columns: 1fr;
+  }
+
+  .traceChannels .flipLink + .flipLink {
+    padding-left: 0;
+    border-left: 0;
+  }
+
+  .traceChannelsHead {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
