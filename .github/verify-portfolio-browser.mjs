@@ -1,3 +1,4 @@
+// Verification revision: immediate project selection sync.
 import { chromium } from "playwright";
 
 const browser = await chromium.launch({ headless: true });
@@ -71,7 +72,7 @@ assert(
 
 const options = page.locator('.projectArchiveWheel button[role="option"]');
 await options.nth(3).click({ force: true });
-await page.waitForTimeout(900);
+await page.waitForTimeout(300);
 assert((await panel.locator("h3").innerText()).includes("RAKSHA GRID"), "Raksha Grid detail did not sync from the wheel.");
 assert(
   (await panel.locator(".projectDetailLink").getAttribute("href"))?.includes("github.com/tarunkkumarsahu/raksha-grid"),
