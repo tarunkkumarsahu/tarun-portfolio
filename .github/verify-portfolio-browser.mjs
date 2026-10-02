@@ -1,5 +1,6 @@
-// Verification revision: project index selection sync.
+// Verification revision: canonical resume asset + project selection.
 import { chromium } from "playwright";
+import { createHash } from "node:crypto";
 
 const browser = await chromium.launch({ headless: true });
 const page = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
@@ -12,6 +13,16 @@ await page.goto("http://127.0.0.1:3000", { waitUntil: "networkidle" });
 await page.waitForTimeout(250);
 await page.keyboard.press("Escape");
 await page.waitForTimeout(350);
+
+const resumeResponse = await page.request.get("http://127.0.0.1:3000/resume/Tarun-Kumar-Sahu-Resume.pdf");
+assert(resumeResponse.ok(), "Canonical resume PDF is not reachable.");
+const resumeBytes = await resumeResponse.body();
+const resumeHash = createHash("sha256").update(resumeBytes).digest("hex");
+assert(resumeBytes.length === 122311, "Canonical resume PDF byte size changed.");
+assert(
+  resumeHash === "1705d6f4d5339e84ae9be6b30ce488eeeac79f915809d58d12f9feeb6663b8c8",
+  "Canonical resume PDF does not match the uploaded file.",
+);
 
 const sense = page.locator(".signalLane").filter({ hasText: "SENSE" }).first();
 await sense.scrollIntoViewIfNeeded();
