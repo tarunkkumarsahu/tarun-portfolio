@@ -33,6 +33,10 @@ export interface WorksWheelProps extends Omit<
   label?: string;
   /** Label on the card's hover affordance. Omit to drop it. @default undefined */
   action?: string;
+  /** Called whenever the wheel settles nearest a different item. */
+  onActiveChange?: (item: WorksWheelItem, index: number) => void;
+  /** Keep cards as outbound links. Set false when an external detail panel owns navigation. */
+  linkCards?: boolean;
 }
 
 /* Geometry. The card is measured against the stage; everything else is measured
@@ -92,6 +96,8 @@ export function WorksWheel({
   items,
   label = "Works '26",
   action = "View",
+  onActiveChange,
+  linkCards = true,
   className,
   ...props
 }: WorksWheelProps) {
@@ -108,6 +114,11 @@ export function WorksWheel({
 
   const count = items.length;
   const last = Math.max(count - 1, 0);
+
+  React.useEffect(() => {
+    const item = items[active];
+    if (item) onActiveChange?.(item, active);
+  }, [active, items, onActiveChange]);
 
   const [reduced, setReduced] = React.useState(false);
   React.useEffect(() => {
@@ -271,54 +282,80 @@ export function WorksWheel({
           className="absolute top-1/2 left-1/2 [transform-style:preserve-3d]"
         >
           {items.map((item, i) => {
-            const Tag = (item.href ? "a" : "div") as "a";
-            return (
-              <React.Fragment key={item.title}>
-                <Tag
+            const cardStyle = {
+              width: metrics.cardW,
+              height: metrics.cardH,
+              marginLeft: -metrics.cardW / 2,
+              marginTop: -metrics.cardH / 2,
+            };
+
+            const face = (
+              <span className="bg-muted shadow-foreground/12 relative block size-full overflow-hidden rounded-lg shadow-[0_18px_40px_-18px_var(--tw-shadow-color)]">
+                <img
+                  src={item.image}
+                  alt={item.title}
+                  draggable={false}
+                  className="size-full object-cover"
+                />
+                {action ? (
+                  <span className="bg-background/80 text-foreground pointer-events-none absolute right-3 bottom-3 flex translate-y-1 items-center gap-1 rounded-full px-2.5 py-1 text-[0.7rem] opacity-0 backdrop-blur-sm transition group-hover:translate-y-0 group-hover:opacity-100">
+                    <svg
+                      viewBox="0 0 12 12"
+                      className="size-2.5"
+                      aria-hidden="true"
+                    >
+                      <path
+                        d="M3 9 9 3M4 3h5v5"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="1.4"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                    {action}
+                  </span>
+                ) : null}
+              </span>
+            );
+
+            if (item.href && linkCards) {
+              return (
+                <a
+                  key={item.title}
                   id={`works-wheel-${i}`}
                   role="option"
                   aria-selected={i === active}
                   href={item.href}
+                  target="_blank"
+                  rel="noreferrer"
                   ref={(node: HTMLElement | null) => {
                     cardRefs.current[i] = node;
                   }}
                   className="group absolute [backface-visibility:hidden]"
-                  style={{
-                    width: metrics.cardW,
-                    height: metrics.cardH,
-                    marginLeft: -metrics.cardW / 2,
-                    marginTop: -metrics.cardH / 2,
-                  }}
+                  style={cardStyle}
                 >
-                  <span className="bg-muted shadow-foreground/12 relative block size-full overflow-hidden rounded-lg shadow-[0_18px_40px_-18px_var(--tw-shadow-color)]">
-                    <img
-                      src={item.image}
-                      alt={item.title}
-                      draggable={false}
-                      className="size-full object-cover"
-                    />
-                    {action && item.href ? (
-                      <span className="bg-background/80 text-foreground pointer-events-none absolute right-3 bottom-3 flex translate-y-1 items-center gap-1 rounded-full px-2.5 py-1 text-[0.7rem] opacity-0 backdrop-blur-sm transition group-hover:translate-y-0 group-hover:opacity-100">
-                        <svg
-                          viewBox="0 0 12 12"
-                          className="size-2.5"
-                          aria-hidden="true"
-                        >
-                          <path
-                            d="M3 9 9 3M4 3h5v5"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="1.4"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
-                        {action}
-                      </span>
-                    ) : null}
-                  </span>
-                </Tag>
-              </React.Fragment>
+                  {face}
+                </a>
+              );
+            }
+
+            return (
+              <button
+                key={item.title}
+                id={`works-wheel-${i}`}
+                type="button"
+                role="option"
+                aria-selected={i === active}
+                ref={(node: HTMLButtonElement | null) => {
+                  cardRefs.current[i] = node;
+                }}
+                className="group absolute border-0 bg-transparent p-0 text-left [backface-visibility:hidden]"
+                style={cardStyle}
+                onClick={() => to(i + 1)}
+              >
+                {face}
+              </button>
             );
           })}
         </div>
