@@ -1,0 +1,46 @@
+name: Portfolio Browser Verification
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/verify-portfolio-browser.yml
+      - .github/verify-portfolio-browser.mjs
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install
+      - run: npm run build
+      - run: npm install --no-save playwright
+      - run: npx playwright install --with-deps chromium
+      - name: Start production server
+        run: |
+          npm start > /tmp/portfolio-next.log 2>&1 &
+          for i in {1..40}; do
+            if curl --fail --silent http://127.0.0.1:3000 >/dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          cat /tmp/portfolio-next.log
+          exit 1
+      - name: Verify interactions in Chromium
+        run: node .github/verify-portfolio-browser.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: portfolio-browser-check
+          path: |
+            portfolio-browser-check.png
+            /tmp/portfolio-next.log
+          if-no-files-found: ignore
