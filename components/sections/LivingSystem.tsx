@@ -37,8 +37,8 @@ export function LivingSystem() {
           <em>MEETS HARDWARE.</em>
         </h2>
         <p>
-          No abstract AI demo. These are the actual system patterns behind my
-          projects — inputs, decisions and real-world outputs.
+          Three system patterns from my projects — inputs, decisions and
+          real-world outputs.
         </p>
       </header>
 
