@@ -2,20 +2,16 @@ import { IntroExperience } from "@/components/IntroExperience";
 import { IntroducingTarun } from "@/components/sections/IntroducingTarun";
 import { LivingSystem } from "@/components/sections/LivingSystem";
 import { TechCursor } from "@/components/TechCursor";
+import { ChapterRail } from "@/components/ChapterRail";
+import { TechIconTrail } from "@/components/ui/tech-cursor";
+import { Workstation } from "@/components/sections/Workstation";
 
 export default function Home() {
   return (
     <main className="portfolioRoot">
       <TechCursor />
-      <aside className="siteRail" aria-label="Portfolio navigation" data-liquid-exclude>
-        <a href="#about">01</a>
-        <a href="#system">02</a>
-        <a href="#method">03</a>
-        <a href="#side-quests">04</a>
-        <a href="#resume">05</a>
-        <a href="#response">06</a>
-        <a href="#workstation">WS</a>
-      </aside>
+      <TechIconTrail />
+      <ChapterRail />
 
       <IntroExperience />
       <IntroducingTarun />
@@ -80,17 +76,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="workstationChapter" id="workstation" data-chapter>
-        <div className="pageChrome lightChrome">
-          <span>WORKSTATION / ONLINE</span>
-          <span>PROJECT INDEX / NEXT BUILD PASS</span>
-        </div>
-        <div className="workstationTitle">
-          <span>ENTER</span>
-          <h2>WORKSTATION</h2>
-          <p>Main systems will open here through the 3D Works Wheel. Lab experiments sit behind it as a second layer.</p>
-        </div>
-      </section>
+      <Workstation />
     </main>
   );
 }
