@@ -3,7 +3,6 @@
 import { useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Lenis from "lenis";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -12,283 +11,81 @@ export function MotionRuntime() {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduced) return;
 
-    const lenis = new Lenis({
-      duration: 1.05,
-      smoothWheel: true,
-      wheelMultiplier: 0.82,
-      touchMultiplier: 1,
-    });
-
-    lenis.on("scroll", ScrollTrigger.update);
-
-    let raf = 0;
-    const tick = (time: number) => {
-      lenis.raf(time);
-      raf = requestAnimationFrame(tick);
-    };
-    raf = requestAnimationFrame(tick);
-
     const ctx = gsap.context(() => {
-      gsap.fromTo(
-        ".introducing",
-        {
-          clipPath: "circle(0% at 50% 50%)",
-          scale: 0.94,
-        },
-        {
-          clipPath: "circle(150% at 50% 50%)",
-          scale: 1,
-          ease: "none",
+      const reveal = (
+        selector: string,
+        trigger: string,
+        vars: gsap.TweenVars = {},
+      ) => {
+        gsap.from(selector, {
+          y: 24,
+          opacity: 0,
+          duration: 0.58,
+          stagger: 0.045,
+          ease: "power2.out",
+          clearProps: "transform,opacity",
+          ...vars,
           scrollTrigger: {
-            trigger: ".introducing",
-            start: "top 98%",
-            end: "top 18%",
-            scrub: 0.9,
+            trigger,
+            start: "top 88%",
+            once: true,
           },
-        },
-      );
+        });
+      };
 
-      gsap.to(".introSticky", {
-        scale: 1.08,
-        filter: "brightness(.55)",
-        ease: "none",
+      reveal(
+        ".introducingBackTitle span, .introducingBackTitle strong",
+        ".introducing",
+        { y: 36, duration: 0.7, stagger: 0.06 },
+      );
+      reveal(".thoughtField", ".introducing");
+      reveal(".modelDock", ".introducing", { y: 32, duration: 0.7 });
+      reveal(".aboutCopy, .socialPanel", ".introducing");
+
+      reveal(
+        ".perceptionField, .intelligenceCore, .actionField",
+        ".spatialMachine",
+      );
+      reveal(".methodHeadline", ".methodMachine");
+      reveal(".methodNode", ".methodMechanism");
+      reveal(".questObject", ".sideQuestStage", { y: 36 });
+      reveal(
+        ".mainPaper, .capabilityPaper, .currentlyPaper",
+        ".systemFileDesk",
+        { y: 44 },
+      );
+      reveal(".traceCopy, .traceForm", ".traceResponse", { y: 36 });
+      reveal(".workstationIntro", ".workstationV2", { y: 40 });
+      reveal(".labRow", ".workstationLab", { y: 22 });
+
+      gsap.from(".introducing", {
+        opacity: 0,
+        duration: 0.35,
+        ease: "power1.out",
         scrollTrigger: {
           trigger: ".introducing",
-          start: "top 100%",
-          end: "top 35%",
-          scrub: 0.9,
+          start: "top 96%",
+          once: true,
         },
-      });
-      gsap.from(".introducingBackTitle span, .introducingBackTitle strong", {
-        yPercent: 85,
-        opacity: 0,
-        duration: 1.2,
-        stagger: 0.08,
-        ease: "power4.out",
-        scrollTrigger: { trigger: ".introducing", start: "top 72%" },
-      });
-
-      gsap.from(".thoughtField", {
-        xPercent: -10,
-        opacity: 0,
-        duration: 1.1,
-        ease: "power3.out",
-        scrollTrigger: { trigger: ".introducing", start: "top 68%" },
-      });
-
-      gsap.from(".modelDock", {
-        y: 70,
-        scale: 0.94,
-        opacity: 0,
-        duration: 1.25,
-        ease: "power4.out",
-        scrollTrigger: { trigger: ".introducing", start: "top 66%" },
-      });
-
-      gsap.from(".aboutCopy, .socialPanel", {
-        x: 34,
-        opacity: 0,
-        duration: 0.9,
-        stagger: 0.14,
-        ease: "power3.out",
-        scrollTrigger: { trigger: ".introducing", start: "top 62%" },
       });
 
       gsap.to(".page1ExitSignal i", {
         scaleX: 1,
-        opacity: 1,
-        stagger: 0.06,
-        ease: "none",
+        opacity: 0.72,
+        stagger: 0.04,
+        duration: 0.3,
+        ease: "power1.out",
         scrollTrigger: {
           trigger: ".introducing",
-          start: "bottom 95%",
-          end: "bottom 45%",
-          scrub: true,
+          start: "bottom 92%",
+          once: true,
         },
       });
-
-      gsap.from(".perceptionField, .intelligenceCore, .actionField", {
-        y: 42,
-        opacity: 0,
-        scale: 0.96,
-        duration: 1,
-        stagger: 0.08,
-        ease: "power3.out",
-        scrollTrigger: { trigger: ".spatialMachine", start: "top 76%" },
-      });
-
-      gsap.from(".methodHeadline", {
-        xPercent: -8,
-        opacity: 0,
-        duration: 1,
-        ease: "power3.out",
-        scrollTrigger: { trigger: ".methodMachine", start: "top 66%" },
-      });
-
-      gsap.from(".methodNode", {
-        x: 60,
-        opacity: 0,
-        duration: 0.8,
-        stagger: 0.05,
-        ease: "power3.out",
-        scrollTrigger: { trigger: ".methodMechanism", start: "top 78%" },
-      });
-
-      gsap.from(".questObject", {
-        z: -180,
-        scale: 0.65,
-        opacity: 0,
-        duration: 1.2,
-        stagger: 0.08,
-        ease: "power4.out",
-        scrollTrigger: { trigger: ".sideQuestStage", start: "top 76%" },
-      });
-
-      gsap.from(".mainPaper, .capabilityPaper, .currentlyPaper", {
-        y: 100,
-        rotate: 0,
-        opacity: 0,
-        duration: 1,
-        stagger: 0.12,
-        ease: "power3.out",
-        scrollTrigger: { trigger: ".systemFileDesk", start: "top 72%" },
-      });
-
-      gsap.from(".traceCopy, .traceForm", {
-        y: 64,
-        opacity: 0,
-        duration: 1,
-        stagger: 0.12,
-        ease: "power3.out",
-        scrollTrigger: { trigger: ".traceResponse", start: "top 68%" },
-      });
-
-      gsap.from(".workstationIntro", {
-        y: 80,
-        opacity: 0,
-        duration: 1.1,
-        ease: "power3.out",
-        scrollTrigger: { trigger: ".workstationV2", start: "top 70%" },
-      });
-
-      gsap.from(".labRow", {
-        y: 32,
-        opacity: 0,
-        duration: 0.75,
-        stagger: 0.08,
-        ease: "power3.out",
-        scrollTrigger: { trigger: ".workstationLab", start: "top 78%" },
-      });
-
-      gsap.to(".systemMarquee", {
-        scaleX: 1.12,
-        letterSpacing: "-.095em",
-        ease: "none",
-        scrollTrigger: {
-          trigger: ".methodMachine",
-          start: "top 100%",
-          end: "top 55%",
-          scrub: 0.8,
-        },
-      });
-
-      gsap.to(".traceRain span", {
-        yPercent: 30,
-        stagger: 0.01,
-        ease: "none",
-        scrollTrigger: {
-          trigger: ".workstationV2",
-          start: "top 100%",
-          end: "top 40%",
-          scrub: 0.8,
-        },
-      });
-
-      const transitionPresets: Record<string, gsap.TweenVars> = {
-        system: {
-          clipPath: "inset(48% 0% 48% 0%)",
-          scale: 0.985,
-        },
-        method: {
-          clipPath: "inset(0% 0% 100% 0%)",
-          y: 80,
-        },
-        "side-quests": {
-          clipPath: "inset(7% 4% 7% 4% round 42px)",
-          scale: 0.93,
-          rotate: -1.5,
-        },
-        resume: {
-          clipPath: "inset(10% 7% 10% 7% round 48px)",
-          y: 70,
-          scale: 0.96,
-        },
-        response: {
-          clipPath: "circle(4% at 50% 0%)",
-          scale: 0.98,
-        },
-        workstation: {
-          clipPath: "inset(48% 48% 48% 48%)",
-          scale: 0.96,
-        },
-      };
-
-      gsap.utils.toArray<HTMLElement>("[data-chapter]").forEach((chapter, index, chapters) => {
-        if (index === 0) return;
-
-        const id = chapter.id;
-        const from = transitionPresets[id] ?? {
-          clipPath: "inset(7% 2% 0% 2% round 32px)",
-          y: 60,
-          scale: 0.98,
-        };
-
-        gsap.fromTo(
-          chapter,
-          {
-            ...from,
-            transformOrigin: "50% 0%",
-          },
-          {
-            clipPath: id === "response" ? "circle(150% at 50% 0%)" : "inset(0% 0% 0% 0% round 0px)",
-            y: 0,
-            scale: 1,
-            rotate: 0,
-            ease: "none",
-            scrollTrigger: {
-              trigger: chapter,
-              start: "top 98%",
-              end: "top 24%",
-              scrub: 0.85,
-            },
-          },
-        );
-
-        const previous = chapters[index - 1];
-        if (previous) {
-          gsap.to(previous, {
-            scale: 0.972,
-            filter: "brightness(.72) saturate(.8)",
-            transformOrigin: "50% 100%",
-            ease: "none",
-            scrollTrigger: {
-              trigger: chapter,
-              start: "top 100%",
-              end: "top 42%",
-              scrub: 0.85,
-            },
-          });
-        }
-      });
-
-
     });
 
     ScrollTrigger.refresh();
 
     return () => {
-      cancelAnimationFrame(raf);
-      lenis.destroy();
       ctx.revert();
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
     };
