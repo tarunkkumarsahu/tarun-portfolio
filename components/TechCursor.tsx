@@ -30,6 +30,10 @@ export function TechCursor() {
     let raf = 0;
 
     const modeFor = (target: Element | null) => {
+      const labelled = target?.closest<HTMLElement>("[data-cursor-label]");
+      const customLabel = labelled?.dataset.cursorLabel?.trim();
+      if (customLabel) return customLabel;
+
       const section = target?.closest("section");
       const id = section?.id || "";
       if (id === "about") return "LIQUID";
