@@ -12,10 +12,16 @@ type Node = {
 const clamp = (value: number, min = 0, max = 1) =>
   Math.min(max, Math.max(min, value));
 
+const smooth = (value: number) => {
+  const t = clamp(value);
+  return t * t * (3 - 2 * t);
+};
+
 export function IntroExperience() {
   const sectionRef = useRef<HTMLElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const progressRef = useRef(0);
+  const skipRef = useRef(false);
   const [introDone, setIntroDone] = useState(false);
 
   // Phase 1: autoplay illustrated push intro.
@@ -23,48 +29,94 @@ export function IntroExperience() {
     const section = sectionRef.current;
     if (!section) return;
 
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const previousOverflow = document.body.style.overflow;
+
     document.body.style.overflow = "hidden";
     document.body.classList.add("intro-push-active");
 
     let raf = 0;
+    let finished = false;
     const started = performance.now();
-    const duration = 3600;
+    const duration = reduced ? 850 : 3850;
+
+    const finishIntro = () => {
+      if (finished) return;
+      finished = true;
+      document.body.style.overflow = previousOverflow;
+      document.body.classList.remove("intro-push-active");
+      setIntroDone(true);
+    };
+
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") skipRef.current = true;
+    };
+
+    window.addEventListener("keydown", onKey);
 
     const drawIntro = (now: number) => {
+      if (skipRef.current) {
+        section.style.setProperty("--auto-overlay-opacity", "0");
+        finishIntro();
+        return;
+      }
+
       const t = clamp((now - started) / duration);
 
-      // Hold briefly, then push across the screen, then collapse away.
-      const push = clamp((t - 0.08) / 0.66);
-      const exit = clamp((t - 0.78) / 0.22);
-      const stride = Math.sin(push * Math.PI * 12);
-      const edge = 28 + push * 50 + exit * 24;
-      const bob = (1 - exit) * stride * 5;
-      const rotate = -3 + stride * 1.1 + exit * 5;
-      const nameOpacity = clamp((t - 0.16) / 0.18) * (1 - exit * 0.55);
-      const characterOpacity = clamp(1 - exit * 1.45);
+      if (reduced) {
+        section.style.setProperty("--auto-edge", `${32 + t * 66}%`);
+        section.style.setProperty("--auto-boy-opacity", String(1 - t));
+        section.style.setProperty("--auto-name-opacity", String(1 - t * 0.45));
+        section.style.setProperty("--auto-overlay-opacity", String(1 - t));
+        if (t < 1) raf = requestAnimationFrame(drawIntro);
+        else finishIntro();
+        return;
+      }
+
+      const approach = smooth((t - 0.02) / 0.12);
+      const firstPush = smooth((t - 0.10) / 0.42);
+      const resistance = smooth((t - 0.48) / 0.11);
+      const finalShove = smooth((t - 0.59) / 0.20);
+      const exit = smooth((t - 0.80) / 0.20);
+
+      const pushDistance =
+        firstPush * 31 +
+        resistance * 3 +
+        finalShove * 18 +
+        exit * 24;
+
+      const stridePhase = approach * 2.2 + firstPush * 8 + finalShove * 4;
+      const stride = Math.sin(stridePhase * Math.PI);
+      const effort = clamp(firstPush * (1 - exit));
+      const edge = 27 + pushDistance;
+      const bob = stride * (3.5 + effort * 2.2);
+      const recoil = Math.sin(resistance * Math.PI) * -9;
+      const rotate = -2.2 + stride * 0.8 - effort * 2.4 + exit * 6;
+      const boyX = -54 * (1 - approach) + recoil;
+      const squash = 1 - Math.sin(resistance * Math.PI) * 0.035;
+      const nameOpacity = smooth((t - 0.14) / 0.18) * (1 - exit * 0.5);
+      const characterOpacity = clamp(1 - exit * 1.55);
       const overlayOpacity = clamp(1 - (t - 0.93) / 0.07);
 
       section.style.setProperty("--auto-edge", `${edge}%`);
       section.style.setProperty("--auto-boy-y", `${bob}px`);
+      section.style.setProperty("--auto-boy-x", `${boyX}px`);
       section.style.setProperty("--auto-boy-rotate", `${rotate}deg`);
+      section.style.setProperty("--auto-boy-squash", String(squash));
       section.style.setProperty("--auto-boy-opacity", String(characterOpacity));
       section.style.setProperty("--auto-name-opacity", String(nameOpacity));
+      section.style.setProperty("--auto-effort", String(effort));
       section.style.setProperty("--auto-overlay-opacity", String(overlayOpacity));
       section.style.setProperty("--auto-progress", String(t));
 
-      if (t < 1) {
-        raf = requestAnimationFrame(drawIntro);
-      } else {
-        document.body.style.overflow = previousOverflow;
-        document.body.classList.remove("intro-push-active");
-        setIntroDone(true);
-      }
+      if (t < 1) raf = requestAnimationFrame(drawIntro);
+      else finishIntro();
     };
 
     raf = requestAnimationFrame(drawIntro);
 
     return () => {
+      window.removeEventListener("keydown", onKey);
       cancelAnimationFrame(raf);
       document.body.style.overflow = previousOverflow;
       document.body.classList.remove("intro-push-active");
@@ -120,7 +172,8 @@ export function IntroExperience() {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    const nodes: Node[] = Array.from({ length: 92 }, (_, i) => ({
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const nodes: Node[] = Array.from({ length: reduced ? 42 : 92 }, (_, i) => ({
       angle: ((i * 137.5) % 360) * (Math.PI / 180),
       radius: 0.14 + (((i * 29) % 100) / 100) * 0.86,
       depth: ((i * 47) % 100) / 100,
@@ -128,7 +181,7 @@ export function IntroExperience() {
     }));
 
     const resize = () => {
-      const dpr = Math.min(window.devicePixelRatio || 1, 1.35);
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.25);
       canvas.width = Math.floor(canvas.clientWidth * dpr);
       canvas.height = Math.floor(canvas.clientHeight * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -138,9 +191,23 @@ export function IntroExperience() {
     window.addEventListener("resize", resize);
 
     let raf = 0;
+    let visible = true;
+    let lastFrame = 0;
     const started = performance.now();
 
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        visible = entry.isIntersecting;
+      },
+      { threshold: 0.02 },
+    );
+    observer.observe(canvas);
+
     const draw = (now: number) => {
+      raf = requestAnimationFrame(draw);
+      if (!visible || now - lastFrame < (reduced ? 45 : 24)) return;
+      lastFrame = now;
+
       const w = canvas.clientWidth;
       const h = canvas.clientHeight;
       const cx = w * 0.5;
@@ -212,13 +279,12 @@ export function IntroExperience() {
         ctx.arc(cx, cy, radius, 0, Math.PI * 2);
         ctx.fill();
       }
-
-      raf = requestAnimationFrame(draw);
     };
 
     raf = requestAnimationFrame(draw);
 
     return () => {
+      observer.disconnect();
       cancelAnimationFrame(raf);
       window.removeEventListener("resize", resize);
     };
@@ -273,6 +339,16 @@ export function IntroExperience() {
           <span>TARUN KUMAR SAHU</span>
           <span>OPENING SEQUENCE</span>
         </div>
+
+        <button
+          type="button"
+          className="introSkip"
+          onClick={() => {
+            skipRef.current = true;
+          }}
+        >
+          SKIP / ESC
+        </button>
       </div>
     </section>
   );
