@@ -1,4 +1,4 @@
-// Verification revision: canonical resume asset + project selection.
+// Verification revision: strict glass activation + canonical resume download.
 import { chromium } from "playwright";
 import { createHash } from "node:crypto";
 
@@ -22,6 +22,16 @@ assert(resumeBytes.length === 122311, "Canonical resume PDF byte size changed.")
 assert(
   resumeHash === "1705d6f4d5339e84ae9be6b30ce488eeeac79f915809d58d12f9feeb6663b8c8",
   "Canonical resume PDF does not match the uploaded file.",
+);
+
+const resumeButton = page.getByRole("button", { name: "DOWNLOAD RESUME" });
+await resumeButton.scrollIntoViewIfNeeded();
+const resumeDownloadPromise = page.waitForEvent("download");
+await resumeButton.click();
+const resumeDownload = await resumeDownloadPromise;
+assert(
+  resumeDownload.suggestedFilename() === "Tarun-Kumar-Sahu-Resume.pdf",
+  "Resume button did not download the canonical filename.",
 );
 
 const sense = page.locator(".signalLane").filter({ hasText: "SENSE" }).first();
@@ -66,12 +76,10 @@ await iframe.locator("#activate").waitFor({ state: "visible", timeout: 20000 });
 await iframe.locator("#activate").hover();
 await iframe.locator("#activate").click();
 await page.waitForTimeout(850);
-
-if (!(await page.locator(".projectArchive").count())) {
-  await page.locator(".projectGlassGateAction").click();
-  await page.waitForTimeout(250);
-}
-assert(await page.locator(".projectArchive").count(), "Project archive did not open.");
+assert(
+  await page.locator(".projectArchive").count(),
+  "Authored Glass AI button activation did not open the project archive.",
+);
 
 const panel = page.locator(".projectDetailPanel");
 await panel.waitFor({ state: "visible" });
