@@ -4306,3 +4306,642 @@ body {
   .heroFallbackPortrait { top: 16%; width: 40%; }
   .heroFallbackLaptopClean { width: 76%; bottom: 14%; }
 }
+
+
+/* =========================================================
+   STRUCTURE RESET — remove dead scroll / abstract filler
+   ========================================================= */
+
+/* PAGE 2 — concrete systems */
+
+.systemsFieldV3 {
+  min-height: auto !important;
+  padding: 118px clamp(28px, 5vw, 86px) 74px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 78% 16%, rgba(143,163,192,.075), transparent 28%),
+    #070809;
+}
+
+.systemsFieldHeader {
+  width: min(1180px, 92vw);
+  margin: 0 auto 88px;
+}
+
+.systemsFieldHeader .kicker {
+  color: var(--signal);
+}
+
+.systemsFieldHeader h2 {
+  margin: 26px 0 24px;
+  font-size: clamp(68px, 9.6vw, 166px);
+  line-height: .72;
+  letter-spacing: -.085em;
+}
+
+.systemsFieldHeader h2 em {
+  font-family: var(--serif);
+  font-weight: 400;
+  color: var(--ivory);
+}
+
+.systemsFieldHeader p {
+  width: min(620px, 82%);
+  margin: 0 0 0 auto;
+  color: rgba(243,240,232,.52);
+  font: italic 500 clamp(20px, 2vw, 32px)/1.15 var(--serif);
+}
+
+.systemsFieldRows {
+  width: min(1360px, 94vw);
+  margin: 0 auto;
+  border-top: 1px solid rgba(243,240,232,.14);
+}
+
+.systemTrace {
+  display: grid;
+  grid-template-columns: 210px minmax(0, 1fr) 320px;
+  gap: 34px;
+  align-items: center;
+  min-height: 170px;
+  padding: 24px 0;
+  border-bottom: 1px solid rgba(243,240,232,.12);
+}
+
+.systemTraceHead {
+  display: grid;
+  gap: 12px;
+}
+
+.systemTraceHead span {
+  color: var(--signal);
+  font: 600 8px/1 var(--mono);
+  letter-spacing: .14em;
+}
+
+.systemTraceHead strong {
+  font-size: clamp(24px, 2.15vw, 38px);
+  line-height: .9;
+  letter-spacing: -.05em;
+}
+
+.systemTraceFlow {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+
+.systemTraceStep {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.systemTraceStep > span {
+  font: 600 8px/1.15 var(--mono);
+  letter-spacing: .09em;
+  color: rgba(243,240,232,.78);
+  white-space: nowrap;
+}
+
+.systemTraceStep > i {
+  position: relative;
+  flex: 1 1 36px;
+  min-width: 24px;
+  height: 1px;
+  margin: 0 12px;
+  background: rgba(143,163,192,.28);
+  overflow: visible;
+}
+
+.systemTraceStep > i::after {
+  content: "";
+  position: absolute;
+  right: -1px;
+  top: -2px;
+  width: 5px;
+  height: 5px;
+  border-top: 1px solid rgba(243,240,232,.55);
+  border-right: 1px solid rgba(243,240,232,.55);
+  transform: rotate(45deg);
+}
+
+.systemTrace:hover .systemTraceStep > i {
+  background: rgba(255,74,56,.55);
+}
+
+.systemTrace p {
+  margin: 0;
+  color: rgba(243,240,232,.43);
+  font-size: 11px;
+  line-height: 1.55;
+}
+
+.systemsFieldStatement {
+  width: min(1360px, 94vw);
+  margin: 74px auto 0;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 24px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(243,240,232,.15);
+  font-size: clamp(46px, 6vw, 104px);
+  font-weight: 760;
+  line-height: .8;
+  letter-spacing: -.075em;
+}
+
+.systemsFieldStatement i {
+  color: var(--signal);
+  font-family: var(--serif);
+  font-weight: 400;
+}
+
+/* PAGE 3 — no sticky gap, no clicks */
+
+.methodV3 {
+  min-height: auto !important;
+  overflow: hidden;
+  padding: 118px clamp(28px, 5vw, 86px) 54px;
+}
+
+.methodV3Layout {
+  width: min(1420px, 94vw);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: .9fr 1.1fr;
+  gap: clamp(48px, 7vw, 120px);
+  align-items: start;
+}
+
+.methodV3 .methodHeadline {
+  position: sticky;
+  top: 94px;
+  max-width: none;
+}
+
+.methodV3 .methodHeadline h2 {
+  margin: 28px 0 18px;
+  font-size: clamp(72px, 8.2vw, 142px);
+  line-height: .73;
+}
+
+.methodV3 .methodHeadline > p {
+  font-size: clamp(44px, 4.8vw, 82px);
+}
+
+.methodV3Rail {
+  padding-top: 26px;
+  border-top: 1px solid rgba(8,9,11,.16);
+}
+
+.methodV3 .methodNode {
+  position: relative !important;
+  left: auto !important;
+  top: auto !important;
+  width: 100% !important;
+  min-height: 92px;
+  display: grid;
+  grid-template-columns: 46px minmax(170px,.7fr) 1fr 16px;
+  gap: 18px;
+  align-items: center;
+  padding: 16px 0 !important;
+  color: rgba(8,9,11,.72) !important;
+  transform: none !important;
+  opacity: 1;
+  border-bottom: 1px solid rgba(8,9,11,.12);
+}
+
+.methodV3 .methodNode::before {
+  display: none;
+}
+
+.methodV3 .methodNode:hover {
+  color: var(--ink) !important;
+}
+
+.methodV3 .methodNode > span,
+.methodV3 .methodNode small {
+  font: 500 8px/1.35 var(--mono);
+  letter-spacing: .1em;
+}
+
+.methodV3 .methodNode > span {
+  color: var(--signal);
+}
+
+.methodV3 .methodNode strong {
+  font-size: clamp(26px, 2.4vw, 42px);
+}
+
+.methodV3 .methodNode i {
+  width: 8px;
+  height: 8px;
+  justify-self: end;
+  border: 1px solid rgba(8,9,11,.28);
+  border-radius: 50%;
+}
+
+.methodV3 .methodNode:hover i {
+  border-color: var(--signal);
+  background: var(--signal);
+}
+
+.methodV3 .methodSignature {
+  width: min(1420px, 94vw);
+  margin: 76px auto 0;
+  padding-top: 20px;
+  font-size: clamp(32px, 4.8vw, 76px);
+}
+
+/* PAGE 4 — explicit interests */
+
+.interestsV3 {
+  min-height: auto !important;
+  overflow: hidden;
+  padding: 116px clamp(28px, 5vw, 86px) 78px;
+}
+
+.interestsHeader {
+  width: min(1360px, 94vw);
+  margin: 0 auto 72px;
+  display: grid;
+  grid-template-columns: 1fr .82fr;
+  column-gap: 70px;
+  align-items: end;
+}
+
+.interestsHeader .kicker {
+  grid-column: 1 / -1;
+  color: var(--signal);
+}
+
+.interestsHeader h2 {
+  margin: 24px 0 0;
+  font-size: clamp(84px, 11vw, 188px);
+  line-height: .65;
+  letter-spacing: -.09em;
+}
+
+.interestsHeader h2 em {
+  font-family: var(--serif);
+  font-weight: 400;
+  color: var(--signal);
+}
+
+.interestsHeader p {
+  margin: 0 0 8px;
+  max-width: 520px;
+  color: rgba(243,240,232,.5);
+  font: italic 500 clamp(24px, 2.4vw, 40px)/1.08 var(--serif);
+}
+
+.interestList {
+  width: min(1360px, 94vw);
+  margin: 0 auto;
+  border-top: 1px solid rgba(243,240,232,.14);
+}
+
+.interestRow {
+  position: relative;
+  display: grid;
+  grid-template-columns: 48px minmax(260px,.72fr) 190px 1fr 24px;
+  gap: 26px;
+  align-items: center;
+  min-height: 132px;
+  border-bottom: 1px solid rgba(243,240,232,.12);
+  color: rgba(243,240,232,.5);
+  transition: color .24s ease, padding .24s ease;
+}
+
+.interestRow:hover {
+  color: rgba(243,240,232,.95);
+  padding-left: 12px;
+}
+
+.interestRow > span,
+.interestRow > small {
+  font: 500 7px/1 var(--mono);
+  letter-spacing: .12em;
+}
+
+.interestRow > span {
+  color: var(--signal);
+}
+
+.interestRow h3 {
+  margin: 0;
+  font-size: clamp(30px, 3.4vw, 58px);
+  line-height: .84;
+  letter-spacing: -.06em;
+}
+
+.interestRow p {
+  margin: 0;
+  max-width: 560px;
+  font-size: 11px;
+  line-height: 1.55;
+  color: rgba(243,240,232,.42);
+}
+
+.interestRow > i {
+  justify-self: end;
+  font-style: normal;
+  font-size: 18px;
+}
+
+/* PAGE 5 — flow-based resume; no clipping */
+
+.systemFileV3 {
+  min-height: auto !important;
+  overflow: visible !important;
+  padding: 118px clamp(28px, 5vw, 86px) 100px;
+}
+
+.systemFileGrid {
+  position: relative;
+  width: min(1360px, 94vw);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1.42fr) minmax(300px,.72fr);
+  gap: clamp(34px, 5vw, 78px);
+  align-items: start;
+}
+
+.systemFileV3 .systemPaper {
+  position: relative !important;
+  left: auto !important;
+  right: auto !important;
+  top: auto !important;
+  bottom: auto !important;
+  width: auto !important;
+  height: auto !important;
+}
+
+.systemFileV3 .mainPaper {
+  min-height: 0 !important;
+  padding: clamp(34px, 4vw, 60px);
+  transform: rotate(-1deg);
+}
+
+.systemFileV3 .mainPaper header h2 {
+  margin-top: 56px;
+  font-size: clamp(72px, 7.5vw, 126px);
+}
+
+.systemFileV3 .paperProfile {
+  margin-top: 64px;
+}
+
+.systemFileV3 .paperSystems {
+  margin-top: 48px;
+}
+
+.systemFileV3 .paperFooter {
+  position: relative !important;
+  left: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  margin-top: 56px;
+}
+
+.systemFileStack {
+  display: grid;
+  gap: 34px;
+  padding-top: 64px;
+}
+
+.systemFileV3 .capabilityPaper,
+.systemFileV3 .currentlyPaper {
+  min-height: 0;
+  padding: 34px;
+}
+
+.systemFileV3 .capabilityPaper {
+  transform: rotate(2.2deg);
+}
+
+.systemFileV3 .currentlyPaper {
+  transform: rotate(-2deg);
+}
+
+.systemFileV3 .currentlyPaper h3 {
+  margin-top: 30px;
+}
+
+.systemFileGithub {
+  display: inline-flex;
+  align-items: center;
+  gap: 18px;
+  margin-top: 8px;
+  padding: 14px 18px;
+  border: 1px solid rgba(8,9,11,.24);
+  color: var(--ink);
+  font: 600 8px/1 var(--mono);
+  letter-spacing: .13em;
+  transition: background .2s ease, color .2s ease, transform .2s ease;
+}
+
+.systemFileGithub:hover {
+  transform: translateY(-2px);
+  color: var(--ivory);
+  background: var(--ink);
+}
+
+/* WORKSTATION — exact supplied wheel is the page */
+
+.workstationV3 {
+  min-height: auto !important;
+  background: #060708;
+  color: var(--ivory);
+}
+
+.workstationIntroV3 {
+  position: absolute;
+  z-index: 20;
+  left: clamp(28px, 5vw, 86px);
+  top: 84px;
+  width: min(430px, 42vw);
+  pointer-events: none;
+}
+
+.workstationIntroV3 .kicker {
+  color: var(--signal);
+}
+
+.workstationIntroV3 p {
+  margin: 12px 0 0;
+  color: rgba(243,240,232,.42);
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+.workstationV3 .workstationWheel {
+  position: relative !important;
+  top: auto !important;
+  height: 100svh !important;
+  min-height: 720px;
+  margin: 0 !important;
+}
+
+.workstationV3 .workstationWheel > section {
+  background: transparent;
+}
+
+.workstationV3 .workstationLab {
+  width: min(1360px, 94vw);
+  margin: 0 auto;
+  padding: 110px 0 120px;
+}
+
+.workstationV3 .labHeading {
+  margin-bottom: 56px;
+}
+
+.workstationV3 .workstationFooter {
+  display: none;
+}
+
+/* responsive */
+
+@media (max-width: 1050px) {
+  .systemTrace {
+    grid-template-columns: 170px 1fr;
+  }
+
+  .systemTrace p {
+    grid-column: 2;
+  }
+
+  .methodV3Layout,
+  .interestsHeader,
+  .systemFileGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .methodV3 .methodHeadline {
+    position: relative;
+    top: auto;
+  }
+
+  .interestsHeader p {
+    margin-top: 28px;
+  }
+
+  .systemFileStack {
+    grid-template-columns: 1fr 1fr;
+    padding-top: 0;
+  }
+}
+
+@media (max-width: 760px) {
+  .systemsFieldV3,
+  .methodV3,
+  .interestsV3,
+  .systemFileV3 {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .systemsFieldHeader,
+  .systemsFieldRows,
+  .systemsFieldStatement,
+  .methodV3Layout,
+  .methodV3 .methodSignature,
+  .interestsHeader,
+  .interestList,
+  .systemFileGrid {
+    width: 100%;
+  }
+
+  .systemsFieldHeader h2 {
+    font-size: 17vw;
+  }
+
+  .systemsFieldHeader p {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .systemTrace {
+    grid-template-columns: 1fr;
+    gap: 18px;
+    min-height: 0;
+    padding: 28px 0;
+  }
+
+  .systemTrace p {
+    grid-column: auto;
+  }
+
+  .systemTraceFlow {
+    overflow-x: auto;
+    padding-bottom: 4px;
+  }
+
+  .systemsFieldStatement {
+    font-size: 11vw;
+    gap: 10px;
+  }
+
+  .methodV3 .methodHeadline h2 {
+    font-size: 18vw;
+  }
+
+  .methodV3 .methodNode {
+    grid-template-columns: 30px 1fr 12px;
+  }
+
+  .methodV3 .methodNode small {
+    display: none;
+  }
+
+  .interestsHeader h2 {
+    font-size: 22vw;
+  }
+
+  .interestRow {
+    grid-template-columns: 34px 1fr 22px;
+    gap: 14px;
+    padding: 22px 0;
+  }
+
+  .interestRow > small,
+  .interestRow > p {
+    grid-column: 2 / 3;
+  }
+
+  .interestRow > i {
+    grid-column: 3;
+    grid-row: 1;
+  }
+
+  .systemFileStack {
+    grid-template-columns: 1fr;
+  }
+
+  .systemFileV3 .mainPaper {
+    padding: 28px 22px;
+  }
+
+  .systemFileV3 .mainPaper header h2 {
+    font-size: 19vw;
+  }
+
+  .workstationIntroV3 {
+    left: 16px;
+    top: 72px;
+    width: calc(100% - 32px);
+  }
+
+  .workstationV3 .workstationWheel {
+    min-height: 620px;
+  }
+
+  .workstationV3 .workstationLab {
+    width: calc(100% - 32px);
+    padding-top: 80px;
+  }
+}
