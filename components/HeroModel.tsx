@@ -49,9 +49,7 @@ function HeroFallback() {
       <div className="heroFallbackPortrait">
         <img src={FALLBACK_PHOTO} alt="Tarun Kumar Sahu" draggable={false} />
       </div>
-      <div className="heroFallbackLaptopClean" aria-hidden="true">
-        <span>MSI</span>
-      </div>
+      <small className="heroModelComing">3D CHARACTER / COMING NEXT</small>
     </div>
   );
 }
