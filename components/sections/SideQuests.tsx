@@ -1,30 +1,18 @@
 const INTERESTS = [
-  {
-    id: "01",
-    title: "3D / BLENDER",
-    note: "Characters, hero assets and spatial scenes for the web. I like making interfaces feel less flat.",
-    tag: "FORM / LIGHT / SPACE",
-  },
-  {
-    id: "02",
-    title: "GAMING",
-    note: "Systems, economies, progression and worlds — the part of games that makes me think beyond a single screen.",
-    tag: "SYSTEMS / STRATEGY",
-  },
-  {
-    id: "03",
-    title: "WEB MOTION",
-    note: "Shaders, transitions, cursor behaviour and small interaction experiments that make a page feel alive.",
-    tag: "MOTION / INTERACTION",
-  },
+  ["01", "3D / BLENDER", "FORM / LIGHT / SPACE", "Characters, hero assets and spatial scenes for the web."],
+  ["02", "PHOTOGRAPHY", "FRAME / LIGHT / MOMENT", "Finding structure, mood and small details inside ordinary scenes."],
+  ["03", "SKETCHING", "LINE / SHAPE / IDEA", "A fast way to think visually before an idea becomes pixels or code."],
+  ["04", "EDITING", "RHYTHM / CUT / STORY", "Shaping raw visuals into something with pace, emphasis and intent."],
+  ["05", "GAMING", "SYSTEMS / STRATEGY / WORLD", "I notice mechanics, progression, economies and how worlds reward curiosity."],
+  ["06", "WEB MOTION", "TYPE / SHADER / INTERACTION", "Making interfaces feel less like documents and more like responsive spaces."],
 ] as const;
 
 export function SideQuests() {
   return (
-    <section className="sideQuestWorld interestsV3" id="side-quests" data-chapter>
+    <section className="sideQuestWorld interestsV4" id="side-quests" data-chapter>
       <div className="pageChrome lightChrome">
         <span>04 / OFF THE CLOCK</span>
-        <span>INTERESTS OUTSIDE THE MAIN BUILD</span>
+        <span>THINGS I DO WITHOUT A ROADMAP</span>
       </div>
 
       <header className="interestsHeader">
@@ -34,16 +22,23 @@ export function SideQuests() {
           <br />
           <em>CLOCK.</em>
         </h2>
-        <p>Things I explore because they are interesting, not because they need to ship.</p>
+        <p>
+          The stuff I keep returning to even when nobody asked for a deliverable.
+        </p>
       </header>
 
-      <div className="interestList">
-        {INTERESTS.map((interest) => (
-          <article className="interestRow" key={interest.title} data-cursor-hot>
-            <span>{interest.id}</span>
-            <h3>{interest.title}</h3>
-            <small>{interest.tag}</small>
-            <p>{interest.note}</p>
+      <div className="interestOrbit">
+        {INTERESTS.map(([id, title, tag, note], index) => (
+          <article
+            className="interestTile"
+            key={title}
+            style={{ "--interest-index": index } as React.CSSProperties}
+            data-cursor-hot
+          >
+            <span>{id}</span>
+            <small>{tag}</small>
+            <h3>{title}</h3>
+            <p>{note}</p>
             <i aria-hidden="true">↗</i>
           </article>
         ))}
