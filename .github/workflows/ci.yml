@@ -1,7 +1,9 @@
-name: Scratch Build
+name: Portfolio Build
 
 on:
   push:
+    branches: [main, rebuild/cinematic-foundation]
+  pull_request:
     branches: [main]
 
 permissions:
@@ -10,7 +12,7 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 12
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
