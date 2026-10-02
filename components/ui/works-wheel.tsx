@@ -38,6 +38,7 @@ export function WorksWheel({
 }: WorksWheelProps) {
   const stageRef = React.useRef<HTMLDivElement>(null);
   const wheelRef = React.useRef<HTMLDivElement>(null);
+  const centerLabelRef = React.useRef<HTMLDivElement>(null);
   const cardRefs = React.useRef<(HTMLElement | null)[]>([]);
   const target = React.useRef(0);
   const turn = React.useRef(0);
@@ -111,8 +112,6 @@ export function WorksWheel({
         const drumDeg = d * STEP;
         const bow = -metrics.cardH * 1.8 * (1 - Math.cos((drumDeg * Math.PI) / 180));
 
-        const ringTransform =
-          `rotateZ(${ringDeg}deg) translateY(${-metrics.ringR}px)`;
         const drumTransform =
           `translateX(${bow}px) rotateX(${drumDeg}deg) translateZ(${metrics.drumR}px)`;
 
@@ -130,6 +129,11 @@ export function WorksWheel({
           face.style.transform = `scale(${lerp(metrics.ringScale, 1, morph)})`;
         }
       });
+
+      if (centerLabelRef.current) {
+        centerLabelRef.current.style.opacity = String(1 - morph);
+        centerLabelRef.current.style.transform = `scale(${1 - morph * 0.12})`;
+      }
 
       const nearest = clamp(Math.round(pos), 0, Math.max(0, items.length - 1));
       setActive((current) => (current === nearest ? current : nearest));
@@ -229,7 +233,7 @@ export function WorksWheel({
           })}
         </div>
 
-        <div className="worksWheelCenterLabel" style={{ opacity: Math.max(0, 1 - turn.current) }}>
+        <div ref={centerLabelRef} className="worksWheelCenterLabel">
           <span>{label}</span>
           <small>SCROLL / DRAG TO OPEN</small>
         </div>
