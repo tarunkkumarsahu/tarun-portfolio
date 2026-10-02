@@ -1,12 +1,24 @@
 "use client";
 
-import type { CSSProperties } from "react";
+import { useRef, type CSSProperties } from "react";
 import { HeroModel } from "@/components/HeroModel";
 import { LiquidOrbitBackground } from "@/components/LiquidOrbitBackground";
 import { FlipLinks } from "@/components/ui/flip-links";
 import { EditorialButton } from "@/components/ui/editorial-button";
 
 export function IntroducingTarun() {
+  const thoughtRef = useRef<HTMLDivElement>(null);
+
+  const moveThought = (event: React.PointerEvent<HTMLDivElement>) => {
+    const cloud = thoughtRef.current;
+    if (!cloud) return;
+    const rect = cloud.getBoundingClientRect();
+    const x = (event.clientX - rect.left) / Math.max(1, rect.width) - 0.5;
+    const y = (event.clientY - rect.top) / Math.max(1, rect.height) - 0.5;
+    cloud.style.setProperty("--thought-x", String(x));
+    cloud.style.setProperty("--thought-y", String(y));
+  };
+
   const enterProjects = () =>
     document.getElementById("workstation")?.scrollIntoView({
       behavior: "smooth",
@@ -31,7 +43,15 @@ export function IntroducingTarun() {
         <div className="thoughtField">
           <span className="thoughtLabel">LIVE THOUGHT CLOUD</span>
 
-          <div className="thoughtCloud">
+          <div
+            ref={thoughtRef}
+            className="thoughtCloud thoughtCloudInteractive"
+            onPointerMove={moveThought}
+            onPointerLeave={() => {
+              thoughtRef.current?.style.setProperty("--thought-x", "0");
+              thoughtRef.current?.style.setProperty("--thought-y", "0");
+            }}
+          >
             <span className="thoughtBlob b1" aria-hidden="true" />
             <span className="thoughtBlob b2" aria-hidden="true" />
             <span className="thoughtBlob b3" aria-hidden="true" />
@@ -59,6 +79,12 @@ export function IntroducingTarun() {
               <span>researching</span>
               <span>breaking</span>
               <span>rebuilding</span>
+            </div>
+
+            <div className="thoughtFragments" aria-hidden="true">
+              <span>WHAT IF THE UI BEHAVES LIKE A MACHINE?</span>
+              <span>CAN SOFTWARE TOUCH THE REAL WORLD?</span>
+              <span>BUILD THE VERSION THAT SHOULD NOT WORK.</span>
             </div>
           </div>
 
