@@ -27,7 +27,7 @@ const STEP = 40;
 const WHEEL_UNITS = 880;
 const DRAG_UNITS = 420;
 const SETTLE = 130;
-const EASE = 0.115;
+const EASE = 0.2;
 
 export function WorksWheel({
   items,
@@ -47,6 +47,7 @@ export function WorksWheel({
   const [active, setActive] = React.useState(0);
   const [size, setSize] = React.useState({ w: 0, h: 0 });
   const [reduced, setReduced] = React.useState(false);
+  const visibleRef = React.useRef(false);
 
   React.useEffect(() => {
     const query = matchMedia("(prefers-reduced-motion: reduce)");
@@ -61,9 +62,22 @@ export function WorksWheel({
     if (!el) return;
     const read = () => setSize({ w: el.clientWidth, h: el.clientHeight });
     read();
+
     const ro = new ResizeObserver(read);
     ro.observe(el);
-    return () => ro.disconnect();
+
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        visibleRef.current = entry.isIntersecting;
+      },
+      { rootMargin: "35% 0px", threshold: 0 },
+    );
+    io.observe(el);
+
+    return () => {
+      ro.disconnect();
+      io.disconnect();
+    };
   }, []);
 
   const metrics = React.useMemo(() => {
@@ -92,6 +106,7 @@ export function WorksWheel({
     let frame = 0;
     const draw = () => {
       frame = requestAnimationFrame(draw);
+      if (!visibleRef.current) return;
 
       const gap = target.current - turn.current;
       if (Math.abs(gap) < 0.0005) turn.current = target.current;
