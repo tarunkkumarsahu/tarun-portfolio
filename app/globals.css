@@ -2638,3 +2638,53 @@ body {
     display: none;
   }
 }
+
+
+/* Page 1 thought stream — remove dashboard card treatment */
+
+.thoughtCloud {
+  border: 0;
+  background: transparent;
+  backdrop-filter: none;
+  overflow: visible;
+}
+
+.thoughtCloud::before,
+.thoughtCloud::after {
+  display: none;
+}
+
+.thoughtCloud svg {
+  overflow: visible;
+  stroke: rgba(8,9,11,.26);
+  stroke-dasharray: 3 7;
+  animation: thoughtPathFlow 7s linear infinite;
+}
+
+.thoughtCloud > i {
+  width: 5px;
+  height: 5px;
+  box-shadow: 0 0 18px rgba(8,9,11,.16);
+}
+
+.thoughtWords span {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  backdrop-filter: none;
+  font-weight: 500;
+}
+
+.thoughtWords span::before {
+  content: "";
+  display: inline-block;
+  width: 18px;
+  height: 1px;
+  margin-right: 7px;
+  vertical-align: middle;
+  background: rgba(8,9,11,.34);
+}
+
+@keyframes thoughtPathFlow {
+  to { stroke-dashoffset: -50; }
+}
