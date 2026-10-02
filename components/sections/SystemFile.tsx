@@ -78,7 +78,7 @@ export function SystemFile() {
             <h3>Building systems that remember, reason, perceive and act.</h3>
             <p>
               The next chapter opens the project archive. The button below
-              downloads a compact portfolio resume snapshot.
+              downloads my current full resume as a PDF.
             </p>
             <ResumeDownloadButton />
           </aside>
