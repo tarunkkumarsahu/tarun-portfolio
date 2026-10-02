@@ -3,7 +3,6 @@ import { Inter_Tight, Cormorant_Garamond, IBM_Plex_Mono } from "next/font/google
 import { MotionRuntime } from "@/components/MotionRuntime";
 import "./globals.css";
 import "./portfolio-interactions.css";
-import "@/components/effects/glass-ai-button/threeui.css";
 
 const interTight = Inter_Tight({
   subsets: ["latin"],
@@ -46,6 +45,9 @@ export default function RootLayout({
       lang="en"
       className={`${interTight.variable} ${cormorant.variable} ${ibmPlexMono.variable}`}
     >
+      <head>
+        <link rel="stylesheet" href="/vendor/threeui.css" />
+      </head>
       <body>
         <MotionRuntime />
         {children}
