@@ -117,8 +117,9 @@ const PROJECTS: Project[] = [
 
 export function Workstation() {
   const [open, setOpen] = useState(false);
-  const [activeIndex, setActiveIndex] = useState(0);
-  const activeProject = PROJECTS[activeIndex] ?? PROJECTS[0];
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const activeProject =
+    activeIndex === null ? null : (PROJECTS[activeIndex] ?? null);
 
   const syncActiveProject = useCallback(
     (_item: WorksWheelItem, index: number) => setActiveIndex(index),
@@ -137,7 +138,10 @@ export function Workstation() {
     document.body.style.overflow = "hidden";
 
     const onKey = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setOpen(false);
+      if (event.key === "Escape") {
+        setOpen(false);
+        setActiveIndex(null);
+      }
     };
 
     window.addEventListener("keydown", onKey);
@@ -185,7 +189,14 @@ export function Workstation() {
         <div className="projectArchive" role="dialog" aria-modal="true" aria-label="Project archive">
           <div className="projectArchiveChrome">
             <span>PROJECT ARCHIVE / {PROJECTS.length}</span>
-            <button type="button" onClick={() => setOpen(false)} data-cursor-hot>
+            <button
+              type="button"
+              onClick={() => {
+                setOpen(false);
+                setActiveIndex(null);
+              }}
+              data-cursor-hot
+            >
               CLOSE / ESC
             </button>
           </div>
@@ -197,50 +208,53 @@ export function Workstation() {
               action="SELECT"
               linkCards={false}
               showActiveTitle={false}
+              deferActiveUntilEngaged
               onActiveChange={syncActiveProject}
             />
           </div>
 
-          <aside className="projectDetailPanel" aria-live="polite">
-            <div className="projectDetailIndex">
-              SELECTED / {String(activeIndex + 1).padStart(2, "0")}
-            </div>
-            <h3>{activeProject.title}</h3>
-            <p className="projectDetailSummary">{activeProject.summary}</p>
-            <p className="projectDetailBody">{activeProject.detail}</p>
-
-            <dl className="projectDetailMeta">
-              <div>
-                <dt>STATUS</dt>
-                <dd>{activeProject.status}</dd>
+          {activeProject && activeIndex !== null ? (
+            <aside className="projectDetailPanel" aria-live="polite">
+              <div className="projectDetailIndex">
+                SELECTED / {String(activeIndex + 1).padStart(2, "0")}
               </div>
-              <div>
-                <dt>ROLE</dt>
-                <dd>{activeProject.role}</dd>
+              <h3>{activeProject.title}</h3>
+              <p className="projectDetailSummary">{activeProject.summary}</p>
+              <p className="projectDetailBody">{activeProject.detail}</p>
+
+              <dl className="projectDetailMeta">
+                <div>
+                  <dt>STATUS</dt>
+                  <dd>{activeProject.status}</dd>
+                </div>
+                <div>
+                  <dt>ROLE</dt>
+                  <dd>{activeProject.role}</dd>
+                </div>
+              </dl>
+
+              <div className="projectDetailStack" aria-label="Technology stack">
+                {activeProject.stack.map((item) => (
+                  <span key={item}>{item}</span>
+                ))}
               </div>
-            </dl>
 
-            <div className="projectDetailStack" aria-label="Technology stack">
-              {activeProject.stack.map((item) => (
-                <span key={item}>{item}</span>
-              ))}
-            </div>
-
-            <a
-              className="projectDetailLink"
-              href={activeProject.href}
-              target="_blank"
-              rel="noreferrer"
-              data-cursor-hot
-              data-cursor-label="SOURCE"
-            >
-              OPEN GITHUB <span aria-hidden="true">↗</span>
-            </a>
-          </aside>
+              <a
+                className="projectDetailLink"
+                href={activeProject.href}
+                target="_blank"
+                rel="noreferrer"
+                data-cursor-hot
+                data-cursor-label="SOURCE"
+              >
+                OPEN GITHUB <span aria-hidden="true">↗</span>
+              </a>
+            </aside>
+          ) : null}
 
           <div className="projectArchiveHint">
-            <span>SCROLL / DRAG / SELECT</span>
-            <span>OPEN SOURCE FROM THE DETAIL PANEL ↗</span>
+            <span>SCROLL / DRAG / SELECT A PROJECT</span>
+            <span>DETAILS APPEAR ONLY AFTER SELECTION ↗</span>
           </div>
         </div>
       ) : null}

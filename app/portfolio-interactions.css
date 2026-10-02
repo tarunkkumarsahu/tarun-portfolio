@@ -887,3 +887,52 @@
     transition: none !important;
   }
 }
+
+
+/* =========================================================
+   PROJECT WHEEL SYNC V3
+   The archive opens as a neutral, centered ring. Details only
+   appear after the user turns/selects a project; the wheel
+   never shifts sideways to make room for the panel.
+   ========================================================= */
+
+.projectArchiveWheel {
+  inset: 0 !important;
+  width: auto !important;
+}
+
+@media (min-width: 761px) {
+  .projectDetailPanel {
+    left: clamp(28px, 3vw, 52px);
+    width: clamp(250px, 20vw, 315px);
+    padding: 18px 22px 18px 0;
+    background:
+      linear-gradient(90deg, rgba(5,6,7,.94) 0%, rgba(5,6,7,.78) 76%, rgba(5,6,7,0) 100%);
+  }
+
+  .projectDetailPanel::after {
+    right: 8px;
+  }
+}
+
+@media (max-width: 1180px) and (min-width: 761px) {
+  .projectArchiveWheel {
+    inset: 0 !important;
+  }
+
+  .projectDetailPanel {
+    left: 22px;
+    width: 250px;
+  }
+}
+
+@media (max-width: 900px) and (min-width: 761px) {
+  .projectArchiveWheel {
+    inset: 0 !important;
+  }
+
+  .projectDetailPanel {
+    left: 16px;
+    width: 225px;
+  }
+}

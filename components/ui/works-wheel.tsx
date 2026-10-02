@@ -39,6 +39,8 @@ export interface WorksWheelProps extends Omit<
   linkCards?: boolean;
   /** Show the built-in active project title at the left edge. */
   showActiveTitle?: boolean;
+  /** Keep the ring neutral until the user actually turns or selects the wheel. */
+  deferActiveUntilEngaged?: boolean;
 }
 
 /* Geometry. The card is measured against the stage; everything else is measured
@@ -101,6 +103,7 @@ export function WorksWheel({
   onActiveChange,
   linkCards = true,
   showActiveTitle = true,
+  deferActiveUntilEngaged = false,
   className,
   ...props
 }: WorksWheelProps) {
@@ -113,15 +116,19 @@ export function WorksWheel({
   const turn = React.useRef(0);
   const target = React.useRef(0);
   const [active, setActive] = React.useState(0);
+  const [engaged, setEngaged] = React.useState(!deferActiveUntilEngaged);
+  const engagedRef = React.useRef(!deferActiveUntilEngaged);
   const [stage, setStage] = React.useState<Stage>({ w: 0, h: 0 });
 
   const count = items.length;
   const last = Math.max(count - 1, 0);
+  const selectionVisible = !deferActiveUntilEngaged || engaged;
 
   React.useEffect(() => {
+    if (!selectionVisible) return;
     const item = items[active];
     if (item) onActiveChange?.(item, active);
-  }, [active, items, onActiveChange]);
+  }, [active, items, onActiveChange, selectionVisible]);
 
   const [reduced, setReduced] = React.useState(false);
   React.useEffect(() => {
@@ -216,20 +223,27 @@ export function WorksWheel({
 
   const to = React.useCallback(
     (next: number) => {
-      target.current = clamp(next, 0, last + 1);
+      const clamped = clamp(next, 0, last + 1);
+      target.current = clamped;
+
+      if (deferActiveUntilEngaged) {
+        const nextEngaged = clamped > 0.02;
+        if (engagedRef.current !== nextEngaged) {
+          engagedRef.current = nextEngaged;
+          setEngaged(nextEngaged);
+        }
+      }
     },
-    [last],
+    [deferActiveUntilEngaged, last],
   );
 
   const select = React.useCallback(
     (index: number) => {
       const nextIndex = clamp(index, 0, last);
       setActive(nextIndex);
-      const item = items[nextIndex];
-      if (item) onActiveChange?.(item, nextIndex);
       to(nextIndex + 1);
     },
-    [items, last, onActiveChange, to],
+    [last, to],
   );
 
   const drag = React.useRef<number | null>(null);
@@ -269,7 +283,7 @@ export function WorksWheel({
         tabIndex={0}
         role="listbox"
         aria-label={label}
-        aria-activedescendant={`works-wheel-${active}`}
+        aria-activedescendant={selectionVisible ? `works-wheel-${active}` : undefined}
         className="focus-visible:outline-foreground absolute inset-0 cursor-grab touch-pan-x outline-none focus-visible:outline-2 focus-visible:-outline-offset-4 active:cursor-grabbing"
         style={{ perspective: `${metrics.depth}px` }}
         onPointerDown={(event) => {
@@ -340,7 +354,7 @@ export function WorksWheel({
                   key={item.title}
                   id={`works-wheel-${i}`}
                   role="option"
-                  aria-selected={i === active}
+                  aria-selected={selectionVisible && i === active}
                   href={item.href}
                   target="_blank"
                   rel="noreferrer"
@@ -361,7 +375,7 @@ export function WorksWheel({
                 id={`works-wheel-${i}`}
                 type="button"
                 role="option"
-                aria-selected={i === active}
+                aria-selected={selectionVisible && i === active}
                 ref={(node: HTMLButtonElement | null) => {
                   cardRefs.current[i] = node;
                 }}
@@ -406,7 +420,7 @@ export function WorksWheel({
               onClick={() => select(i)}
               className={cn(
                 "focus-visible:outline-foreground cursor-pointer transition-colors outline-none focus-visible:outline-1",
-                i === active && "text-foreground font-medium",
+                selectionVisible && i === active && "text-foreground font-medium",
               )}
             >
               {item.title}

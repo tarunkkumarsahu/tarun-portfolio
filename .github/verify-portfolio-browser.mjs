@@ -62,25 +62,23 @@ assert(await page.locator(".projectArchive").count(), "Project archive did not o
 
 const panel = page.locator(".projectDetailPanel");
 const wheel = page.locator(".projectArchiveWheel");
-await panel.waitFor({ state: "visible" });
 
-const panelBox = await panel.boundingBox();
-const wheelBox = await wheel.boundingBox();
-assert(panelBox && wheelBox, "Project archive layout boxes were not measurable.");
 assert(
-  panelBox.x + panelBox.width + 20 <= wheelBox.x,
-  "Project detail panel overlaps the interactive project wheel.",
+  (await panel.count()) === 0,
+  "Project detail should stay hidden while the archive is still in its neutral ring state.",
 );
 
-assert((await panel.locator("h3").innerText()).includes("JARVIS OS"), "Initial project detail is wrong.");
+const wheelBox = await wheel.boundingBox();
+assert(wheelBox, "Project wheel layout box was not measurable.");
 assert(
-  (await panel.locator(".projectDetailLink").getAttribute("href"))?.includes("github.com/tarunkkumarsahu/Jarvis-OS"),
-  "Initial GitHub source link is wrong.",
+  wheelBox.x < 12 && wheelBox.width > 1400 - 24,
+  "Project wheel is no longer centered across the archive viewport.",
 );
 
 const rakshaIndex = page.locator(".projectArchiveWheel ol button", { hasText: "RAKSHA GRID" });
 await rakshaIndex.click();
 await page.waitForTimeout(300);
+await panel.waitFor({ state: "visible" });
 assert((await panel.locator("h3").innerText()).includes("RAKSHA GRID"), "Raksha Grid detail did not sync from the wheel.");
 assert(
   (await panel.locator(".projectDetailLink").getAttribute("href"))?.includes("github.com/tarunkkumarsahu/raksha-grid"),
