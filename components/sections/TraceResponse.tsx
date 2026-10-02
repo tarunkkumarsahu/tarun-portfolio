@@ -6,8 +6,10 @@ import { EditorialButton } from "@/components/ui/editorial-button";
 
 const FALLING = ["01", "{}", "<>", "&&", "!=", "//", "API", "SIG", "101", "[]", "=>", "CV"];
 
+type Status = "idle" | "sending" | "sent" | "fallback" | "error";
+
 export function TraceResponse() {
-  const [status, setStatus] = useState<"idle" | "packing" | "ready">("idle");
+  const [status, setStatus] = useState<Status>("idle");
   const [form, setForm] = useState({ name: "", response: "", link: "" });
 
   const payload = useMemo(
@@ -22,17 +24,44 @@ export function TraceResponse() {
     [form],
   );
 
-  const submit = async (event?: FormEvent) => {
-    event?.preventDefault();
-    if (!form.response.trim() || status === "packing") return;
-
-    setStatus("packing");
+  const copyFallback = async () => {
     try {
       await navigator.clipboard.writeText(payload);
     } catch {
-      // Clipboard may be blocked.
+      // The message remains visible in the form if clipboard access is blocked.
     }
-    window.setTimeout(() => setStatus("ready"), 560);
+    setStatus("fallback");
+  };
+
+  const submit = async (event: FormEvent) => {
+    event.preventDefault();
+    if (!form.response.trim() || status === "sending") return;
+
+    setStatus("sending");
+
+    try {
+      const response = await fetch("/api/trace", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          ...form,
+          website: "",
+        }),
+      });
+
+      const result = (await response.json().catch(() => null)) as
+        | { delivered?: boolean; fallback?: string }
+        | null;
+
+      if (response.ok && result?.delivered) {
+        setStatus("sent");
+        return;
+      }
+
+      await copyFallback();
+    } catch {
+      await copyFallback();
+    }
   };
 
   const reopenProjects = () => {
@@ -42,6 +71,15 @@ export function TraceResponse() {
     });
     window.setTimeout(() => window.dispatchEvent(new Event("open-projects")), 620);
   };
+
+  const statusCopy =
+    status === "sent"
+      ? "DELIVERED."
+      : status === "fallback"
+        ? "DELIVERY CHANNEL IS NOT CONFIGURED YET — TRACE COPIED TO CLIPBOARD."
+        : status === "error"
+          ? "TRACE COULD NOT BE PACKED. YOUR TEXT IS STILL HERE."
+          : "NOTHING IS SILENTLY STORED.";
 
   return (
     <section className="traceResponse traceFinal" id="response" data-chapter>
@@ -84,12 +122,21 @@ export function TraceResponse() {
         onSubmit={submit}
         data-liquid-exclude
       >
+        <input
+          className="traceHoneypot"
+          tabIndex={-1}
+          autoComplete="off"
+          aria-hidden="true"
+          name="website"
+        />
+
         <label>
           <span>YOUR NAME</span>
           <input
             value={form.name}
             onChange={(event) => setForm({ ...form, name: event.target.value })}
             placeholder="Optional"
+            maxLength={120}
           />
         </label>
 
@@ -101,6 +148,7 @@ export function TraceResponse() {
             onChange={(event) => setForm({ ...form, response: event.target.value })}
             placeholder="What stayed with you?"
             rows={4}
+            maxLength={3000}
           />
         </label>
 
@@ -111,22 +159,21 @@ export function TraceResponse() {
             onChange={(event) => setForm({ ...form, link: event.target.value })}
             placeholder="https://"
             inputMode="url"
+            maxLength={500}
           />
         </label>
 
         <div className="traceSubmit">
-          <EditorialButton type="submit">
-            {status === "packing"
-              ? "PACKING TRACE"
-              : status === "ready"
-                ? "TRACE READY"
-                : "SUBMIT TRACE"}
+          <EditorialButton type="submit" disabled={status === "sending"}>
+            {status === "sending"
+              ? "SENDING TRACE"
+              : status === "sent"
+                ? "TRACE SENT"
+                : status === "fallback"
+                  ? "TRACE READY"
+                  : "SUBMIT TRACE"}
           </EditorialButton>
-          <small>
-            {status === "ready"
-              ? "COPIED TO CLIPBOARD — SEND IT THROUGH ANY OPEN CHANNEL."
-              : "NOTHING IS SILENTLY STORED."}
-          </small>
+          <small>{statusCopy}</small>
         </div>
 
         <div className="tracePacket" aria-hidden="true">
@@ -163,11 +210,16 @@ export function TraceResponse() {
         />
       </div>
 
-      {status === "ready" ? (
+      {(status === "sent" || status === "fallback") ? (
         <div className="traceRecorded" role="status">
-          TRACE READY.
+          {status === "sent" ? "TRACE DELIVERED." : "TRACE PACKED."}
         </div>
       ) : null}
+
+      <footer className="finalSignoff">
+        <span>DESIGNED + BUILT BY TARUN KUMAR SAHU</span>
+        <span>INDIA / 2026</span>
+      </footer>
     </section>
   );
 }
