@@ -29,6 +29,36 @@ export function MotionRuntime() {
     raf = requestAnimationFrame(tick);
 
     const ctx = gsap.context(() => {
+      gsap.fromTo(
+        ".introducing",
+        {
+          clipPath: "circle(0% at 50% 50%)",
+          scale: 0.94,
+        },
+        {
+          clipPath: "circle(150% at 50% 50%)",
+          scale: 1,
+          ease: "none",
+          scrollTrigger: {
+            trigger: ".introducing",
+            start: "top 98%",
+            end: "top 18%",
+            scrub: 0.9,
+          },
+        },
+      );
+
+      gsap.to(".introSticky", {
+        scale: 1.08,
+        filter: "brightness(.55)",
+        ease: "none",
+        scrollTrigger: {
+          trigger: ".introducing",
+          start: "top 100%",
+          end: "top 35%",
+          scrub: 0.9,
+        },
+      });
       gsap.from(".introducingBackTitle span, .introducingBackTitle strong", {
         yPercent: 85,
         opacity: 0,
