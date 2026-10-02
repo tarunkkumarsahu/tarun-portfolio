@@ -37,6 +37,8 @@ export interface WorksWheelProps extends Omit<
   onActiveChange?: (item: WorksWheelItem, index: number) => void;
   /** Keep cards as outbound links. Set false when an external detail panel owns navigation. */
   linkCards?: boolean;
+  /** Show the built-in active project title at the left edge. */
+  showActiveTitle?: boolean;
 }
 
 /* Geometry. The card is measured against the stage; everything else is measured
@@ -98,6 +100,7 @@ export function WorksWheel({
   action = "View",
   onActiveChange,
   linkCards = true,
+  showActiveTitle = true,
   className,
   ...props
 }: WorksWheelProps) {
@@ -368,13 +371,17 @@ export function WorksWheel({
       >
         {label}
       </div>
-      <div
-        ref={titleRef}
-        className="pointer-events-none absolute top-1/2 left-[8%] -translate-y-1/2 tracking-tight opacity-0"
-        style={{ fontSize: metrics.title }}
-      >
-        {items[active]?.title}
-      </div>
+      {showActiveTitle ? (
+        <div
+          ref={titleRef}
+          className="pointer-events-none absolute top-1/2 left-[8%] -translate-y-1/2 tracking-tight opacity-0"
+          style={{ fontSize: metrics.title }}
+        >
+          {items[active]?.title}
+        </div>
+      ) : (
+        <div ref={titleRef} className="hidden" aria-hidden="true" />
+      )}
 
       <ol
         className="text-muted-foreground absolute top-[7.5%] right-[2.5%] text-right leading-[1.75]"
