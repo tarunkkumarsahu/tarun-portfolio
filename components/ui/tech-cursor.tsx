@@ -62,6 +62,7 @@ export function TechIconTrail({
     if (!ctx) return;
 
     let raf = 0;
+    let running = false;
     let lastSpawn = 0;
     let lastX = 0;
     let lastY = 0;
@@ -69,7 +70,7 @@ export function TechIconTrail({
     let assets: IconAsset[] = [];
 
     const resize = () => {
-      const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.2);
       canvas.width = Math.floor(innerWidth * dpr);
       canvas.height = Math.floor(innerHeight * dpr);
       canvas.style.width = `${innerWidth}px`;
@@ -94,6 +95,45 @@ export function TechIconTrail({
       ).filter(Boolean) as IconAsset[];
     };
 
+    const draw = () => {
+      ctx.clearRect(0, 0, innerWidth, innerHeight);
+
+      for (let i = particles.length - 1; i >= 0; i -= 1) {
+        const p = particles[i];
+        p.x += p.vx;
+        p.y += p.vy;
+        p.alpha -= 0.026;
+
+        if (p.alpha <= 0) {
+          particles.splice(i, 1);
+          continue;
+        }
+
+        ctx.globalAlpha = p.alpha;
+        ctx.drawImage(
+          p.image,
+          p.x - p.size / 2,
+          p.y - p.size / 2,
+          p.size,
+          p.size,
+        );
+      }
+
+      ctx.globalAlpha = 1;
+
+      if (particles.length > 0) {
+        raf = requestAnimationFrame(draw);
+      } else {
+        running = false;
+      }
+    };
+
+    const start = () => {
+      if (running) return;
+      running = true;
+      raf = requestAnimationFrame(draw);
+    };
+
     const move = (event: PointerEvent) => {
       const target = document.elementFromPoint(event.clientX, event.clientY);
       if (!target?.closest(selector) || assets.length === 0) {
@@ -104,53 +144,31 @@ export function TechIconTrail({
 
       const speed = Math.hypot(event.clientX - lastX, event.clientY - lastY);
       const now = performance.now();
-      const delay = Math.max(42, 120 - speed * 3.5);
+      const delay = Math.max(58, 145 - speed * 3);
 
-      if (speed > 3 && now - lastSpawn > delay && particles.length < 28) {
+      if (speed > 5 && now - lastSpawn > delay && particles.length < 18) {
         const asset = assets[Math.floor(Math.random() * assets.length)];
         particles.push({
           x: event.clientX,
           y: event.clientY,
-          vx: (Math.random() - 0.5) * 0.55,
-          vy: -0.35 - Math.random() * 0.45,
-          alpha: 0.72,
-          size: 17 + Math.random() * 9,
+          vx: (Math.random() - 0.5) * 0.45,
+          vy: -0.3 - Math.random() * 0.35,
+          alpha: 0.62,
+          size: 16 + Math.random() * 7,
           image: asset.image,
         });
         lastSpawn = now;
+        start();
       }
 
       lastX = event.clientX;
       lastY = event.clientY;
     };
 
-    const draw = () => {
-      ctx.clearRect(0, 0, innerWidth, innerHeight);
-
-      for (let i = particles.length - 1; i >= 0; i -= 1) {
-        const p = particles[i];
-        p.x += p.vx;
-        p.y += p.vy;
-        p.alpha -= 0.018;
-
-        if (p.alpha <= 0) {
-          particles.splice(i, 1);
-          continue;
-        }
-
-        ctx.globalAlpha = p.alpha;
-        ctx.drawImage(p.image, p.x - p.size / 2, p.y - p.size / 2, p.size, p.size);
-      }
-
-      ctx.globalAlpha = 1;
-      raf = requestAnimationFrame(draw);
-    };
-
     resize();
-    load();
+    void load();
     window.addEventListener("resize", resize);
     window.addEventListener("pointermove", move, { passive: true });
-    raf = requestAnimationFrame(draw);
 
     return () => {
       cancelAnimationFrame(raf);
@@ -159,5 +177,11 @@ export function TechIconTrail({
     };
   }, [selector]);
 
-  return <canvas ref={canvasRef} className="techIconTrailCanvas" aria-hidden="true" />;
+  return (
+    <canvas
+      ref={canvasRef}
+      className="techIconTrailCanvas"
+      aria-hidden="true"
+    />
+  );
 }
