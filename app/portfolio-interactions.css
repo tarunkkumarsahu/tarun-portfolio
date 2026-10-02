@@ -506,3 +506,94 @@
     animation: none;
   }
 }
+
+
+/* -------------------------------------------------------------------------- */
+/* Exact ThreeUI project gateway                                              */
+/* -------------------------------------------------------------------------- */
+
+.projectGlassGate {
+  position: relative;
+  width: min(34rem, 78vw);
+  margin-top: clamp(18px, 2.2vw, 32px);
+  isolation: isolate;
+}
+
+.projectGlassGateEffect {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3.08 / 1;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  background: #a8b0bd;
+  box-shadow:
+    0 20px 55px rgba(0, 0, 0, 0.28),
+    0 0 0 1px rgba(255, 255, 255, 0.025);
+}
+
+.projectGlassGateEffect > .glass-ai-button {
+  width: 100%;
+  height: 100%;
+}
+
+.projectGlassGateAction {
+  position: absolute;
+  right: 6%;
+  bottom: -16px;
+  z-index: 6;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 999px;
+  color: rgba(247, 244, 238, 0.94);
+  background: rgba(7, 7, 8, 0.74);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  font-family: var(--font-mono), monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  cursor: pointer;
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    background 180ms ease;
+}
+
+.projectGlassGateAction i {
+  color: #ff4a38;
+  font-style: normal;
+  transition: transform 180ms ease;
+}
+
+.projectGlassGateAction:hover,
+.projectGlassGateAction:focus-visible {
+  transform: translateY(-2px);
+  border-color: rgba(255, 74, 56, 0.5);
+  background: rgba(7, 7, 8, 0.9);
+}
+
+.projectGlassGateAction:hover i,
+.projectGlassGateAction:focus-visible i {
+  transform: translate(2px, -2px);
+}
+
+.projectGlassGateAction:focus-visible {
+  outline: 1px solid #ff4a38;
+  outline-offset: 4px;
+}
+
+@media (max-width: 760px) {
+  .projectGlassGate {
+    width: min(30rem, 90vw);
+  }
+
+  .projectGlassGateAction {
+    right: 8%;
+    bottom: -14px;
+    padding: 9px 12px;
+    font-size: 0.56rem;
+  }
+}
