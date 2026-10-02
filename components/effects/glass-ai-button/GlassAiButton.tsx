@@ -9,7 +9,7 @@ export type GlassAiButtonProps = {
 };
 
 const PORTFOLIO_SOURCE_DOCUMENT = sourceDocument
-  .replaceAll("GPT 6 Sol", "TAP HERE")
+  .split("GPT 6 Sol").join("TAP HERE")
   .replace(
     "</body>",
     `<script>
