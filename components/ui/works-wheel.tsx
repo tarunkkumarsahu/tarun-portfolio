@@ -205,7 +205,8 @@ export function WorksWheel({
 
       if (labelRef.current) labelRef.current.style.opacity = String(1 - m);
       if (titleRef.current) titleRef.current.style.opacity = String(m);
-      const near = clamp(Math.round(pos), 0, last);
+      const intendedPos = Math.max(0, target.current - 1);
+      const near = clamp(Math.round(intendedPos), 0, last);
       setActive((prev) => (prev === near ? prev : near));
     };
 
