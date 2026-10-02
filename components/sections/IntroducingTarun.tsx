@@ -84,6 +84,11 @@ export function IntroducingTarun() {
                   href: "https://www.linkedin.com/in/tarunnsahuu/",
                   meta: "/in/tarunnsahuu",
                 },
+                {
+                  label: "INSTAGRAM",
+                  href: "https://www.instagram.com/tarunnsahuu/",
+                  meta: "@tarunnsahuu",
+                },
               ]}
             />
           </div>
