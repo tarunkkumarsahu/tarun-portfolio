@@ -5,10 +5,27 @@ import sourceDocument from "./sources/glass-ai-button.html?raw";
 export type GlassAiButtonProps = {
   className?: string;
   style?: CSSProperties;
+  onActivate?: () => void;
 };
 
-export function GlassAiButton({ className = "", style }: GlassAiButtonProps) {
+const PORTFOLIO_SOURCE_DOCUMENT = sourceDocument
+  .replaceAll("GPT 6 Sol", "TAP HERE")
+  .replace(
+    "</body>",
+    `<script>
+      document.getElementById("activate")?.addEventListener("click", () => {
+        parent.postMessage({ type: "threeui-glass-activate" }, "*");
+      });
+    <\/script></body>`,
+  );
+
+export function GlassAiButton({
+  className = "",
+  style,
+  onActivate,
+}: GlassAiButtonProps) {
   const hostRef = useRef<HTMLDivElement>(null);
+  const frameRef = useRef<HTMLIFrameElement>(null);
   const [documentVisible, setDocumentVisible] = useState(() => (
     typeof document === "undefined" || !document.hidden
   ));
@@ -22,9 +39,11 @@ export function GlassAiButton({ className = "", style }: GlassAiButtonProps) {
       setHostVisible(true);
       return undefined;
     }
+
     const observer = new IntersectionObserver(([entry]) => {
       setHostVisible(entry?.isIntersecting ?? true);
     }, { rootMargin: "80px" });
+
     observer.observe(host);
     return () => observer.disconnect();
   }, []);
@@ -35,6 +54,19 @@ export function GlassAiButton({ className = "", style }: GlassAiButtonProps) {
     document.addEventListener("visibilitychange", update);
     return () => document.removeEventListener("visibilitychange", update);
   }, []);
+
+  useEffect(() => {
+    if (!onActivate) return undefined;
+
+    const onMessage = (event: MessageEvent) => {
+      if (event.source !== frameRef.current?.contentWindow) return;
+      if (event.data?.type !== "threeui-glass-activate") return;
+      onActivate();
+    };
+
+    window.addEventListener("message", onMessage);
+    return () => window.removeEventListener("message", onMessage);
+  }, [onActivate]);
 
   const mounted = hostVisible && documentVisible;
 
@@ -47,7 +79,7 @@ export function GlassAiButton({ className = "", style }: GlassAiButtonProps) {
       ref={hostRef}
       className={`threeui-background glass-ai-button${className ? ` ${className}` : ""}`}
       role="group"
-      aria-label="Interactive glass AI button"
+      aria-label="Interactive glass project archive button"
       data-state={!mounted ? "paused" : ready ? "ready" : "loading"}
       style={{
         position: "relative",
@@ -59,8 +91,9 @@ export function GlassAiButton({ className = "", style }: GlassAiButtonProps) {
     >
       {mounted ? (
         <iframe
-          title="Glass AI Button"
-          srcDoc={sourceDocument}
+          ref={frameRef}
+          title="Glass project archive button"
+          srcDoc={PORTFOLIO_SOURCE_DOCUMENT}
           sandbox="allow-scripts"
           loading="eager"
           onLoad={() => setReady(true)}
