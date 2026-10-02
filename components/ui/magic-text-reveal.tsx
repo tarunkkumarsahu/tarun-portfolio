@@ -38,7 +38,7 @@ export function MagicTextReveal({
 
     const build = () => {
       const rect = wrap.getBoundingClientRect();
-      const dpr = Math.min(devicePixelRatio || 1, 1.5);
+      const dpr = Math.min(devicePixelRatio || 1, 1.2);
       canvas.width = Math.max(1, Math.floor(rect.width * dpr));
       canvas.height = Math.max(1, Math.floor(rect.height * dpr));
       canvas.style.width = `${rect.width}px`;
@@ -119,8 +119,14 @@ export function MagicTextReveal({
 
     const start = performance.now();
     const draw = (now: number) => {
+      if (!visible) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        raf = requestAnimationFrame(draw);
+        return;
+      }
+
       const t = (now - start) / 1000;
-      const dpr = Math.min(devicePixelRatio || 1, 1.5);
+      const dpr = Math.min(devicePixelRatio || 1, 1.2);
 
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.save();
