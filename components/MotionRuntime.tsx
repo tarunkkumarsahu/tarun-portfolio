@@ -107,14 +107,101 @@ export function MotionRuntime() {
         },
       });
 
-      gsap.from(".systemRig, .systemCore", {
-        y: 44,
+      gsap.from(".perceptionField, .intelligenceCore, .actionField", {
+        y: 42,
         opacity: 0,
-        scale: 0.97,
-        duration: 0.9,
+        scale: 0.96,
+        duration: 1,
         stagger: 0.08,
         ease: "power3.out",
-        scrollTrigger: { trigger: ".systemStage", start: "top 78%" },
+        scrollTrigger: { trigger: ".spatialMachine", start: "top 76%" },
+      });
+
+      gsap.from(".methodHeadline", {
+        xPercent: -8,
+        opacity: 0,
+        duration: 1,
+        ease: "power3.out",
+        scrollTrigger: { trigger: ".methodMachine", start: "top 66%" },
+      });
+
+      gsap.from(".methodNode", {
+        x: 60,
+        opacity: 0,
+        duration: 0.8,
+        stagger: 0.05,
+        ease: "power3.out",
+        scrollTrigger: { trigger: ".methodMechanism", start: "top 78%" },
+      });
+
+      gsap.from(".questObject", {
+        z: -180,
+        scale: 0.65,
+        opacity: 0,
+        duration: 1.2,
+        stagger: 0.08,
+        ease: "power4.out",
+        scrollTrigger: { trigger: ".sideQuestStage", start: "top 76%" },
+      });
+
+      gsap.from(".mainPaper, .capabilityPaper, .currentlyPaper", {
+        y: 100,
+        rotate: 0,
+        opacity: 0,
+        duration: 1,
+        stagger: 0.12,
+        ease: "power3.out",
+        scrollTrigger: { trigger: ".systemFileDesk", start: "top 72%" },
+      });
+
+      gsap.from(".traceCopy, .traceForm", {
+        y: 64,
+        opacity: 0,
+        duration: 1,
+        stagger: 0.12,
+        ease: "power3.out",
+        scrollTrigger: { trigger: ".traceResponse", start: "top 68%" },
+      });
+
+      gsap.from(".workstationIntro", {
+        y: 80,
+        opacity: 0,
+        duration: 1.1,
+        ease: "power3.out",
+        scrollTrigger: { trigger: ".workstationV2", start: "top 70%" },
+      });
+
+      gsap.from(".labRow", {
+        y: 32,
+        opacity: 0,
+        duration: 0.75,
+        stagger: 0.08,
+        ease: "power3.out",
+        scrollTrigger: { trigger: ".workstationLab", start: "top 78%" },
+      });
+
+      gsap.to(".systemMarquee", {
+        scaleX: 1.12,
+        letterSpacing: "-.095em",
+        ease: "none",
+        scrollTrigger: {
+          trigger: ".methodMachine",
+          start: "top 100%",
+          end: "top 55%",
+          scrub: 0.8,
+        },
+      });
+
+      gsap.to(".traceRain span", {
+        yPercent: 30,
+        stagger: 0.01,
+        ease: "none",
+        scrollTrigger: {
+          trigger: ".workstationV2",
+          start: "top 100%",
+          end: "top 40%",
+          scrub: 0.8,
+        },
       });
 
       const transitionPresets: Record<string, gsap.TweenVars> = {
@@ -194,17 +281,7 @@ export function MotionRuntime() {
         }
       });
 
-      gsap.utils
-        .toArray<HTMLElement>(".placeholderInner, .resumeBoard .paper, .responsePanel, .workstationTitle")
-        .forEach((el) => {
-          gsap.from(el, {
-            y: 56,
-            opacity: 0,
-            duration: 1,
-            ease: "power3.out",
-            scrollTrigger: { trigger: el, start: "top 86%" },
-          });
-        });
+
     });
 
     ScrollTrigger.refresh();
