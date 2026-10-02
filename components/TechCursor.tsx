@@ -85,8 +85,8 @@ export function TechCursor() {
     };
 
     const loop = () => {
-      rx += (x - rx) * 0.16;
-      ry += (y - ry) * 0.16;
+      rx += (x - rx) * 0.42;
+      ry += (y - ry) * 0.42;
       ring.style.transform = `translate3d(${rx}px,${ry}px,0)`;
       raf = requestAnimationFrame(loop);
     };
