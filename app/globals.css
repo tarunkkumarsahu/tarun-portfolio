@@ -1564,3 +1564,190 @@ button {
     opacity: .75;
   }
 }
+
+
+/* SIGNATURE PASS — HERO TYPOGRAPHY / CURSOR / CHAPTER TRANSITIONS */
+
+[data-chapter] {
+  position: relative;
+  will-change: transform, clip-path, filter;
+  backface-visibility: hidden;
+}
+
+.introducingBackTitle {
+  position: absolute;
+  z-index: 2;
+  inset: 12% 0 auto;
+  display: grid;
+  justify-items: center;
+  pointer-events: none;
+  overflow: hidden;
+  color: rgba(7, 9, 12, .72);
+  text-align: center;
+  letter-spacing: -.095em;
+  line-height: .66;
+  mix-blend-mode: multiply;
+  user-select: none;
+}
+
+.introducingBackTitle span,
+.introducingBackTitle strong {
+  display: block;
+  white-space: nowrap;
+}
+
+.introducingBackTitle span {
+  font-size: clamp(78px, 11.6vw, 210px);
+  font-weight: 850;
+}
+
+.introducingBackTitle strong {
+  margin-top: .08em;
+  font: 400 clamp(120px, 17vw, 310px)/.66 var(--serif);
+  letter-spacing: -.105em;
+  color: rgba(9, 11, 15, .78);
+}
+
+.modelDock {
+  z-index: 4;
+}
+
+.page1ExitSignal {
+  position: absolute;
+  z-index: 7;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 3px;
+  display: grid;
+  grid-template-columns: 1fr 1.8fr 1fr;
+  gap: 7px;
+  pointer-events: none;
+}
+
+.page1ExitSignal i {
+  display: block;
+  height: 1px;
+  align-self: end;
+  background: rgba(8, 9, 11, .76);
+  box-shadow: 0 0 18px rgba(233, 238, 245, .38);
+  opacity: .1;
+  transform: scaleX(.04);
+}
+
+.page1ExitSignal i:nth-child(1) { transform-origin: right; }
+.page1ExitSignal i:nth-child(2) {
+  height: 2px;
+  background: rgba(8, 9, 11, .92);
+  transform-origin: center;
+}
+.page1ExitSignal i:nth-child(3) { transform-origin: left; }
+
+.techCursorDot,
+.techCursorRing,
+.techCursorTrail {
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+.techCursorDot {
+  width: 5px;
+  height: 5px;
+  margin: -2.5px 0 0 -2.5px;
+  border-radius: 50%;
+  background: #f5f3ec;
+  mix-blend-mode: difference;
+  box-shadow: 0 0 10px rgba(255,255,255,.35);
+}
+
+.techCursorRing {
+  width: 42px;
+  height: 42px;
+  margin: -21px 0 0 -21px;
+  border: 1px solid rgba(245,243,236,.7);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: #f5f3ec;
+  mix-blend-mode: difference;
+  transition:
+    width .24s cubic-bezier(.2,.8,.2,1),
+    height .24s cubic-bezier(.2,.8,.2,1),
+    margin .24s cubic-bezier(.2,.8,.2,1),
+    border-color .24s ease,
+    background .24s ease;
+}
+
+.techCursorRing span {
+  font: 6px/1 var(--mono);
+  letter-spacing: .12em;
+  opacity: .82;
+}
+
+.cursorHot .techCursorRing {
+  width: 68px;
+  height: 68px;
+  margin: -34px 0 0 -34px;
+  background: rgba(255,255,255,.1);
+  border-color: rgba(255,255,255,.95);
+}
+
+.techCursorRing.isClicking {
+  animation: cursorClick .42s cubic-bezier(.2,.8,.2,1);
+}
+
+.techCursorGlyph {
+  position: fixed;
+  transform: translate(-50%, -50%);
+  color: rgba(233,238,245,.58);
+  font: 7px/1 var(--mono);
+  letter-spacing: .05em;
+  animation: cursorGlyph .76s ease-out forwards;
+  text-shadow: 0 0 12px rgba(143,163,192,.55);
+}
+
+@keyframes cursorClick {
+  0% { scale: 1; }
+  45% { scale: .7; }
+  100% { scale: 1.22; opacity: .2; }
+}
+
+@keyframes cursorGlyph {
+  0% { opacity: .85; transform: translate(-50%, -50%) scale(1); }
+  100% { opacity: 0; transform: translate(-50%, var(--glyph-shift)) scale(.72); }
+}
+
+@media (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  body,
+  a,
+  button,
+  [role="button"] {
+    cursor: none !important;
+  }
+}
+
+@media (max-width: 900px) {
+  .introducingBackTitle {
+    inset: 9% 0 auto;
+    opacity: .55;
+  }
+
+  .introducingBackTitle span {
+    font-size: 17vw;
+  }
+
+  .introducingBackTitle strong {
+    font-size: 26vw;
+  }
+}
+
+@media (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .techCursorDot,
+  .techCursorRing,
+  .techCursorTrail {
+    display: none;
+  }
+}
