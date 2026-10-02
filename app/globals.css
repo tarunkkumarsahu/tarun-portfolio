@@ -6479,3 +6479,364 @@ body.intro-push-active .chapterRail {
     right: 14px;
   }
 }
+
+
+/* =========================================================
+   INTRO SEQUENCE V3 — autoplay push -> scroll neural tunnel
+   ========================================================= */
+
+body.neural-entry-active .chapterRail {
+  opacity: 0 !important;
+  pointer-events: none;
+}
+
+.introExperienceV3 {
+  position: relative;
+  height: 285svh;
+  background: #050505;
+  color: #eef4fa;
+  --neural-progress: 0;
+}
+
+.neuralSticky {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  overflow: hidden;
+  background: #050505;
+}
+
+.neuralTunnelV3 {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transform: scale(1.055);
+  transition:
+    opacity .75s ease,
+    transform 1.15s cubic-bezier(.2,.8,.2,1);
+}
+
+.introExperienceV3.introAutoDone .neuralTunnelV3 {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.neuralSticky::before,
+.neuralSticky::after {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.neuralSticky::before {
+  inset: 0;
+  background:
+    radial-gradient(circle at 50% 50%, transparent 0 18%, rgba(5,5,5,.08) 44%, rgba(5,5,5,.72) 100%);
+}
+
+.neuralSticky::after {
+  left: 50%;
+  top: 50%;
+  width: min(36vw, 520px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  transform:
+    translate(-50%, -50%)
+    scale(calc(.42 + var(--neural-progress) * .86));
+  border: 1px solid rgba(143,163,192,.13);
+  box-shadow:
+    0 0 calc(30px + var(--neural-progress) * 70px) rgba(143,163,192,.06),
+    inset 0 0 70px rgba(143,163,192,.025);
+  opacity: calc(.18 + var(--neural-progress) * .6);
+}
+
+.neuralHud {
+  position: absolute;
+  z-index: 5;
+  left: 22px;
+  right: 22px;
+  bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  color: rgba(233,238,245,.44);
+  font: 600 7px/1 var(--mono);
+  letter-spacing: .15em;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity .5s ease .2s, transform .5s ease .2s;
+  pointer-events: none;
+}
+
+.introExperienceV3.introAutoDone .neuralHud {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.neuralCoreCopy {
+  position: absolute;
+  z-index: 4;
+  left: 50%;
+  top: 50%;
+  width: min(720px, 72vw);
+  transform:
+    translate(-50%, -50%)
+    scale(calc(.88 + var(--neural-progress) * .12));
+  display: grid;
+  grid-template-columns: auto 1fr auto 1fr auto;
+  gap: 14px;
+  align-items: center;
+  color: rgba(233,238,245,.48);
+  font: 600 7px/1 var(--mono);
+  letter-spacing: .15em;
+  opacity: calc(var(--neural-progress) * .72);
+  pointer-events: none;
+}
+
+.neuralCoreCopy i {
+  display: block;
+  height: 1px;
+  background:
+    linear-gradient(90deg, transparent, rgba(143,163,192,.58), transparent);
+  transform: scaleX(var(--neural-progress));
+}
+
+.autoPushIntro {
+  position: fixed;
+  z-index: 15000;
+  inset: 0;
+  overflow: hidden;
+  opacity: var(--auto-overlay-opacity, 1);
+  visibility: visible;
+  background: #050505;
+  pointer-events: auto;
+  will-change: opacity;
+}
+
+.introExperienceV3.introAutoDone .autoPushIntro {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.autoPushBlack {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 78% 35%, rgba(255,255,255,.018), transparent 24%),
+    #050505;
+}
+
+.autoPushWhite {
+  position: absolute;
+  z-index: 2;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: var(--auto-edge, 28%);
+  overflow: hidden;
+  background: #f3f1eb;
+  box-shadow: 14px 0 44px rgba(0,0,0,.12);
+  will-change: width;
+}
+
+.autoPushWhite::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 24% 34%, rgba(0,0,0,.018), transparent 28%);
+}
+
+.autoPushType {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 100vw;
+  transform: translateY(-48%);
+  display: grid;
+  opacity: var(--auto-name-opacity, 0);
+  pointer-events: none;
+}
+
+.autoPushType span,
+.autoPushType strong {
+  display: block;
+  width: max-content;
+  margin-left: clamp(29vw, 38vw, 44vw);
+  color: #ff5147;
+  font-family: var(--serif);
+  font-weight: 500;
+  line-height: .66;
+  letter-spacing: -.078em;
+  white-space: nowrap;
+}
+
+.autoPushType span {
+  font-size: clamp(92px, 15vw, 250px);
+}
+
+.autoPushType strong {
+  margin-top: .02em;
+  font-size: clamp(108px, 17vw, 290px);
+}
+
+.autoPushMeta {
+  position: absolute;
+  left: 28px;
+  bottom: 24px;
+  width: calc(100vw - 56px);
+  display: flex;
+  justify-content: space-between;
+  color: rgba(8,9,11,.46);
+  font: 600 7px/1 var(--mono);
+  letter-spacing: .14em;
+  opacity: var(--auto-name-opacity, 0);
+}
+
+.autoPushDivider {
+  position: absolute;
+  z-index: 5;
+  left: var(--auto-edge, 28%);
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: rgba(12,12,12,.94);
+  will-change: left;
+}
+
+.autoPushDivider::before {
+  content: "";
+  position: absolute;
+  left: -17px;
+  top: 0;
+  bottom: 0;
+  width: 34px;
+  background: linear-gradient(90deg, transparent, rgba(0,0,0,.09), transparent);
+  opacity: .4;
+}
+
+.autoPushDivider i {
+  position: absolute;
+  left: -2px;
+  top: 50%;
+  width: 5px;
+  height: clamp(84px, 11vh, 122px);
+  transform: translateY(-50%);
+  background: #ff5147;
+  box-shadow: 0 0 22px rgba(255,81,71,.15);
+  opacity: calc(.12 + var(--auto-name-opacity) * .8);
+}
+
+.autoPushBoy {
+  position: absolute;
+  z-index: 8;
+  left: var(--auto-edge, 28%);
+  top: 52%;
+  width: clamp(235px, 25vw, 390px);
+  transform:
+    translate(-87%, calc(-50% + var(--auto-boy-y, 0px)))
+    rotate(var(--auto-boy-rotate, -3deg));
+  transform-origin: 86% 48%;
+  opacity: var(--auto-boy-opacity, 1);
+  filter: drop-shadow(0 18px 20px rgba(0,0,0,.08));
+  pointer-events: none;
+  will-change: left, transform, opacity;
+}
+
+.autoPushBoy img {
+  display: block;
+  width: 100%;
+  height: auto;
+  user-select: none;
+}
+
+.autoPushHud {
+  position: absolute;
+  z-index: 12;
+  left: 18px;
+  right: 18px;
+  top: 18px;
+  display: flex;
+  justify-content: space-between;
+  mix-blend-mode: difference;
+  color: white;
+  font: 600 7px/1 var(--mono);
+  letter-spacing: .15em;
+  pointer-events: none;
+}
+
+@media (max-width: 900px) {
+  .autoPushBoy {
+    width: clamp(190px, 31vw, 300px);
+    top: 54%;
+  }
+
+  .autoPushType span,
+  .autoPushType strong {
+    margin-left: 30vw;
+  }
+
+  .autoPushType span {
+    font-size: clamp(72px, 17vw, 170px);
+  }
+
+  .autoPushType strong {
+    font-size: clamp(88px, 20vw, 200px);
+  }
+}
+
+@media (max-width: 640px) {
+  .introExperienceV3 {
+    height: 230svh;
+  }
+
+  .autoPushBoy {
+    width: 190px;
+    top: 57%;
+  }
+
+  .autoPushType {
+    top: 44%;
+  }
+
+  .autoPushType span,
+  .autoPushType strong {
+    margin-left: 18vw;
+  }
+
+  .autoPushType span {
+    font-size: 21vw;
+  }
+
+  .autoPushType strong {
+    font-size: 24vw;
+  }
+
+  .autoPushMeta {
+    left: 14px;
+    bottom: 14px;
+    width: calc(100vw - 28px);
+  }
+
+  .autoPushMeta span:last-child {
+    display: none;
+  }
+
+  .autoPushHud {
+    left: 14px;
+    right: 14px;
+  }
+
+  .neuralCoreCopy {
+    width: 84vw;
+    grid-template-columns: auto 1fr auto;
+  }
+
+  .neuralCoreCopy i:nth-of-type(2),
+  .neuralCoreCopy span:last-child {
+    display: none;
+  }
+}
