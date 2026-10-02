@@ -4097,3 +4097,212 @@ body {
   font: 600 8px/1 var(--mono);
   letter-spacing: .14em;
 }
+
+
+/* =========================================================
+   HOTFIX — CLEAN HERO + ZERO-LAG CHAPTERS
+   ========================================================= */
+
+[data-chapter] {
+  will-change: auto !important;
+  filter: none !important;
+}
+
+.introducing {
+  min-height: 100svh;
+  background: #b5c4d8;
+}
+
+.introducing::after {
+  background:
+    linear-gradient(90deg, rgba(255,255,255,.08), transparent 18%, transparent 82%, rgba(255,255,255,.06)),
+    radial-gradient(circle at 50% 62%, transparent 0 32%, rgba(8,9,11,.025) 74%, rgba(8,9,11,.065) 100%);
+}
+
+.introducingGrid {
+  grid-template-columns: minmax(190px,.72fr) minmax(420px,1.18fr) minmax(300px,.82fr);
+  gap: clamp(20px,2.6vw,48px);
+  max-width: 1540px;
+  padding-top: 78px;
+  padding-bottom: 62px;
+}
+
+.introducingBackTitle {
+  inset: 11% 0 auto;
+  opacity: .56;
+  line-height: .72;
+  mix-blend-mode: multiply;
+}
+
+.introducingBackTitle span {
+  font-size: clamp(68px, 8.2vw, 148px);
+  letter-spacing: -.07em;
+}
+
+.introducingBackTitle strong {
+  margin-top: .03em;
+  font-size: clamp(104px, 12.6vw, 220px);
+  line-height: .7;
+  letter-spacing: -.08em;
+}
+
+.thoughtField {
+  min-height: 360px;
+  transform: translateY(3vh);
+}
+
+.thoughtLabel {
+  margin-bottom: 12px;
+  font-size: 7px;
+  opacity: .5;
+}
+
+.thoughtCloud {
+  height: 230px;
+}
+
+.laptopSignal {
+  width: 82%;
+  margin-top: 12px;
+}
+
+.modelDock {
+  min-height: 610px;
+  z-index: 4;
+}
+
+.modelHalo {
+  width: 64%;
+  opacity: .45;
+  animation-duration: 10s;
+}
+
+.heroFallbackClean {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  filter: drop-shadow(0 28px 42px rgba(20,25,36,.18));
+}
+
+.heroFallbackPortrait {
+  position: absolute;
+  top: 13%;
+  width: min(42%, 220px);
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: 50%;
+  border: 1px solid rgba(8,9,11,.16);
+  background: rgba(233,238,245,.28);
+  box-shadow: 0 0 0 18px rgba(233,238,245,.06);
+}
+
+.heroFallbackPortrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.heroFallbackLaptopClean {
+  position: absolute;
+  left: 50%;
+  bottom: 15%;
+  width: min(72%, 430px);
+  height: 31%;
+  transform: translateX(-50%) perspective(800px) rotateX(-5deg);
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(255,255,255,.12);
+  background:
+    linear-gradient(145deg, rgba(255,255,255,.055), transparent 24%),
+    #111318;
+  box-shadow: 0 28px 42px rgba(0,0,0,.2);
+}
+
+.heroFallbackLaptopClean::after {
+  content: "";
+  position: absolute;
+  left: -4%;
+  right: -4%;
+  bottom: -13px;
+  height: 13px;
+  transform: perspective(500px) rotateX(65deg);
+  background: #171a20;
+}
+
+.heroFallbackLaptopClean span {
+  color: rgba(233,238,245,.42);
+  font-weight: 800;
+  letter-spacing: .2em;
+}
+
+.aboutPanel {
+  gap: 38px;
+}
+
+.aboutCopy {
+  max-width: 390px;
+  padding: 16px 0 18px;
+}
+
+.aboutCopy h2 {
+  margin: 16px 0 12px;
+  max-width: 360px;
+  font-size: clamp(34px, 3vw, 54px);
+  line-height: .9;
+}
+
+.aboutCopy p {
+  max-width: 345px;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.heroPrimaryCta {
+  margin-top: 22px;
+}
+
+.socialPanel > .kicker {
+  margin-bottom: 10px;
+}
+
+.flipLink {
+  min-height: 62px;
+}
+
+.flipLinkWord {
+  height: 34px;
+  font-size: clamp(28px, 2.45vw, 46px);
+}
+
+.chapterRail {
+  opacity: .72;
+}
+
+.techIconTrailCanvas {
+  opacity: .5;
+}
+
+@media (max-width: 1100px) {
+  .introducingGrid {
+    grid-template-columns: minmax(160px,.7fr) minmax(360px,1.15fr) minmax(260px,.8fr);
+    gap: 18px;
+  }
+
+  .introducingBackTitle span { font-size: 8.4vw; }
+  .introducingBackTitle strong { font-size: 13vw; }
+  .aboutCopy h2 { font-size: clamp(32px,4vw,48px); }
+}
+
+@media (max-width: 760px) {
+  .introducingBackTitle {
+    inset: 9% 0 auto;
+    opacity: .4;
+  }
+
+  .introducingBackTitle span { font-size: 15vw; }
+  .introducingBackTitle strong { font-size: 23vw; }
+  .heroFallbackPortrait { top: 16%; width: 40%; }
+  .heroFallbackLaptopClean { width: 76%; bottom: 14%; }
+}
