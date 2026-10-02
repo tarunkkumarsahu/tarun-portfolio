@@ -195,16 +195,18 @@ export function WorksWheel({
       >
         <div ref={wheelRef} className="worksWheelRotor">
           {items.map((item, index) => {
-            const Tag = item.href ? "a" : "div";
             return (
-              <Tag
+              <a
                 key={item.title}
                 ref={(node: HTMLElement | null) => {
                   cardRefs.current[index] = node;
                 }}
-                href={item.href}
+                href={item.href ?? "#"}
                 target={item.href ? "_blank" : undefined}
                 rel={item.href ? "noreferrer" : undefined}
+                onClick={(event) => {
+                  if (!item.href) event.preventDefault();
+                }}
                 role="option"
                 aria-selected={index === active}
                 className="worksWheelCard"
@@ -222,7 +224,7 @@ export function WorksWheel({
                   <small>{item.meta ?? `SYS / ${String(index + 1).padStart(2, "0")}`}</small>
                   {item.href ? <b>{action} ↗</b> : null}
                 </span>
-              </Tag>
+              </a>
             );
           })}
         </div>
