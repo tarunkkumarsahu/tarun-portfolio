@@ -198,6 +198,7 @@ export function Workstation() {
               label="WORKS '26"
               action="SELECT"
               linkCards={false}
+              showActiveTitle={false}
               onActiveChange={syncActiveProject}
             />
           </div>
