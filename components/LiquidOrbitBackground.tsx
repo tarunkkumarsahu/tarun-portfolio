@@ -149,7 +149,7 @@ export function LiquidOrbitBackground() {
     let previousAt = performance.now();
 
     const resize = () => {
-      const dpr = Math.min(window.devicePixelRatio || 1, 1.75);
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.25);
       const rect = canvas.getBoundingClientRect();
       canvas.width = Math.max(1, Math.floor(rect.width * dpr));
       canvas.height = Math.max(1, Math.floor(rect.height * dpr));
@@ -195,9 +195,24 @@ export function LiquidOrbitBackground() {
     resize();
 
     let raf = 0;
+    let visible = true;
+    let lastFrame = 0;
     const started = performance.now();
 
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        visible = entry.isIntersecting;
+      },
+      { threshold: 0.02 },
+    );
+    observer.observe(canvas);
+
     const draw = (nowMs: number) => {
+      if (!visible || nowMs - lastFrame < 24) {
+        raf = requestAnimationFrame(draw);
+        return;
+      }
+      lastFrame = nowMs;
       const time = (nowMs - started) / 1000;
       const clickAge = nowMs / 1000 - click.at;
 
@@ -220,6 +235,7 @@ export function LiquidOrbitBackground() {
 
     return () => {
       cancelAnimationFrame(raf);
+      observer.disconnect();
       window.removeEventListener("resize", resize);
       window.removeEventListener("pointermove", move);
       window.removeEventListener("pointerdown", clickHandler);
