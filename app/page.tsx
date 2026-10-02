@@ -1,10 +1,12 @@
 import { IntroExperience } from "@/components/IntroExperience";
 import { IntroducingTarun } from "@/components/sections/IntroducingTarun";
 import { LivingSystem } from "@/components/sections/LivingSystem";
+import { TechCursor } from "@/components/TechCursor";
 
 export default function Home() {
   return (
     <main className="portfolioRoot">
+      <TechCursor />
       <aside className="siteRail" aria-label="Portfolio navigation" data-liquid-exclude>
         <a href="#about">01</a>
         <a href="#system">02</a>
@@ -19,7 +21,7 @@ export default function Home() {
       <IntroducingTarun />
       <LivingSystem />
 
-      <section className="chapterPlaceholder methodChapter" id="method">
+      <section className="chapterPlaceholder methodChapter" id="method" data-chapter>
         <div className="pageChrome">
           <span>03 / METHOD</span>
           <span>RESEARCH → BUILD → BREAK → REBUILD</span>
@@ -36,7 +38,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="chapterPlaceholder sideQuestChapter" id="side-quests">
+      <section className="chapterPlaceholder sideQuestChapter" id="side-quests" data-chapter>
         <div className="pageChrome">
           <span>04 / SIDE QUESTS</span>
           <span>CURIOSITY OUTSIDE THE MAIN THREAD</span>
@@ -50,7 +52,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="chapterPlaceholder resumeChapter" id="resume">
+      <section className="chapterPlaceholder resumeChapter" id="resume" data-chapter>
         <div className="pageChrome">
           <span>05 / SYSTEM FILE</span>
           <span>RESUME / FACTS PENDING</span>
@@ -63,7 +65,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="chapterPlaceholder responseChapter" id="response">
+      <section className="chapterPlaceholder responseChapter" id="response" data-chapter>
         <div className="codeCeiling" aria-hidden="true">
           <span>01</span><span>&amp;&amp;</span><span>{"{}"}</span><span>!=</span><span>101</span><span>&lt;/&gt;</span>
         </div>
@@ -78,7 +80,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="workstationChapter" id="workstation">
+      <section className="workstationChapter" id="workstation" data-chapter>
         <div className="pageChrome lightChrome">
           <span>WORKSTATION / ONLINE</span>
           <span>PROJECT INDEX / NEXT BUILD PASS</span>
