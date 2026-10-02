@@ -6075,3 +6075,97 @@ body {
     flex-direction: column;
   }
 }
+
+
+/* RESUME COMPOSITION HOTFIX */
+
+.systemFileV4 {
+  padding-top: 112px;
+  padding-bottom: 112px;
+  overflow: hidden !important;
+}
+
+.systemFileV4 .systemFileGrid {
+  width: min(1320px, 92vw);
+  grid-template-columns: minmax(0, 1.22fr) minmax(310px, .64fr);
+  gap: clamp(34px, 4.5vw, 72px);
+  align-items: start;
+}
+
+.systemFileV4 .mainPaper {
+  z-index: 2;
+  min-height: 0 !important;
+  transform: rotate(-1deg);
+}
+
+.systemFileV4 .systemFileStack {
+  position: relative;
+  z-index: 3;
+  display: grid;
+  grid-template-columns: 1fr !important;
+  gap: 30px;
+  padding-top: 76px;
+}
+
+.systemFileV4 .capabilityPaper,
+.systemFileV4 .currentlyPaper {
+  position: relative !important;
+  inset: auto !important;
+  width: auto !important;
+  min-height: 0 !important;
+}
+
+.systemFileV4 .capabilityPaper {
+  transform: rotate(1.6deg);
+}
+
+.systemFileV4 .currentlyPaper {
+  transform: rotate(-1.4deg);
+}
+
+.systemFileV4 .mainPaper header h2 {
+  font-size: clamp(72px, 7.2vw, 122px);
+  line-height: .67;
+}
+
+.systemFileV4 .mainPaper header p {
+  max-width: 560px;
+}
+
+.systemFileV4 .paperProfile {
+  width: min(520px, 88%);
+}
+
+.systemFileV4 .currentlyPaper h3 {
+  font-size: clamp(32px, 3vw, 50px);
+  line-height: .9;
+}
+
+@media (max-width: 1050px) {
+  .systemFileV4 .systemFileGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .systemFileV4 .systemFileStack {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    padding-top: 0;
+  }
+}
+
+@media (max-width: 720px) {
+  .systemFileV4 {
+    padding: 92px 16px 76px;
+  }
+
+  .systemFileV4 .systemFileGrid {
+    width: 100%;
+  }
+
+  .systemFileV4 .systemFileStack {
+    grid-template-columns: 1fr !important;
+  }
+
+  .systemFileV4 .mainPaper header h2 {
+    font-size: 18vw;
+  }
+}
