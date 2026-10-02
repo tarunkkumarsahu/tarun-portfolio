@@ -1751,3 +1751,890 @@ button {
     display: none;
   }
 }
+
+
+/* =========================================================
+   V2 — WORLD, NOT DASHBOARD
+   ========================================================= */
+
+:root {
+  --sans: var(--font-display), Arial, sans-serif;
+  --serif: var(--font-editorial), Georgia, serif;
+  --mono: var(--font-mono), "Cascadia Code", monospace;
+}
+
+body {
+  font-family: var(--sans);
+}
+
+/* chapter rail */
+
+.siteRail {
+  display: none !important;
+}
+
+.chapterRail {
+  position: fixed;
+  z-index: 8000;
+  top: 50%;
+  right: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  transform: translateY(-50%);
+  color: white;
+  mix-blend-mode: difference;
+}
+
+.chapterRailLine {
+  position: absolute;
+  top: 8px;
+  bottom: 8px;
+  right: 4px;
+  width: 1px;
+  background: rgba(255,255,255,.22);
+}
+
+.chapterRail a {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 24px;
+  align-items: center;
+  min-height: 12px;
+  color: inherit;
+}
+
+.chapterRailDot {
+  grid-column: 2;
+  justify-self: end;
+  width: 9px;
+  height: 9px;
+  border: 1px solid rgba(255,255,255,.55);
+  border-radius: 50%;
+  background: transparent;
+  transform: scale(.45);
+  transition:
+    transform .3s cubic-bezier(.2,.8,.2,1),
+    background .3s ease,
+    box-shadow .3s ease;
+}
+
+.chapterRailCode {
+  position: absolute;
+  right: 17px;
+  font: 500 7px/1 var(--mono);
+  letter-spacing: .08em;
+  opacity: .34;
+  transition: opacity .25s ease;
+}
+
+.chapterRailLabel {
+  position: absolute;
+  right: 44px;
+  width: max-content;
+  transform: translateX(8px);
+  opacity: 0;
+  font: 500 7px/1 var(--mono);
+  letter-spacing: .14em;
+  transition: opacity .25s ease, transform .25s ease;
+}
+
+.chapterRail a:hover .chapterRailLabel,
+.chapterRail a.active .chapterRailLabel {
+  opacity: .86;
+  transform: translateX(0);
+}
+
+.chapterRail a.active .chapterRailDot {
+  transform: scale(1);
+  background: white;
+  box-shadow: 0 0 20px rgba(255,255,255,.55);
+}
+
+.chapterRail a.active .chapterRailCode {
+  opacity: 1;
+}
+
+/* supplied tech-cursor particle layer */
+
+.techIconTrailCanvas {
+  position: fixed;
+  z-index: 9997;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: .78;
+}
+
+/* Page 2 rebuilt as a spatial system */
+
+.spatialSystem {
+  min-height: 330svh;
+  background:
+    radial-gradient(circle at 50% 38%, rgba(143,163,192,.08), transparent 28%),
+    #060708;
+}
+
+.spatialSystem .livingGrid {
+  opacity: .28;
+  background-size: 54px 54px;
+  mask-image: radial-gradient(circle at 50% 45%, black 0 42%, transparent 82%);
+}
+
+.livingSticky {
+  position: sticky;
+  top: 0;
+  min-height: 100svh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  overflow: hidden;
+  padding-top: 72px;
+}
+
+.spatialSystem .livingHeading {
+  width: min(100% - 80px, 1540px);
+  padding-top: 20px;
+}
+
+.spatialMachine {
+  position: relative;
+  width: min(100% - 60px, 1580px);
+  min-height: 58vh;
+  margin: 0 auto;
+  isolation: isolate;
+}
+
+.systemConstellation {
+  position: absolute;
+  z-index: 0;
+  inset: 4% 0 0;
+  width: 100%;
+  height: 92%;
+  overflow: visible;
+}
+
+.systemConstellation path {
+  fill: none;
+  stroke: rgba(143,163,192,.18);
+  stroke-width: .8;
+  stroke-dasharray: 4 8;
+  animation: constellationFlow 8s linear infinite;
+}
+
+.systemConstellation .pathB {
+  animation-direction: reverse;
+  stroke: rgba(233,238,245,.10);
+}
+
+.systemConstellation .pathC {
+  stroke: rgba(255,74,56,.13);
+  animation-duration: 11s;
+}
+
+.systemConstellation circle {
+  fill: rgba(233,238,245,.78);
+  filter: drop-shadow(0 0 8px rgba(233,238,245,.65));
+}
+
+.perceptionField,
+.actionField {
+  position: absolute;
+  z-index: 3;
+  top: 50%;
+  transform: translateY(-50%);
+  width: min(27vw, 380px);
+  min-height: 310px;
+}
+
+.perceptionField {
+  left: 2%;
+}
+
+.actionField {
+  right: 2%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  text-align: right;
+}
+
+.fieldIndex,
+.fieldEyebrow,
+.actionLabel {
+  display: block;
+  font: 500 8px/1 var(--mono);
+  letter-spacing: .16em;
+  color: rgba(233,238,245,.43);
+}
+
+.fieldIndex {
+  margin-bottom: 15px;
+  font-size: 10px;
+  color: var(--signal);
+}
+
+.targetGlyph {
+  position: relative;
+  width: min(24vw, 300px);
+  aspect-ratio: 1.2;
+  margin-top: 28px;
+  background:
+    linear-gradient(rgba(233,238,245,.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(233,238,245,.035) 1px, transparent 1px);
+  background-size: 9px 9px;
+  mask-image: radial-gradient(circle, black 35%, transparent 90%);
+}
+
+.targetGlyph > i {
+  position: absolute;
+  width: 38%;
+  height: 38%;
+  border-color: rgba(233,238,245,.72);
+}
+
+.targetGlyph > i:nth-child(1) {
+  left: 7%; top: 8%;
+  border-left: 1px solid;
+  border-top: 1px solid;
+}
+
+.targetGlyph > i:nth-child(2) {
+  right: 7%; top: 8%;
+  border-right: 1px solid;
+  border-top: 1px solid;
+}
+
+.targetGlyph > i:nth-child(3) {
+  left: 7%; bottom: 8%;
+  border-left: 1px solid;
+  border-bottom: 1px solid;
+}
+
+.targetGlyph > i:nth-child(4) {
+  right: 7%; bottom: 8%;
+  border-right: 1px solid;
+  border-bottom: 1px solid;
+}
+
+.targetGlyph::before {
+  content: "";
+  position: absolute;
+  inset: 22% 27%;
+  border: 1px solid rgba(255,74,56,.88);
+  box-shadow: 0 0 32px rgba(255,74,56,.07);
+  animation: targetLock 2.6s ease-in-out infinite;
+}
+
+.targetGlyph::after {
+  content: "";
+  position: absolute;
+  left: 7%;
+  right: 7%;
+  top: 50%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(233,238,245,.85), transparent);
+  box-shadow: 0 0 14px rgba(233,238,245,.6);
+  animation: scanFloat 3.2s ease-in-out infinite;
+}
+
+.targetGlyph span {
+  position: absolute;
+  left: 28%;
+  top: 17%;
+  color: var(--signal);
+  font: 600 8px/1 var(--mono);
+  letter-spacing: .08em;
+}
+
+.perceptionField > small {
+  display: block;
+  margin-top: 17px;
+  color: rgba(233,238,245,.58);
+  font: 500 9px/1.3 var(--mono);
+  letter-spacing: .06em;
+}
+
+.intelligenceCore {
+  position: absolute;
+  z-index: 5;
+  left: 50%;
+  top: 50%;
+  width: clamp(250px, 25vw, 430px);
+  aspect-ratio: 1;
+  transform: translate(-50%,-50%);
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 10px;
+  border: 0;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 50% 45%, rgba(233,238,245,.13), rgba(143,163,192,.035) 42%, transparent 68%);
+  cursor: pointer;
+  isolation: isolate;
+}
+
+.intelligenceCore::before {
+  content: "";
+  position: absolute;
+  inset: 27%;
+  z-index: -1;
+  border-radius: 50%;
+  background: rgba(143,163,192,.08);
+  box-shadow:
+    0 0 70px rgba(143,163,192,.2),
+    0 0 150px rgba(143,163,192,.08);
+  animation: corePulse 3s ease-in-out infinite;
+}
+
+.intelligenceCore small,
+.intelligenceCore em {
+  font: 500 7px/1 var(--mono);
+  letter-spacing: .16em;
+  color: rgba(233,238,245,.44);
+  font-style: normal;
+}
+
+.intelligenceCore strong {
+  max-width: 260px;
+  font-size: clamp(38px, 4.3vw, 76px);
+  line-height: .78;
+  letter-spacing: -.075em;
+  text-align: center;
+}
+
+.coreShell {
+  position: absolute;
+  inset: 7%;
+  z-index: -1;
+  border: 1px solid rgba(143,163,192,.19);
+  border-radius: 50%;
+}
+
+.shellA {
+  animation: coreOrbit 16s linear infinite;
+}
+
+.shellB {
+  inset: -7%;
+  border-style: dashed;
+  border-color: rgba(233,238,245,.12);
+  animation: coreOrbit 27s linear infinite reverse;
+}
+
+.shellC {
+  inset: -23%;
+  border-color: rgba(255,74,56,.11);
+  animation: coreOrbit 38s linear infinite;
+}
+
+.coreCrosshair::before,
+.coreCrosshair::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  background: linear-gradient(90deg, transparent, rgba(233,238,245,.12), transparent);
+  transform: translate(-50%,-50%);
+}
+
+.coreCrosshair::before {
+  width: 150%;
+  height: 1px;
+}
+
+.coreCrosshair::after {
+  width: 1px;
+  height: 150%;
+}
+
+.actionObject {
+  position: relative;
+  width: min(22vw, 300px);
+  height: 230px;
+  margin: 18px 0 8px;
+}
+
+.actionArm {
+  position: absolute;
+  left: 35%;
+  bottom: 28%;
+  height: 5px;
+  transform-origin: left center;
+  background: linear-gradient(90deg, var(--steel), var(--silver));
+  box-shadow: 0 0 16px rgba(143,163,192,.18);
+}
+
+.actionArm.a1 {
+  width: 42%;
+  transform: rotate(-57deg);
+  animation: armOne 4.2s ease-in-out infinite;
+}
+
+.actionArm.a2 {
+  width: 34%;
+  left: 58%;
+  bottom: 58%;
+  transform: rotate(18deg);
+  animation: armTwo 4.2s ease-in-out infinite;
+}
+
+.actionNode {
+  position: absolute;
+  right: 13%;
+  top: 22%;
+  width: 30px;
+  height: 30px;
+  border: 1px solid rgba(255,74,56,.85);
+  border-radius: 50%;
+  box-shadow: 0 0 28px rgba(255,74,56,.15);
+}
+
+.actionWave {
+  position: absolute;
+  right: calc(13% + 8px);
+  top: calc(22% + 8px);
+  width: 14px;
+  height: 14px;
+  border: 1px solid rgba(255,74,56,.78);
+  border-radius: 50%;
+  animation: actuatorPing 2.2s ease-out infinite;
+}
+
+.actionField > strong {
+  max-width: 330px;
+  font-size: clamp(30px, 3vw, 54px);
+  line-height: .82;
+  letter-spacing: -.06em;
+}
+
+.floatingStates span {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  color: rgba(233,238,245,.24);
+  font: 500 7px/1 var(--mono);
+  letter-spacing: .12em;
+  animation: stateDrift 5s ease-in-out infinite alternate;
+}
+
+.spatialNarrative {
+  width: min(100% - 80px, 1540px);
+  margin: 0 auto 26px;
+  border: 0;
+  border-top: 1px solid rgba(233,238,245,.10);
+  padding-top: 16px;
+}
+
+.spatialNarrative p {
+  max-width: 740px;
+  font-size: 12px;
+}
+
+.spatialSystem .systemMarquee {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+/* Works Wheel */
+
+.workstationV2 {
+  display: block;
+  min-height: 200svh;
+  background:
+    radial-gradient(circle at 50% 42%, rgba(143,163,192,.08), transparent 28%),
+    #060708;
+}
+
+.workstationIntro {
+  position: relative;
+  z-index: 3;
+  width: min(100% - 64px, 1500px);
+  margin: 0 auto;
+  padding-top: 13vh;
+}
+
+.workstationIntro .kicker {
+  color: var(--signal);
+}
+
+.workstationIntro h2 {
+  margin: 24px 0 14px;
+  font-size: clamp(90px, 13vw, 230px);
+  line-height: .68;
+  letter-spacing: -.095em;
+}
+
+.workstationIntro p {
+  width: min(560px, 90%);
+  margin: 0 0 0 auto;
+  color: rgba(243,240,232,.52);
+  font: 400 clamp(22px, 2vw, 34px)/1.08 var(--serif);
+  font-style: italic;
+}
+
+.workstationWheel {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  margin-top: 20vh;
+}
+
+.worksWheel {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  color: var(--ivory);
+  background: transparent;
+}
+
+.worksWheelStage {
+  position: absolute;
+  inset: 0;
+  outline: none;
+  touch-action: pan-x;
+  cursor: grab;
+}
+
+.worksWheelStage:active {
+  cursor: grabbing;
+}
+
+.worksWheelRotor {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform-style: preserve-3d;
+}
+
+.worksWheelCard {
+  position: absolute;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+  transition: opacity .2s ease;
+}
+
+.worksWheelFace {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border: 1px solid rgba(233,238,245,.14);
+  background: #0b0d11;
+  box-shadow: 0 28px 70px rgba(0,0,0,.34);
+  transform-origin: center;
+}
+
+.worksWheelFace::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, transparent 45%, rgba(5,6,8,.88)),
+    radial-gradient(circle at 70% 20%, rgba(143,163,192,.08), transparent 36%);
+  pointer-events: none;
+}
+
+.worksWheelFace img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  filter: saturate(.62) contrast(1.05) brightness(.78);
+  transition: filter .35s ease, transform .55s cubic-bezier(.2,.8,.2,1);
+}
+
+.worksWheelCard:hover img {
+  filter: saturate(.92) contrast(1.06) brightness(.92);
+  transform: scale(1.025);
+}
+
+.worksWheelFace small {
+  position: absolute;
+  z-index: 2;
+  left: 14px;
+  top: 14px;
+  font: 500 7px/1 var(--mono);
+  letter-spacing: .14em;
+  color: rgba(243,240,232,.68);
+}
+
+.worksWheelFace b {
+  position: absolute;
+  z-index: 2;
+  right: 14px;
+  bottom: 14px;
+  font: 500 7px/1 var(--mono);
+  letter-spacing: .12em;
+  color: rgba(243,240,232,.8);
+}
+
+.worksWheelScan {
+  position: absolute;
+  z-index: 2;
+  left: 0;
+  right: 0;
+  top: -2px;
+  height: 1px;
+  background: rgba(243,240,232,.78);
+  box-shadow: 0 0 13px rgba(243,240,232,.42);
+  opacity: 0;
+  transition: opacity .2s;
+  animation: wheelScan 3.7s linear infinite;
+}
+
+.worksWheelCard:hover .worksWheelScan {
+  opacity: .65;
+}
+
+.worksWheelCenterLabel {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 10px;
+  pointer-events: none;
+  text-align: center;
+}
+
+.worksWheelCenterLabel span {
+  font-size: clamp(42px, 5vw, 86px);
+  font-weight: 650;
+  letter-spacing: -.065em;
+}
+
+.worksWheelCenterLabel small {
+  font: 500 7px/1 var(--mono);
+  letter-spacing: .15em;
+  color: rgba(243,240,232,.42);
+}
+
+.worksWheelActiveCopy {
+  position: absolute;
+  z-index: 4;
+  left: 5vw;
+  top: 50%;
+  width: min(29vw, 430px);
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.worksWheelActiveCopy > span {
+  color: var(--signal);
+  font: 500 8px/1 var(--mono);
+  letter-spacing: .14em;
+}
+
+.worksWheelActiveCopy h3 {
+  margin: 20px 0 18px;
+  font-size: clamp(48px, 5.2vw, 96px);
+  line-height: .76;
+  letter-spacing: -.08em;
+}
+
+.worksWheelActiveCopy p {
+  max-width: 350px;
+  margin: 0;
+  color: rgba(243,240,232,.48);
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.worksWheelIndex {
+  position: absolute;
+  z-index: 5;
+  top: 50%;
+  right: 3vw;
+  display: grid;
+  gap: 7px;
+  transform: translateY(-50%);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.worksWheelIndex button {
+  display: grid;
+  grid-template-columns: 24px auto;
+  gap: 9px;
+  border: 0;
+  padding: 0;
+  color: rgba(243,240,232,.26);
+  background: transparent;
+  font: 500 7px/1 var(--mono);
+  letter-spacing: .1em;
+  text-align: left;
+  transition: color .25s ease, transform .25s ease;
+}
+
+.worksWheelIndex button span {
+  color: rgba(255,74,56,.42);
+}
+
+.worksWheelIndex button:hover,
+.worksWheelIndex button.active {
+  color: rgba(243,240,232,.9);
+  transform: translateX(-5px);
+}
+
+.workstationFooter {
+  position: absolute;
+  left: 32px;
+  right: 32px;
+  bottom: 22px;
+  display: flex;
+  justify-content: space-between;
+  color: rgba(243,240,232,.34);
+  font: 500 7px/1 var(--mono);
+  letter-spacing: .13em;
+}
+
+/* animations */
+
+@keyframes constellationFlow {
+  to { stroke-dashoffset: -48; }
+}
+
+@keyframes targetLock {
+  0%,100% { transform: scale(.92); opacity: .5; }
+  50% { transform: scale(1.04); opacity: 1; }
+}
+
+@keyframes scanFloat {
+  0%,100% { transform: translateY(-70px); opacity: .15; }
+  50% { transform: translateY(70px); opacity: .9; }
+}
+
+@keyframes stateDrift {
+  from { transform: translate3d(-4px,-3px,0); opacity: .15; }
+  to { transform: translate3d(8px,6px,0); opacity: .42; }
+}
+
+@keyframes wheelScan {
+  from { transform: translateY(-4px); }
+  to { transform: translateY(320px); }
+}
+
+@media (max-width: 980px) {
+  .chapterRail {
+    display: none;
+  }
+
+  .perceptionField,
+  .actionField {
+    width: 29vw;
+  }
+
+  .worksWheelActiveCopy {
+    left: 24px;
+    width: 35vw;
+  }
+
+  .worksWheelIndex {
+    display: none;
+  }
+}
+
+@media (max-width: 760px) {
+  .spatialSystem {
+    min-height: 260svh;
+  }
+
+  .livingSticky {
+    padding-top: 62px;
+  }
+
+  .spatialSystem .livingHeading {
+    width: calc(100% - 28px);
+  }
+
+  .spatialMachine {
+    width: calc(100% - 28px);
+    min-height: 62vh;
+  }
+
+  .perceptionField {
+    left: 0;
+    top: 40%;
+    width: 42%;
+    transform: translateY(-50%) scale(.82);
+    transform-origin: left center;
+  }
+
+  .actionField {
+    right: 0;
+    top: 63%;
+    width: 42%;
+    transform: translateY(-50%) scale(.82);
+    transform-origin: right center;
+  }
+
+  .intelligenceCore {
+    width: 185px;
+  }
+
+  .intelligenceCore strong {
+    font-size: 34px;
+  }
+
+  .floatingStates {
+    display: none;
+  }
+
+  .spatialNarrative {
+    width: calc(100% - 28px);
+  }
+
+  .workstationIntro {
+    width: calc(100% - 28px);
+    padding-top: 12vh;
+  }
+
+  .workstationIntro p {
+    margin-left: 0;
+  }
+
+  .workstationWheel {
+    margin-top: 10vh;
+  }
+
+  .worksWheelActiveCopy {
+    left: 18px;
+    right: 18px;
+    top: 15%;
+    width: auto;
+    transform: none;
+  }
+
+  .worksWheelActiveCopy h3 {
+    font-size: 48px;
+  }
+
+  .worksWheelActiveCopy p {
+    max-width: 280px;
+  }
+
+  .worksWheelCenterLabel span {
+    font-size: 34px;
+  }
+
+  .workstationFooter {
+    left: 16px;
+    right: 16px;
+  }
+
+  .workstationFooter span:last-child {
+    display: none;
+  }
+
+  .techIconTrailCanvas {
+    display: none;
+  }
+}
