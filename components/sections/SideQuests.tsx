@@ -4,6 +4,8 @@ const INTERESTS = [
     title: "3D / BLENDER",
     tag: "FORM / LIGHT / SPACE",
     note: "Characters, hero assets and spatial scenes for the web.",
+    thought: "I like turning flat ideas into spaces you can almost enter.",
+    action: "EXPLORE",
     kind: "blender",
   },
   {
@@ -11,6 +13,8 @@ const INTERESTS = [
     title: "PHOTOGRAPHY",
     tag: "FRAME / LIGHT / MOMENT",
     note: "Finding structure, mood and small details inside ordinary scenes.",
+    thought: "I notice light before I notice the subject.",
+    action: "VIEW",
     kind: "photo",
   },
   {
@@ -18,6 +22,8 @@ const INTERESTS = [
     title: "SKETCHING",
     tag: "LINE / SHAPE / IDEA",
     note: "A fast way to think visually before an idea becomes pixels or code.",
+    thought: "Where ideas exist before they need to make sense.",
+    action: "VIEW",
     kind: "sketch",
   },
   {
@@ -25,6 +31,8 @@ const INTERESTS = [
     title: "EDITING",
     tag: "RHYTHM / CUT / STORY",
     note: "Shaping raw visuals into something with pace, emphasis and intent.",
+    thought: "Finding rhythm inside raw footage.",
+    action: "PLAY",
     kind: "edit",
   },
   {
@@ -32,6 +40,8 @@ const INTERESTS = [
     title: "GAMING",
     tag: "SYSTEMS / STRATEGY / WORLD",
     note: "I notice mechanics, progression, economies and how worlds reward curiosity.",
+    thought: "I study systems even when I am supposed to be playing.",
+    action: "EXPLORE",
     kind: "gaming",
   },
   {
@@ -39,6 +49,8 @@ const INTERESTS = [
     title: "WEB MOTION",
     tag: "TYPE / SHADER / INTERACTION",
     note: "Making interfaces feel less like documents and more like responsive spaces.",
+    thought: "Interfaces should respond, not just exist.",
+    action: "PLAY",
     kind: "motion",
   },
 ] as const;
@@ -70,6 +82,7 @@ export function SideQuests() {
             key={interest.title}
             style={{ "--interest-index": index } as React.CSSProperties}
             data-cursor-hot
+            data-cursor-label={interest.action}
           >
             <div
               className={`interestVisual interestVisual-${interest.kind}`}
@@ -87,6 +100,10 @@ export function SideQuests() {
               <h3>{interest.title}</h3>
               <p>{interest.note}</p>
               <i aria-hidden="true">↗</i>
+              <div className="interestThought" aria-hidden="true">
+                <em>{interest.thought}</em>
+                <b>{interest.action}</b>
+              </div>
             </div>
           </article>
         ))}
@@ -94,10 +111,7 @@ export function SideQuests() {
 
       <div className="interestAssetNote">
         <span>PERSONAL MEDIA LAYER</span>
-        <p>
-          Photography, sketches, edits and Blender renders can drop into these
-          frames later without changing the layout.
-        </p>
+        <p>Things I make when nobody is waiting for a deliverable.</p>
       </div>
     </section>
   );
