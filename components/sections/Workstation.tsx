@@ -1,35 +1,36 @@
 import { WorksWheel, type WorksWheelItem } from "@/components/ui/works-wheel";
+import { ProjectDossiers } from "@/components/sections/ProjectDossiers";
 
 const PROJECTS: WorksWheelItem[] = [
   {
     title: "JARVIS OS",
     image: "https://opengraph.githubassets.com/1/tarunkkumarsahu/Jarvis-OS",
-    href: "https://github.com/tarunkkumarsahu/Jarvis-OS",
+    href: "#project-jarvis",
   },
   {
     title: "EXOCORTEX",
     image: "https://opengraph.githubassets.com/1/tarunkkumarsahu/EXOCROTEX",
-    href: "https://github.com/tarunkkumarsahu/EXOCROTEX",
+    href: "#project-exocortex",
   },
   {
     title: "FRESHFUSION",
     image: "https://opengraph.githubassets.com/1/tarunkkumarsahu/Fresh-Fusion-",
-    href: "https://github.com/tarunkkumarsahu/Fresh-Fusion-",
+    href: "#project-freshfusion",
   },
   {
     title: "RAKSHA GRID",
     image: "https://opengraph.githubassets.com/1/tarunkkumarsahu/raksha-grid",
-    href: "https://github.com/tarunkkumarsahu/raksha-grid",
+    href: "#project-raksha",
   },
   {
     title: "PRECISION WEEDING",
     image: "https://opengraph.githubassets.com/1/tarunkkumarsahu/smart-precision-weeding-robot",
-    href: "https://github.com/tarunkkumarsahu/smart-precision-weeding-robot",
+    href: "#project-weeding",
   },
   {
     title: "AGRINEXUS",
     image: "https://opengraph.githubassets.com/1/tarunkkumarsahu/agrinexus-ai",
-    href: "https://github.com/tarunkkumarsahu/agrinexus-ai",
+    href: "#project-agrinexus",
   },
 ];
 
@@ -70,6 +71,8 @@ export function Workstation() {
       <div className="workstationWheel">
         <WorksWheel items={PROJECTS} label="WORKS '26" action="OPEN" />
       </div>
+
+      <ProjectDossiers />
 
       <div className="workstationLab">
         <div className="labHeading">
