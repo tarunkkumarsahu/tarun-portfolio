@@ -1,3 +1,5 @@
+import { ResumeDownloadButton } from "@/components/ResumeDownloadButton";
+
 const SYSTEMS = [
   "JARVIS OS",
   "EXOCORTEX",
@@ -15,14 +17,14 @@ const CAPABILITIES = [
 
 export function SystemFile() {
   return (
-    <section className="systemFile systemFileV3" id="resume" data-chapter>
+    <section className="systemFile systemFileV4" id="resume" data-chapter>
       <div className="pageChrome">
         <span>05 / SYSTEM FILE</span>
         <span>TARUN KUMAR SAHU / 2026</span>
       </div>
 
       <div className="systemFileGrid">
-        <article className="systemPaper mainPaper">
+        <article className="systemPaper mainPaper resumeSlideLeft">
           <span className="paperClip" aria-hidden="true" />
           <span className="paperTape tapeA" aria-hidden="true" />
           <span className="paperStamp">ACTIVE FILE</span>
@@ -59,7 +61,7 @@ export function SystemFile() {
           </div>
         </article>
 
-        <div className="systemFileStack">
+        <div className="systemFileStack resumeSlideRight">
           <aside className="systemPaper capabilityPaper">
             <span className="paperTape tapeB" aria-hidden="true" />
             <small>CAPABILITY INDEX</small>
@@ -75,18 +77,10 @@ export function SystemFile() {
             <small>CURRENT THREAD</small>
             <h3>Building systems that remember, reason, perceive and act.</h3>
             <p>
-              The Workstation below opens the repositories and experiments behind
-              that direction.
+              The next chapter opens the project archive. The button below
+              downloads a compact portfolio resume snapshot.
             </p>
-            <a
-              className="systemFileGithub"
-              href="https://github.com/tarunkkumarsahu"
-              target="_blank"
-              rel="noreferrer"
-              data-cursor-hot
-            >
-              OPEN GITHUB <span>↗</span>
-            </a>
+            <ResumeDownloadButton />
           </aside>
         </div>
       </div>
