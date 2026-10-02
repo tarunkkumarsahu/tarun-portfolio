@@ -1,0 +1,508 @@
+/* Interaction layer added after the base portfolio styles.
+   Keeps the authored layout intact while adding the new hover/tap behavior. */
+
+/* -------------------------------------------------------------------------- */
+/* Software ↔ hardware: compact hover notes                                   */
+/* -------------------------------------------------------------------------- */
+
+.signalLane {
+  position: relative;
+  outline: none;
+}
+
+.signalLane:focus-visible {
+  outline: 1px solid rgba(255, 92, 72, 0.7);
+  outline-offset: -1px;
+}
+
+.signalLaneHoverNote {
+  position: absolute;
+  left: 61%;
+  top: 50%;
+  z-index: 12;
+  width: clamp(128px, 9vw, 154px);
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  border: 1px solid rgba(255, 92, 72, 0.5);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 42% 34%, rgba(255, 92, 72, 0.08), transparent 58%),
+    rgba(8, 8, 9, 0.76);
+  box-shadow: 0 0 42px rgba(255, 74, 56, 0.08);
+  backdrop-filter: blur(8px);
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.72);
+  transform-origin: center;
+  pointer-events: none;
+  transition:
+    opacity 180ms ease,
+    transform 260ms cubic-bezier(.2,.75,.2,1),
+    border-color 180ms ease;
+}
+
+.signalLaneHoverNote > b {
+  position: absolute;
+  left: -26px;
+  top: 50%;
+  width: 26px;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(255, 74, 56, 0), rgba(255, 74, 56, 0.78));
+}
+
+.signalLaneHoverNote > em {
+  max-width: 11ch;
+  color: rgba(245, 241, 232, 0.92);
+  font-family: var(--font-editorial), Georgia, serif;
+  font-size: clamp(0.86rem, 0.95vw, 1.06rem);
+  line-height: 1.08;
+  text-align: center;
+  font-weight: 400;
+}
+
+.signalLane.is-active .signalLaneHoverNote,
+.signalLane:focus-within .signalLaneHoverNote {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.signalLane.is-active > i b {
+  box-shadow:
+    0 0 0 4px rgba(255, 74, 56, 0.08),
+    0 0 18px rgba(255, 74, 56, 0.7);
+}
+
+.signalWorldStage[data-active-lane="sense"] .signalFieldCursor,
+.signalWorldStage[data-active-lane="think"] .signalFieldCursor,
+.signalWorldStage[data-active-lane="route"] .signalFieldCursor,
+.signalWorldStage[data-active-lane="act"] .signalFieldCursor {
+  filter: drop-shadow(0 0 16px rgba(255, 74, 56, 0.32));
+}
+
+.signalWorldStage[data-active-lane="sense"] .signalFieldCursor i {
+  animation: signalModePulse 1.1s ease-in-out infinite;
+}
+
+.signalWorldStage[data-active-lane="think"] .signalFieldCursor i {
+  box-shadow:
+    0 0 0 10px rgba(255, 74, 56, 0.04),
+    0 0 0 20px rgba(255, 74, 56, 0.025);
+}
+
+.signalWorldStage[data-active-lane="route"] .signalFieldCursor::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 56px;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(255, 74, 56, 0.6), transparent);
+  transform: translate(14px, -50%);
+}
+
+.signalWorldStage[data-active-lane="act"] .signalFieldCursor i {
+  box-shadow: 0 0 24px rgba(255, 74, 56, 0.62);
+}
+
+@keyframes signalModePulse {
+  0%, 100% { transform: scale(0.9); opacity: 0.65; }
+  50% { transform: scale(1.12); opacity: 1; }
+}
+
+/* -------------------------------------------------------------------------- */
+/* How I build: stage notes + signature coupling                              */
+/* -------------------------------------------------------------------------- */
+
+.methodNode {
+  position: relative;
+  outline: none;
+}
+
+.methodNode:focus-visible {
+  outline: 1px solid rgba(255, 74, 56, 0.65);
+  outline-offset: -1px;
+}
+
+.methodNodeHoverNote {
+  position: absolute;
+  right: -2%;
+  top: 50%;
+  z-index: 8;
+  width: clamp(126px, 8.5vw, 150px);
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  border: 1px solid rgba(18, 18, 18, 0.3);
+  border-radius: 50%;
+  background: rgba(246, 241, 231, 0.96);
+  box-shadow: 0 16px 46px rgba(52, 39, 25, 0.08);
+  opacity: 0;
+  transform: translate(42%, -50%) scale(0.76);
+  pointer-events: none;
+  transition:
+    opacity 170ms ease,
+    transform 250ms cubic-bezier(.2,.75,.2,1);
+}
+
+.methodNodeHoverNote > b {
+  position: absolute;
+  left: -24px;
+  top: 50%;
+  width: 24px;
+  height: 1px;
+  background: rgba(255, 74, 56, 0.58);
+}
+
+.methodNodeHoverNote > em {
+  max-width: 12ch;
+  color: #ff4a38;
+  font-family: var(--font-editorial), Georgia, serif;
+  font-size: clamp(0.9rem, 1vw, 1.1rem);
+  line-height: 1.08;
+  text-align: center;
+  font-weight: 500;
+}
+
+.methodNode.is-active .methodNodeHoverNote,
+.methodNode:focus-within .methodNodeHoverNote {
+  opacity: 1;
+  transform: translate(42%, -50%) scale(1);
+}
+
+.methodNode.is-active > strong {
+  color: #111;
+}
+
+.methodNode.is-active > i {
+  border-color: #ff4a38 !important;
+  background: #ff4a38 !important;
+  box-shadow: 0 0 0 5px rgba(255, 74, 56, 0.08);
+}
+
+.methodSignature > span {
+  display: inline-block;
+  transition:
+    color 180ms ease,
+    transform 180ms ease,
+    text-shadow 180ms ease;
+}
+
+.methodSignature > span.is-active {
+  color: #ff4a38;
+  transform: translateY(-4px);
+  text-shadow: 0 8px 28px rgba(255, 74, 56, 0.18);
+}
+
+/* -------------------------------------------------------------------------- */
+/* Off the clock: personal thought layer                                      */
+/* -------------------------------------------------------------------------- */
+
+.interestTile {
+  position: relative;
+  isolation: isolate;
+}
+
+.interestThought {
+  position: absolute;
+  left: clamp(18px, 2vw, 34px);
+  right: clamp(18px, 2vw, 34px);
+  bottom: clamp(16px, 2vw, 28px);
+  z-index: 6;
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 18px;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(10px);
+  transition:
+    opacity 220ms ease,
+    transform 260ms cubic-bezier(.2,.75,.2,1);
+}
+
+.interestThought em {
+  max-width: 24ch;
+  color: rgba(247, 242, 232, 0.96);
+  font-family: var(--font-editorial), Georgia, serif;
+  font-size: clamp(1rem, 1.1vw, 1.35rem);
+  line-height: 1.08;
+  font-weight: 400;
+}
+
+.interestThought b {
+  flex: 0 0 auto;
+  color: #ff4a38;
+  font-family: var(--font-mono), monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.14em;
+  font-weight: 500;
+}
+
+.interestTile:hover .interestThought,
+.interestTile:focus-within .interestThought {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.interestTile:hover .interestTileCopy > p {
+  opacity: 0.18;
+}
+
+.interestTile .interestTileCopy > p {
+  transition: opacity 180ms ease;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Project archive: selected-project information panel                        */
+/* -------------------------------------------------------------------------- */
+
+.projectDetailPanel {
+  position: absolute;
+  left: clamp(20px, 4vw, 76px);
+  top: 50%;
+  z-index: 30;
+  width: min(27vw, 430px);
+  transform: translateY(-50%);
+  color: rgba(247, 244, 238, 0.96);
+  pointer-events: auto;
+}
+
+.projectDetailIndex {
+  margin-bottom: 18px;
+  color: #ff4a38;
+  font-family: var(--font-mono), monospace;
+  font-size: clamp(0.52rem, 0.54vw, 0.66rem);
+  letter-spacing: 0.16em;
+}
+
+.projectDetailPanel h3 {
+  margin: 0 0 16px;
+  max-width: 10ch;
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(2rem, 3.1vw, 4.15rem);
+  line-height: 0.9;
+  letter-spacing: -0.07em;
+  font-weight: 500;
+}
+
+.projectDetailSummary,
+.projectDetailBody {
+  margin: 0;
+  max-width: 38ch;
+}
+
+.projectDetailSummary {
+  color: rgba(247, 244, 238, 0.9);
+  font-size: clamp(0.78rem, 0.92vw, 1rem);
+  line-height: 1.35;
+}
+
+.projectDetailBody {
+  margin-top: 10px;
+  color: rgba(247, 244, 238, 0.5);
+  font-size: clamp(0.68rem, 0.74vw, 0.82rem);
+  line-height: 1.45;
+}
+
+.projectDetailMeta {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px 18px;
+  margin: 18px 0 0;
+  padding: 14px 0;
+  border-top: 1px solid rgba(255,255,255,0.12);
+  border-bottom: 1px solid rgba(255,255,255,0.12);
+}
+
+.projectDetailMeta div {
+  min-width: 0;
+}
+
+.projectDetailMeta dt {
+  margin-bottom: 5px;
+  color: rgba(247, 244, 238, 0.34);
+  font-family: var(--font-mono), monospace;
+  font-size: 0.52rem;
+  letter-spacing: 0.15em;
+}
+
+.projectDetailMeta dd {
+  margin: 0;
+  color: rgba(247, 244, 238, 0.78);
+  font-family: var(--font-mono), monospace;
+  font-size: 0.62rem;
+  line-height: 1.35;
+}
+
+.projectDetailStack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 14px;
+}
+
+.projectDetailStack span {
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 999px;
+  padding: 5px 8px;
+  color: rgba(247,244,238,0.58);
+  font-family: var(--font-mono), monospace;
+  font-size: 0.54rem;
+  letter-spacing: 0.04em;
+}
+
+.projectDetailLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 18px;
+  color: rgba(247,244,238,0.96);
+  font-family: var(--font-mono), monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-decoration: none;
+}
+
+.projectDetailLink span {
+  color: #ff4a38;
+  transition: transform 180ms ease;
+}
+
+.projectDetailLink:hover span,
+.projectDetailLink:focus-visible span {
+  transform: translate(3px, -3px);
+}
+
+.projectDetailLink:focus-visible {
+  outline: 1px solid #ff4a38;
+  outline-offset: 7px;
+}
+
+.projectArchiveWheel button[role="option"] {
+  cursor: pointer;
+}
+
+.projectArchiveWheel button[role="option"]:focus-visible {
+  outline: 1px solid rgba(255, 74, 56, 0.8);
+  outline-offset: 4px;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Responsive / touch                                                         */
+/* -------------------------------------------------------------------------- */
+
+@media (max-width: 1050px) {
+  .projectDetailPanel {
+    left: 22px;
+    width: min(34vw, 330px);
+  }
+
+  .projectDetailPanel h3 {
+    font-size: clamp(1.75rem, 3.8vw, 3rem);
+  }
+
+  .projectDetailBody {
+    display: none;
+  }
+
+  .signalLaneHoverNote {
+    left: 58%;
+  }
+}
+
+@media (max-width: 760px) {
+  .signalLaneHoverNote {
+    left: auto;
+    right: 10px;
+    width: 112px;
+    padding: 14px;
+    transform: translate(0, -50%) scale(0.76);
+  }
+
+  .signalLane.is-active .signalLaneHoverNote,
+  .signalLane:focus-within .signalLaneHoverNote {
+    transform: translate(0, -50%) scale(1);
+  }
+
+  .signalLaneHoverNote > b {
+    display: none;
+  }
+
+  .methodNodeHoverNote {
+    right: 4px;
+    width: 112px;
+    padding: 13px;
+    transform: translate(0, -50%) scale(0.76);
+  }
+
+  .methodNode.is-active .methodNodeHoverNote,
+  .methodNode:focus-within .methodNodeHoverNote {
+    transform: translate(0, -50%) scale(1);
+  }
+
+  .methodNodeHoverNote > b {
+    display: none;
+  }
+
+  .projectDetailPanel {
+    left: 14px;
+    right: 14px;
+    top: auto;
+    bottom: 52px;
+    width: auto;
+    transform: none;
+    padding: 12px 14px;
+    border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(5,5,5,0.76);
+    backdrop-filter: blur(14px);
+  }
+
+  .projectDetailPanel h3 {
+    max-width: none;
+    margin-bottom: 8px;
+    font-size: 1.7rem;
+  }
+
+  .projectDetailSummary {
+    max-width: none;
+    font-size: 0.72rem;
+  }
+
+  .projectDetailBody,
+  .projectDetailMeta {
+    display: none;
+  }
+
+  .projectDetailStack {
+    margin-top: 9px;
+  }
+
+  .projectDetailLink {
+    margin-top: 10px;
+  }
+
+  .interestThought {
+    opacity: 1;
+    transform: none;
+  }
+
+  .interestThought em {
+    font-size: 0.94rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .signalLaneHoverNote,
+  .methodNodeHoverNote,
+  .methodSignature > span,
+  .interestThought,
+  .projectDetailLink span {
+    transition: none !important;
+  }
+
+  .signalWorldStage[data-active-lane="sense"] .signalFieldCursor i {
+    animation: none;
+  }
+}
