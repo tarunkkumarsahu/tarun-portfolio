@@ -37,7 +37,7 @@ float ripple(vec2 uv, vec2 origin, float phase, float falloff) {
   vec2 p = uv - origin;
   p.x *= uResolution.x / max(uResolution.y, 1.0);
   float d = length(p);
-  return sin(d * 44.0 - phase) * exp(-d * falloff);
+  return sin(d * 50.0 - phase) * exp(-d * falloff);
 }
 
 void main() {
@@ -50,8 +50,8 @@ void main() {
   vec2 distorted = uv;
   vec2 mouseDir = normalize((uv - uMouse) + vec2(0.0001));
   vec2 clickDir = normalize((uv - uClick) + vec2(0.0001));
-  distorted += mouseDir * mouseWave * 0.008;
-  distorted += clickDir * clickWave * 0.014;
+  distorted += mouseDir * mouseWave * 0.020;
+  distorted += clickDir * clickWave * 0.034;
 
   vec2 center = vec2(0.46, 0.45);
   vec2 p = distorted - center;
@@ -66,14 +66,14 @@ void main() {
   float sweep = fract(a / (2.0 * PI) + 1.0);
 
   float micro = sin((p.x + p.y) * 18.0 + uTime * 0.25) * 0.004;
-  vec3 color = palette(sweep + micro + mouseWave * 0.018 + clickWave * 0.025);
+  vec3 color = palette(sweep + micro + mouseWave * 0.050 + clickWave * 0.070);
 
   float radial = distance(distorted, vec2(0.5));
   float vignette = smoothstep(0.52, 0.9, radial);
   color *= 1.0 - vignette * 0.08;
 
   float spec = pow(max(0.0, 1.0 - length(uv - uMouse) * 2.0), 3.0);
-  color += spec * uMouseStrength * 0.05;
+  color += spec * uMouseStrength * 0.11;
 
   gl_FragColor = vec4(color, 1.0);
 }
@@ -175,7 +175,7 @@ export function LiquidOrbitBackground() {
 
       targetStrength = excludedAt(event.clientX, event.clientY)
         ? 0
-        : Math.min(1, velocity * 0.9 + 0.16);
+        : Math.min(1, velocity * 1.4 + 0.22);
 
       previous = { x: event.clientX, y: event.clientY };
       previousAt = now;
