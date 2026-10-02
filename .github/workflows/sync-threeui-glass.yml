@@ -1,0 +1,133 @@
+name: Sync ThreeUI Glass Button Source
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/sync-threeui-glass.yml
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Fetch verified ThreeUI bundle
+        run: |
+          curl --fail --location --silent --show-error \
+            https://threeui.com/source-code/glass-ai-button.json \
+            --output /tmp/glass-ai-button.json
+
+      - name: Extract registered files and verify hashes
+        run: |
+          python - <<'PY'
+          import hashlib
+          import json
+          import os
+          import sys
+
+          source = "/tmp/glass-ai-button.json"
+          with open(source, "r", encoding="utf-8") as fh:
+              data = json.load(fh)
+
+          targets = {
+              "src/shaders/glass-ai-button/GlassAiButton.tsx": (
+                  "components/effects/glass-ai-button/GlassAiButton.tsx",
+                  "1a11cd583e856d3be328a0192be4d77184607c64721f3fb646bd6d61436b2104",
+              ),
+              "src/shaders/glass-ai-button/sources/glass-ai-button.html": (
+                  "components/effects/glass-ai-button/sources/glass-ai-button.html",
+                  "a484571de316c05ab7fbd2da82da5e028ee1ffe0bd169449fb8a3c7801abd81e",
+              ),
+              "src/shaders/threeui.css": (
+                  "components/effects/glass-ai-button/threeui.css",
+                  "efe4447139f1358dd8e9be68edf6fa46cbefbd1de423a4d6c439ca61d2c8eccf",
+              ),
+          }
+
+          found = {}
+
+          def candidate_content(value):
+              if isinstance(value, str):
+                  return value
+              if isinstance(value, dict):
+                  for key in ("content", "source", "code", "text", "raw"):
+                      if isinstance(value.get(key), str):
+                          return value[key]
+              return None
+
+          def walk(node):
+              if isinstance(node, dict):
+                  path = None
+                  for key in ("path", "filePath", "filepath", "file", "name"):
+                      value = node.get(key)
+                      if isinstance(value, str) and value in targets:
+                          path = value
+                          break
+                  if path:
+                      content = candidate_content(node)
+                      if content is not None:
+                          found[path] = content
+
+                  for key, value in node.items():
+                      if key in targets:
+                          content = candidate_content(value)
+                          if content is not None:
+                              found[key] = content
+                      walk(value)
+              elif isinstance(node, list):
+                  for value in node:
+                      walk(value)
+
+          walk(data)
+
+          missing = [path for path in targets if path not in found]
+          if missing:
+              print("Missing registered files:", *missing, sep="\n- ", file=sys.stderr)
+              print("Top-level JSON keys:", list(data) if isinstance(data, dict) else type(data), file=sys.stderr)
+              raise SystemExit(2)
+
+          for source_path, (dest, expected) in targets.items():
+              content = found[source_path]
+              raw = content.encode("utf-8")
+              digest = hashlib.sha256(raw).hexdigest()
+
+              # Some JSON encoders normalize line endings. Only the canonical
+              # authored LF representation is accepted if that restores the
+              # registered hash.
+              if digest != expected:
+                  normalized = content.replace("\r\n", "\n").encode("utf-8")
+                  normalized_digest = hashlib.sha256(normalized).hexdigest()
+                  if normalized_digest == expected:
+                      raw = normalized
+                      digest = normalized_digest
+
+              if digest != expected:
+                  raise SystemExit(
+                      f"Hash mismatch for {source_path}: {digest} != {expected}"
+                  )
+
+              os.makedirs(os.path.dirname(dest), exist_ok=True)
+              with open(dest, "wb") as fh:
+                  fh.write(raw)
+              print(f"{source_path} -> {dest} [{digest[:12]}]")
+
+          PY
+
+      - name: Commit verified source
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add components/effects/glass-ai-button
+          if git diff --cached --quiet; then
+            echo "Verified source already present."
+          else
+            git commit -m "chore: vendor verified ThreeUI glass button source [skip ci]"
+            git push
+          fi
