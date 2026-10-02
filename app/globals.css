@@ -6840,3 +6840,373 @@ body.neural-entry-active .chapterRail {
     display: none;
   }
 }
+
+
+/* =========================================================
+   CHECKLIST COMPLETION PASS — INTERACTION / MOTION / POLISH
+   ========================================================= */
+
+/* One lightweight transition language for every chapter. */
+[data-chapter] {
+  --chapter-line: 0%;
+  position: relative;
+}
+
+[data-chapter]::before {
+  content: "";
+  position: absolute;
+  z-index: 30;
+  left: 0;
+  top: 0;
+  width: var(--chapter-line);
+  height: 1px;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255,74,56,.72) 24%,
+    rgba(143,163,192,.45) 70%,
+    transparent
+  );
+}
+
+/* Autoplay push intro: resistance, effort, skip affordance. */
+.autoPushBoy {
+  transform:
+    translate(
+      calc(-87% + var(--auto-boy-x, 0px)),
+      calc(-50% + var(--auto-boy-y, 0px))
+    )
+    rotate(var(--auto-boy-rotate, -3deg))
+    scaleX(var(--auto-boy-squash, 1));
+}
+
+.autoPushBoy::after {
+  content: "";
+  position: absolute;
+  left: 7%;
+  top: 46%;
+  width: calc(18px + var(--auto-effort, 0) * 38px);
+  height: 1px;
+  background: #111;
+  opacity: calc(.12 + var(--auto-effort, 0) * .38);
+  transform: translateX(calc(var(--auto-effort, 0) * -16px));
+}
+
+.autoPushBoy .pushMotionLine {
+  opacity: calc(.12 + var(--auto-effort, 0) * .55);
+}
+
+.introSkip {
+  position: absolute;
+  z-index: 30;
+  right: 18px;
+  bottom: 18px;
+  border: 0;
+  padding: 10px 0 10px 18px;
+  color: white;
+  background: transparent;
+  mix-blend-mode: difference;
+  font: 600 7px/1 var(--mono);
+  letter-spacing: .14em;
+  cursor: pointer;
+  opacity: .46;
+  transition: opacity .2s ease;
+}
+
+.introSkip:hover,
+.introSkip:focus-visible {
+  opacity: 1;
+}
+
+/* Page 1: thought cloud is a field, not a static box. */
+.thoughtCloudInteractive {
+  --thought-x: 0;
+  --thought-y: 0;
+}
+
+.thoughtCloudInteractive::before {
+  transform:
+    translate(
+      calc(var(--thought-x) * 16px),
+      calc(var(--thought-y) * 13px)
+    )
+    scale(calc(1 + var(--thought-x) * .025));
+  transition: transform .16s ease-out;
+}
+
+.thoughtCloudInteractive::after {
+  transform:
+    translate(
+      calc(var(--thought-x) * -22px),
+      calc(var(--thought-y) * -15px)
+    )
+    scale(calc(1 - var(--thought-y) * .035));
+  transition: transform .2s ease-out;
+}
+
+.thoughtCloudInteractive .b1 {
+  transform:
+    translate(
+      calc(var(--thought-x) * 24px),
+      calc(var(--thought-y) * 18px)
+    );
+}
+
+.thoughtCloudInteractive .b2 {
+  transform:
+    translate(
+      calc(var(--thought-x) * -17px),
+      calc(var(--thought-y) * 27px)
+    );
+}
+
+.thoughtCloudInteractive .b3 {
+  transform:
+    translate(
+      calc(var(--thought-x) * 11px),
+      calc(var(--thought-y) * -24px)
+    );
+}
+
+.thoughtFragments {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+  color: rgba(8,9,11,.34);
+  font: 600 6px/1.2 var(--mono);
+  letter-spacing: .09em;
+}
+
+.thoughtFragments span {
+  position: absolute;
+  max-width: 156px;
+  transition: transform .18s ease-out, opacity .2s ease;
+}
+
+.thoughtFragments span:nth-child(1) {
+  left: 0;
+  top: 7%;
+  transform: translate(
+    calc(var(--thought-x) * 14px),
+    calc(var(--thought-y) * 8px)
+  ) rotate(-4deg);
+}
+
+.thoughtFragments span:nth-child(2) {
+  right: -5%;
+  top: 44%;
+  transform: translate(
+    calc(var(--thought-x) * -18px),
+    calc(var(--thought-y) * 12px)
+  ) rotate(5deg);
+}
+
+.thoughtFragments span:nth-child(3) {
+  left: 11%;
+  bottom: -3%;
+  transform: translate(
+    calc(var(--thought-x) * 10px),
+    calc(var(--thought-y) * -18px)
+  ) rotate(-2deg);
+}
+
+.thoughtCloudInteractive:hover .thoughtFragments span {
+  opacity: .78;
+}
+
+/* Page 2: cursor becomes a live field input. */
+.signalWorldStageV2 {
+  --field-x: 50%;
+  --field-y: 50%;
+  --field-xn: .5;
+  --field-yn: .5;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.signalWorldStageV2::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: var(--field-x);
+  top: var(--field-y);
+  width: 420px;
+  aspect-ratio: 1;
+  transform: translate(-50%,-50%);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(143,163,192,.12),
+    rgba(255,74,56,.035) 36%,
+    transparent 70%
+  );
+  filter: blur(12px);
+  pointer-events: none;
+}
+
+.signalWorldPorts {
+  position: absolute;
+  z-index: 3;
+  left: 14px;
+  right: 14px;
+  top: 12px;
+  display: flex;
+  justify-content: space-between;
+  color: rgba(243,240,232,.22);
+  font: 600 6px/1 var(--mono);
+  letter-spacing: .14em;
+  pointer-events: none;
+}
+
+.signalFieldCursor {
+  position: absolute;
+  z-index: 6;
+  left: var(--field-x);
+  top: var(--field-y);
+  width: 64px;
+  height: 64px;
+  transform: translate(-50%,-50%);
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(243,240,232,.14);
+  border-radius: 50%;
+  pointer-events: none;
+  transition: width .18s ease, height .18s ease, border-color .18s ease;
+}
+
+.signalFieldCursor i {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--signal);
+  box-shadow: 0 0 18px rgba(255,74,56,.6);
+}
+
+.signalFieldCursor span {
+  position: absolute;
+  top: calc(100% + 8px);
+  white-space: nowrap;
+  color: rgba(243,240,232,.3);
+  font: 600 6px/1 var(--mono);
+  letter-spacing: .13em;
+}
+
+.signalWorldStageV2:hover .signalFieldCursor {
+  width: 78px;
+  height: 78px;
+  border-color: rgba(255,74,56,.32);
+}
+
+.signalLaneMeta {
+  display: grid;
+  gap: 7px;
+  justify-items: end;
+  text-align: right;
+}
+
+.signalLaneMeta small {
+  font: 600 7px/1 var(--mono);
+  letter-spacing: .12em;
+  color: rgba(243,240,232,.32);
+}
+
+.signalLaneMeta em {
+  color: rgba(255,74,56,.56);
+  font: italic 500 11px/1 var(--serif);
+}
+
+.signalFieldEcho {
+  position: absolute;
+  z-index: -1;
+  left: var(--field-x);
+  top: var(--field-y);
+  border: 1px solid rgba(143,163,192,.09);
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%,-50%);
+}
+
+.signalFieldEcho.echoA {
+  width: 180px;
+  height: 180px;
+  animation: fieldEcho 2.8s ease-out infinite;
+}
+
+.signalFieldEcho.echoB {
+  width: 280px;
+  height: 280px;
+  animation: fieldEcho 2.8s 1.2s ease-out infinite;
+}
+
+@keyframes fieldEcho {
+  0% { opacity: .35; transform: translate(-50%,-50%) scale(.6); }
+  100% { opacity: 0; transform: translate(-50%,-50%) scale(1.25); }
+}
+
+/* Page 3: visible decision spine + rejected paths. */
+.methodSideNote {
+  margin-top: 54px;
+  max-width: 290px;
+  padding-top: 13px;
+  border-top: 1px solid rgba(8,9,11,.14);
+}
+
+.methodSideNote span {
+  color: rgba(8,9,11,.38);
+  font: 600 7px/1 var(--mono);
+  letter-spacing: .14em;
+}
+
+.methodSideNote strong {
+  display: block;
+  margin-top: 10px;
+  font: italic 500 clamp(22px, 2vw, 32px)/1.05 var(--serif);
+  color: var(--signal);
+}
+
+.methodV3Rail {
+  position: relative;
+  overflow: visible;
+}
+
+.methodDecisionLine {
+  position: absolute;
+  left: 45px;
+  top: 26px;
+  bottom: 26px;
+  width: 1px;
+  background: rgba(8,9,11,.08);
+  pointer-events: none;
+}
+
+.methodDecisionLine i {
+  position: absolute;
+  inset: 0;
+  display: block;
+  background: linear-gradient(180deg, var(--signal), rgba(255,74,56,.12));
+  transform-origin: top;
+}
+
+.methodRejectField {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.methodRejectField span {
+  position: absolute;
+  color: rgba(255,74,56,.24);
+  font: 600 6px/1 var(--mono);
+  letter-spacing: .12em;
+  text-decoration: line-through;
+}
+
+.methodRejectField span:nth-child(1) { left: -24%; top: 17%; }
+.methodRejectField span:nth-child(2) { right: -20%; top: 34%; }
+.methodRejectField span:nth-child(3) { left: -16%; top: 52%; }
+.methodRejectField span:nth-child(4) { right: -24%; top: 70%; }
+.methodRejectField span:nth-child(5) { left: -10%; top: 87%; }
+
