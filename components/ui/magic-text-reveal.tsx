@@ -54,7 +54,11 @@ export function MagicTextReveal({
       o.fillStyle = "#f2efe8";
       o.textAlign = "center";
       o.textBaseline = "middle";
-      o.font = `700 ${Math.min(fontSize, rect.width * 0.11)}px var(--font-display), Arial, sans-serif`;
+      const displayFont =
+        getComputedStyle(document.documentElement)
+          .getPropertyValue("--font-display")
+          .trim() || "Arial";
+      o.font = `700 ${Math.min(fontSize, rect.width * 0.11)}px ${displayFont}, Arial, sans-serif`;
       o.fillText(text, rect.width / 2, rect.height / 2);
 
       const image = o.getImageData(0, 0, off.width, off.height);
