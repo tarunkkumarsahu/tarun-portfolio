@@ -3,49 +3,31 @@ import { WorksWheel, type WorksWheelItem } from "@/components/ui/works-wheel";
 const PROJECTS: WorksWheelItem[] = [
   {
     title: "JARVIS OS",
-    description:
-      "A personal AI operating layer exploring memory, planning, tools, agents and execution.",
-    meta: "AGENTIC SYSTEM",
     image: "https://opengraph.githubassets.com/1/tarunkkumarsahu/Jarvis-OS",
     href: "https://github.com/tarunkkumarsahu/Jarvis-OS",
   },
   {
     title: "EXOCORTEX",
-    description:
-      "A Rust-first cognitive extension built around evidence-linked memory and local intelligence.",
-    meta: "RUST / LOCAL AI",
     image: "https://opengraph.githubassets.com/1/tarunkkumarsahu/EXOCROTEX",
     href: "https://github.com/tarunkkumarsahu/EXOCROTEX",
   },
   {
     title: "FRESHFUSION",
-    description:
-      "A multimodal fruit-quality investigation system combining visual and physical evidence.",
-    meta: "CV / SENSOR FUSION",
     image: "https://opengraph.githubassets.com/1/tarunkkumarsahu/Fresh-Fusion-",
     href: "https://github.com/tarunkkumarsahu/Fresh-Fusion-",
   },
   {
     title: "RAKSHA GRID",
-    description:
-      "Disaster-response intelligence for safer corridors, isolation risk and shelter coordination.",
-    meta: "GIS / RESPONSE",
     image: "https://opengraph.githubassets.com/1/tarunkkumarsahu/raksha-grid",
     href: "https://github.com/tarunkkumarsahu/raksha-grid",
   },
   {
     title: "PRECISION WEEDING",
-    description:
-      "Computer vision meeting physical action for selective weed removal in crop rows.",
-    meta: "VISION / ROBOTICS",
     image: "https://opengraph.githubassets.com/1/tarunkkumarsahu/smart-precision-weeding-robot",
     href: "https://github.com/tarunkkumarsahu/smart-precision-weeding-robot",
   },
   {
     title: "AGRINEXUS",
-    description:
-      "Evidence-driven agricultural decision experiments across web, Android and a shared backend.",
-    meta: "DECISION SYSTEM",
     image: "https://opengraph.githubassets.com/1/tarunkkumarsahu/agrinexus-ai",
     href: "https://github.com/tarunkkumarsahu/agrinexus-ai",
   },
@@ -55,39 +37,38 @@ const LAB = [
   {
     title: "AWR BOT",
     meta: "ROS 2 / NAV2 / GAZEBO",
-    note: "A modular warehouse AMR prototype for mission planning, SLAM, obstacle-aware navigation and payload events.",
+    note: "Warehouse AMR prototype for mission planning, SLAM, obstacle-aware navigation and payload events.",
     href: "https://github.com/tarunkkumarsahu/AWR-Bot-",
   },
   {
     title: "SAKTI BAND",
     meta: "ESP32 / GPS / BLE",
-    note: "A safety wearable prototype connecting SOS events, location and mobile response.",
+    note: "Safety wearable prototype connecting SOS events, location and mobile response.",
     href: "https://github.com/tarunkkumarsahu/Smart-Safety-Wristband",
   },
   {
     title: "STRUCTURED DSA",
     meta: "ALGORITHMS / PRACTICE",
-    note: "A growing repository for structured problem-solving and data-structure practice.",
+    note: "Structured problem-solving and data-structure practice.",
     href: "https://github.com/tarunkkumarsahu/Structured-DSA",
   },
 ];
 
 export function Workstation() {
   return (
-    <section className="workstationChapter workstationV2" id="workstation" data-chapter>
+    <section className="workstationChapter workstationV3" id="workstation" data-chapter>
       <div className="pageChrome lightChrome">
-        <span>WORKSTATION / ONLINE</span>
-        <span>SELECTED SYSTEMS / 2026</span>
+        <span>WORKSTATION / PROJECTS</span>
+        <span>SCROLL OR DRAG THE WHEEL</span>
       </div>
 
-      <div className="workstationIntro">
-        <span className="kicker">SYSTEMS / EXPERIMENTS / CURRENT BUILDS</span>
-        <h2>WORKSTATION</h2>
-        <p>Things I build when an idea refuses to stay theoretical.</p>
+      <div className="workstationIntroV3">
+        <span className="kicker">SELECTED SYSTEMS / 2026</span>
+        <p>Turn the wheel. Bring a project to the front. Open the source.</p>
       </div>
 
       <div className="workstationWheel">
-        <WorksWheel items={PROJECTS} />
+        <WorksWheel items={PROJECTS} label="WORKS '26" action="OPEN" />
       </div>
 
       <div className="workstationLab">
@@ -114,11 +95,6 @@ export function Workstation() {
             </a>
           ))}
         </div>
-      </div>
-
-      <div className="workstationFooter">
-        <span>SCROLL / DRAG THE WHEEL</span>
-        <span>OPEN SOURCE ↗</span>
       </div>
     </section>
   );
