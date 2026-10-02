@@ -1,8 +1,18 @@
+"use client";
+
 import type { CSSProperties } from "react";
+import { HeroModel } from "@/components/HeroModel";
 import { LiquidOrbitBackground } from "@/components/LiquidOrbitBackground";
 import { FlipLinks } from "@/components/ui/flip-links";
+import { LiquidMetalButton } from "@/components/ui/liquid-metal-button";
 
 export function IntroducingTarun() {
+  const enterWorkstation = () =>
+    document.getElementById("workstation")?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+
   return (
     <section className="introducing" id="about" data-chapter>
       <LiquidOrbitBackground />
@@ -40,34 +50,29 @@ export function IntroducingTarun() {
           </div>
           <div className="laptopSignal">
             <span />
-            <small>PROCESSING</small>
+            <small>INPUT → CONTEXT → DECISION</small>
           </div>
         </div>
 
         <div className="modelDock" data-liquid-exclude>
           <div className="modelHalo" />
-          <div className="modelProxy" aria-label="3D model placeholder">
-            <div className="proxyHead" />
-            <div className="proxyBody" />
-            <div className="proxyLaptop">
-              <span>MSI</span>
-            </div>
-          </div>
-          <div className="modelDockMeta">
-            <span>3D SOCKET</span>
-            <strong>tarun.glb</strong>
-            <small>HOT-SWAP READY</small>
-          </div>
+          <HeroModel />
         </div>
 
         <div className="aboutPanel">
           <div className="aboutCopy" data-liquid-exclude>
             <span className="kicker">ABOUT / 01A</span>
-            <h2>Tarun builds beyond the screen.</h2>
+            <h2>I build systems that cross the screen.</h2>
             <p>
-              AI, backend systems and connected machines — designed as one system,
-              not separate layers.
+              AI, backend systems and connected hardware — turning real-world
+              inputs into software decisions and physical responses.
             </p>
+            <div className="heroPrimaryCta">
+              <LiquidMetalButton
+                label="ENTER WORKSTATION"
+                onClick={enterWorkstation}
+              />
+            </div>
           </div>
 
           <div className="socialPanel">
