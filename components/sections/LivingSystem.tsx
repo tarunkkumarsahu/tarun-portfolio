@@ -1,74 +1,48 @@
-"use client";
-
-const SYSTEMS = [
-  {
-    id: "01",
-    name: "PRECISION WEEDING",
-    line: ["CAMERA", "WEED DETECTION", "CROP SAFETY ZONE", "MECHANICAL TOOL"],
-    note: "Vision becomes a physical action only after the crop-safe target is isolated.",
-  },
-  {
-    id: "02",
-    name: "FRESHFUSION",
-    line: ["CAMERA", "MQ135 + DHT11", "SENSOR FUSION", "QUALITY STATE"],
-    note: "Visual evidence and sensor readings meet before the system decides the fruit state.",
-  },
-  {
-    id: "03",
-    name: "RAKSHA GRID",
-    line: ["INCIDENT", "ROAD CLOSURE", "REROUTE", "SHELTER UPDATE"],
-    note: "A real-world change updates the network, the route and the response state.",
-  },
+const LANES = [
+  ["SENSE", "CAMERA / SENSOR / EVENT"],
+  ["THINK", "STATE / MODEL / LOGIC"],
+  ["ROUTE", "API / MEMORY / DECISION"],
+  ["ACT", "MOTOR / ALERT / WORLD"],
 ] as const;
 
 export function LivingSystem() {
   return (
-    <section className="livingSystem systemsFieldV3" id="system" data-chapter>
+    <section className="livingSystem signalWorld" id="system" data-chapter>
       <div className="pageChrome lightChrome">
-        <span>02 / SYSTEMS</span>
-        <span>SOFTWARE → SIGNAL → PHYSICAL WORLD</span>
+        <span>02 / SOFTWARE ↔ HARDWARE</span>
+        <span>ONE SYSTEM / TWO WORLDS</span>
       </div>
 
-      <header className="systemsFieldHeader">
-        <span className="kicker">WHAT I ACTUALLY BUILD</span>
+      <header className="signalWorldHeading">
+        <span className="kicker">THE HANDOFF</span>
         <h2>
-          WHERE SOFTWARE
+          SOFTWARE DOESN&apos;T
           <br />
-          <em>MEETS HARDWARE.</em>
+          <em>END AT THE SCREEN.</em>
         </h2>
         <p>
-          Three system patterns from my projects — inputs, decisions and
-          real-world outputs.
+          I like the moment where data stops being abstract and starts changing
+          something real.
         </p>
       </header>
 
-      <div className="systemsFieldRows">
-        {SYSTEMS.map((system) => (
-          <article className="systemTrace" key={system.name} data-cursor-hot>
-            <div className="systemTraceHead">
-              <span>{system.id}</span>
-              <strong>{system.name}</strong>
-            </div>
-
-            <div className="systemTraceFlow" aria-label={system.line.join(" to ")}>
-              {system.line.map((step, index) => (
-                <div className="systemTraceStep" key={step}>
-                  <span>{step}</span>
-                  {index < system.line.length - 1 ? <i aria-hidden="true" /> : null}
-                </div>
-              ))}
-            </div>
-
-            <p>{system.note}</p>
-          </article>
+      <div className="signalWorldStage" aria-label="Software to hardware signal flow">
+        <div className="signalWorldSpine" aria-hidden="true" />
+        {LANES.map(([title, meta], index) => (
+          <div className="signalLane" key={title} data-cursor-hot>
+            <span>{String(index + 1).padStart(2, "0")}</span>
+            <strong>{title}</strong>
+            <i aria-hidden="true"><b /></i>
+            <small>{meta}</small>
+          </div>
         ))}
       </div>
 
-      <div className="systemsFieldStatement">
+      <div className="signalWorldFooter">
         <span>INPUT</span>
-        <i>→</i>
-        <span>DECISION</span>
-        <i>→</i>
+        <em>becomes</em>
+        <span>STATE</span>
+        <em>becomes</em>
         <span>ACTION</span>
       </div>
     </section>
