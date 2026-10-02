@@ -71,6 +71,24 @@ export function IntroExperience() {
     };
   }, []);
 
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        document.body.classList.toggle("neural-entry-active", entry.isIntersecting);
+      },
+      { threshold: 0.02 },
+    );
+
+    observer.observe(section);
+    return () => {
+      observer.disconnect();
+      document.body.classList.remove("neural-entry-active");
+    };
+  }, []);
+
   // Phase 2: scroll drives the neuron/computer tunnel.
   useEffect(() => {
     const section = sectionRef.current;
