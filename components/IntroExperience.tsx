@@ -18,22 +18,63 @@ export function IntroExperience() {
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
+    let cancelled = false;
     const started = performance.now();
-    let raf = 0;
 
-    const tick = (now: number) => {
-      const elapsed = now - started;
-      const value = Math.min(100, Math.floor((elapsed / 1850) * 100));
-      setBoot(value);
-      if (value >= 100) {
-        setReady(true);
-        return;
+    const ramp = (target: number, duration = 420) =>
+      new Promise<void>((resolve) => {
+        const from = performance.now();
+        const startValue = progressRef.current;
+
+        const frame = (now: number) => {
+          if (cancelled) return resolve();
+          const t = Math.min(1, (now - from) / duration);
+          const eased = 1 - Math.pow(1 - t, 3);
+          const value = Math.round(startValue + (target - startValue) * eased);
+          progressRef.current = value;
+          setBoot(value);
+
+          if (t >= 1) resolve();
+          else requestAnimationFrame(frame);
+        };
+
+        requestAnimationFrame(frame);
+      });
+
+    const bootSequence = async () => {
+      await ramp(26, 320);
+
+      const fontReady =
+        typeof document !== "undefined" && "fonts" in document
+          ? document.fonts.ready.catch(() => undefined)
+          : Promise.resolve();
+
+      const heroProbe = fetch("/models/tarun_hero_web.glb", {
+        method: "HEAD",
+        cache: "no-store",
+      }).catch(() => undefined);
+
+      await Promise.race([
+        Promise.allSettled([fontReady, heroProbe]),
+        new Promise((resolve) => window.setTimeout(resolve, 1250)),
+      ]);
+
+      await ramp(82, 520);
+
+      const minVisible = Math.max(0, 1150 - (performance.now() - started));
+      if (minVisible > 0) {
+        await new Promise((resolve) => window.setTimeout(resolve, minVisible));
       }
-      raf = requestAnimationFrame(tick);
+
+      await ramp(100, 360);
+      if (!cancelled) setReady(true);
     };
 
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
+    void bootSequence();
+
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   useEffect(() => {
