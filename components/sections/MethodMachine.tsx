@@ -8,6 +8,14 @@ const STAGES = [
   ["07", "SYSTEM", "Connect the parts into something repeatable."],
 ] as const;
 
+const REJECTS = [
+  "ASSUMPTION",
+  "NO EVIDENCE",
+  "TOO EARLY",
+  "FAILED PATH",
+  "REBUILD",
+] as const;
+
 export function MethodMachine() {
   return (
     <section className="methodMachine methodV3" id="method" data-chapter>
@@ -25,17 +33,37 @@ export function MethodMachine() {
             WITH CODE.
           </h2>
           <p>I start with a problem.</p>
+
+          <div className="methodSideNote">
+            <span>THE RULE</span>
+            <strong>Evidence before confidence.</strong>
+          </div>
         </header>
 
         <div className="methodV3Rail" aria-label="Problem-solving process">
+          <div className="methodDecisionLine" aria-hidden="true">
+            <i />
+          </div>
+
           {STAGES.map(([index, title, copy]) => (
-            <div className="methodNode" key={title}>
+            <div className="methodNode" key={title} data-method-stage={index}>
               <span>{index}</span>
               <strong>{title}</strong>
               <small>{copy}</small>
               <i aria-hidden="true" />
             </div>
           ))}
+
+          <div className="methodRejectField" aria-hidden="true">
+            {REJECTS.map((item, index) => (
+              <span
+                key={item}
+                style={{ "--reject-index": index } as React.CSSProperties}
+              >
+                {item}
+              </span>
+            ))}
+          </div>
         </div>
       </div>
 
