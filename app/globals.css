@@ -7210,3 +7210,491 @@ body.neural-entry-active .chapterRail {
 .methodRejectField span:nth-child(4) { right: -24%; top: 70%; }
 .methodRejectField span:nth-child(5) { left: -10%; top: 87%; }
 
+
+
+/* Off The Clock: each interest gets its own visual grammar. */
+.interestTile {
+  display: grid;
+  grid-template-columns: minmax(180px,.72fr) minmax(0,1fr);
+  align-items: stretch;
+  min-height: 290px;
+  padding: 0;
+}
+
+.interestVisual {
+  position: relative;
+  min-height: 100%;
+  overflow: hidden;
+  border-right: 1px solid rgba(243,240,232,.1);
+  background:
+    linear-gradient(rgba(243,240,232,.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(243,240,232,.025) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+.interestTileCopy {
+  position: relative;
+  padding: 28px 30px 30px;
+}
+
+.interestTileCopy > span,
+.interestTileCopy > small {
+  font: 600 7px/1 var(--mono);
+  letter-spacing: .12em;
+}
+
+.interestTileCopy > span {
+  color: var(--signal);
+}
+
+.interestTileCopy > small {
+  position: absolute;
+  right: 28px;
+  top: 29px;
+  color: rgba(243,240,232,.28);
+}
+
+.interestTileCopy h3 {
+  margin: 62px 0 18px;
+  max-width: 90%;
+  font-size: clamp(38px, 4.2vw, 74px);
+  line-height: .76;
+  letter-spacing: -.075em;
+}
+
+.interestTileCopy p {
+  width: min(440px, 92%);
+  margin: 0;
+  color: rgba(243,240,232,.4);
+  font-size: 11px;
+  line-height: 1.55;
+}
+
+.interestTileCopy > i {
+  position: absolute;
+  right: 28px;
+  bottom: 24px;
+  font-style: normal;
+  font-size: 18px;
+}
+
+.interestVisual > span {
+  position: absolute;
+  display: block;
+  transition:
+    transform .55s cubic-bezier(.2,.8,.2,1),
+    opacity .35s ease;
+}
+
+.interestVisual-blender span:nth-child(1) {
+  left: 50%;
+  top: 50%;
+  width: 88px;
+  height: 88px;
+  transform: translate(-50%,-50%) rotate(30deg) skewY(-18deg);
+  border: 1px solid rgba(143,163,192,.48);
+}
+
+.interestVisual-blender span:nth-child(2) {
+  left: 50%;
+  top: 50%;
+  width: 88px;
+  height: 88px;
+  transform: translate(-38%,-62%) rotate(30deg) skewY(-18deg);
+  border: 1px solid rgba(255,74,56,.42);
+}
+
+.interestVisual-blender span:nth-child(3) {
+  left: 50%;
+  top: 12%;
+  bottom: 12%;
+  width: 1px;
+  background: rgba(243,240,232,.16);
+}
+
+.interestVisual-blender span:nth-child(4) {
+  left: 12%;
+  right: 12%;
+  top: 50%;
+  height: 1px;
+  background: rgba(243,240,232,.16);
+}
+
+.interestVisual-photo::before,
+.interestVisual-photo::after {
+  content: "";
+  position: absolute;
+  inset: 18%;
+  border: 1px solid rgba(243,240,232,.25);
+}
+
+.interestVisual-photo::after {
+  inset: 28%;
+  border-radius: 50%;
+  border-color: rgba(255,74,56,.45);
+}
+
+.interestVisual-photo span:nth-child(1),
+.interestVisual-photo span:nth-child(2) {
+  top: 50%;
+  width: 30%;
+  height: 1px;
+  background: rgba(243,240,232,.18);
+}
+
+.interestVisual-photo span:nth-child(1) { left: 0; }
+.interestVisual-photo span:nth-child(2) { right: 0; }
+
+.interestVisual-photo span:nth-child(3),
+.interestVisual-photo span:nth-child(4) {
+  left: 50%;
+  width: 1px;
+  height: 30%;
+  background: rgba(243,240,232,.18);
+}
+
+.interestVisual-photo span:nth-child(3) { top: 0; }
+.interestVisual-photo span:nth-child(4) { bottom: 0; }
+
+.interestVisual-sketch span:nth-child(1) {
+  left: 16%;
+  top: 28%;
+  width: 70%;
+  height: 42%;
+  border: 1px solid rgba(243,240,232,.22);
+  border-radius: 52% 30% 48% 34%;
+  transform: rotate(-11deg);
+}
+
+.interestVisual-sketch span:nth-child(2) {
+  left: 24%;
+  top: 35%;
+  width: 58%;
+  height: 1px;
+  background: rgba(255,74,56,.44);
+  transform: rotate(17deg);
+}
+
+.interestVisual-sketch span:nth-child(3) {
+  left: 20%;
+  top: 56%;
+  width: 66%;
+  height: 1px;
+  background: rgba(143,163,192,.38);
+  transform: rotate(-8deg);
+}
+
+.interestVisual-sketch span:nth-child(4) {
+  left: 42%;
+  top: 20%;
+  width: 1px;
+  height: 64%;
+  background: rgba(243,240,232,.14);
+  transform: rotate(8deg);
+}
+
+.interestVisual-edit span {
+  left: 12%;
+  height: 12px;
+  background: rgba(143,163,192,.18);
+}
+
+.interestVisual-edit span:nth-child(1) { top: 28%; width: 70%; }
+.interestVisual-edit span:nth-child(2) { top: 43%; width: 48%; background: rgba(255,74,56,.34); }
+.interestVisual-edit span:nth-child(3) { top: 58%; width: 78%; }
+.interestVisual-edit span:nth-child(4) {
+  left: 56%;
+  top: 18%;
+  width: 1px;
+  height: 62%;
+  background: rgba(243,240,232,.38);
+}
+
+.interestVisual-gaming::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 126px;
+  height: 72px;
+  transform: translate(-50%,-50%);
+  border: 1px solid rgba(243,240,232,.28);
+  border-radius: 42% 42% 34% 34%;
+}
+
+.interestVisual-gaming span:nth-child(1),
+.interestVisual-gaming span:nth-child(2) {
+  top: 50%;
+  width: 22px;
+  height: 22px;
+  transform: translateY(-50%);
+  border: 1px solid rgba(255,74,56,.44);
+  border-radius: 50%;
+}
+
+.interestVisual-gaming span:nth-child(1) { left: 26%; }
+.interestVisual-gaming span:nth-child(2) { right: 26%; }
+
+.interestVisual-motion span:nth-child(1),
+.interestVisual-motion span:nth-child(2),
+.interestVisual-motion span:nth-child(3) {
+  left: 12%;
+  width: 76%;
+  height: 1px;
+  background: rgba(243,240,232,.12);
+  transform-origin: left;
+}
+
+.interestVisual-motion span:nth-child(1) {
+  top: 32%;
+  transform: rotate(8deg);
+}
+
+.interestVisual-motion span:nth-child(2) {
+  top: 49%;
+  background: rgba(255,74,56,.42);
+  transform: rotate(-5deg) scaleX(.72);
+}
+
+.interestVisual-motion span:nth-child(3) {
+  top: 65%;
+  transform: rotate(3deg) scaleX(.48);
+}
+
+.interestVisual-motion span:nth-child(4) {
+  left: 62%;
+  top: 24%;
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(143,163,192,.4);
+  border-radius: 50%;
+}
+
+.interestTile:hover .interestVisual > span {
+  transform: translate3d(4px,-4px,0) rotate(3deg);
+}
+
+.interestAssetNote {
+  width: min(1320px, 94vw);
+  margin: 34px auto 0;
+  display: grid;
+  grid-template-columns: 190px 1fr;
+  gap: 24px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(243,240,232,.1);
+}
+
+.interestAssetNote span {
+  color: rgba(243,240,232,.3);
+  font: 600 7px/1 var(--mono);
+  letter-spacing: .13em;
+}
+
+.interestAssetNote p {
+  margin: 0;
+  max-width: 560px;
+  color: rgba(243,240,232,.25);
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+/* Project archive: unify generic repository artwork into a cinematic system. */
+.projectArchiveWheel img {
+  filter: grayscale(.35) saturate(.72) contrast(1.08) brightness(.82);
+  transform: scale(1.015);
+  transition: filter .32s ease, transform .42s cubic-bezier(.2,.8,.2,1);
+}
+
+.projectArchiveWheel a:hover img {
+  filter: grayscale(0) saturate(.92) contrast(1.05) brightness(.94);
+  transform: scale(1.045);
+}
+
+.projectArchiveWheel a > span::before {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(145deg, rgba(255,255,255,.08), transparent 30%),
+    linear-gradient(0deg, rgba(5,6,7,.64), transparent 42%);
+  mix-blend-mode: screen;
+}
+
+.projectArchiveWheel a:nth-child(3n + 1) > span::after,
+.projectArchiveWheel a:nth-child(3n + 2) > span::after,
+.projectArchiveWheel a:nth-child(3n + 3) > span::after {
+  content: "";
+  position: absolute;
+  z-index: 3;
+  inset: 0;
+  pointer-events: none;
+  opacity: .28;
+}
+
+.projectArchiveWheel a:nth-child(3n + 1) > span::after {
+  background:
+    linear-gradient(90deg, transparent 68%, rgba(255,74,56,.42)),
+    repeating-linear-gradient(0deg, transparent 0 24px, rgba(255,255,255,.04) 25px 26px);
+}
+
+.projectArchiveWheel a:nth-child(3n + 2) > span::after {
+  background:
+    radial-gradient(circle at 72% 28%, rgba(143,163,192,.42), transparent 24%),
+    linear-gradient(135deg, transparent 0 48%, rgba(255,255,255,.06) 49% 50%, transparent 51%);
+}
+
+.projectArchiveWheel a:nth-child(3n + 3) > span::after {
+  background:
+    linear-gradient(135deg, rgba(255,74,56,.2), transparent 28%),
+    repeating-linear-gradient(90deg, transparent 0 34px, rgba(143,163,192,.04) 35px 36px);
+}
+
+.projectArchiveWheel ol {
+  z-index: 12;
+  max-width: 180px;
+  color: rgba(243,240,232,.36);
+}
+
+.projectArchiveWheel ol button {
+  padding: 2px 0;
+}
+
+.projectArchiveWheel ol button:hover,
+.projectArchiveWheel ol button.text-foreground {
+  color: var(--signal) !important;
+}
+
+/* Final trace: delivery states + finished footer. */
+.traceHoneypot {
+  position: absolute !important;
+  left: -9999px !important;
+  width: 1px !important;
+  height: 1px !important;
+  opacity: 0 !important;
+}
+
+.traceForm.is-sending {
+  opacity: .62;
+}
+
+.traceForm.is-sent .tracePacket,
+.traceForm.is-fallback .tracePacket {
+  transform: translate(-50%, -120px) scale(1);
+  opacity: 1;
+}
+
+.finalSignoff {
+  position: relative;
+  z-index: 5;
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(243,240,232,.1);
+  color: rgba(243,240,232,.28);
+  font: 600 7px/1 var(--mono);
+  letter-spacing: .13em;
+}
+
+/* Performance: skip offscreen paint for non-sticky lower chapters. */
+.methodV3,
+.interestsV4,
+.systemFileV4,
+.projectsGateway,
+.traceFinal {
+  content-visibility: auto;
+  contain-intrinsic-size: 1000px;
+}
+
+@media (hover: none), (pointer: coarse) {
+  .signalFieldCursor,
+  .signalFieldEcho,
+  .thoughtFragments {
+    display: none;
+  }
+
+  .interestTile:hover,
+  .systemPaper:hover {
+    transform: none !important;
+  }
+}
+
+@media (max-width: 900px) {
+  .interestTile {
+    grid-template-columns: 180px 1fr;
+  }
+
+  .methodRejectField {
+    display: none;
+  }
+
+  .projectArchiveWheel ol {
+    top: 12% !important;
+    right: 4% !important;
+    max-width: 130px;
+  }
+}
+
+@media (max-width: 720px) {
+  .interestTile {
+    grid-template-columns: 1fr;
+  }
+
+  .interestVisual {
+    min-height: 180px;
+    border-right: 0;
+    border-bottom: 1px solid rgba(243,240,232,.1);
+  }
+
+  .interestAssetNote {
+    grid-template-columns: 1fr;
+  }
+
+  .signalLaneMeta {
+    justify-items: start;
+    text-align: left;
+  }
+
+  .signalFieldCursor,
+  .signalWorldPorts {
+    display: none;
+  }
+
+  .methodDecisionLine {
+    left: 29px;
+  }
+
+  .projectArchiveWheel ol {
+    display: none;
+  }
+
+  .projectArchiveHint {
+    font-size: 6px;
+  }
+
+  .finalSignoff {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .introSkip {
+    right: 14px;
+    bottom: 14px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .signalFieldEcho,
+  .signalLane > i b,
+  .thoughtBlob,
+  .interestVisual > span {
+    animation: none !important;
+  }
+
+  [data-chapter]::before {
+    width: 100% !important;
+  }
+}
