@@ -220,6 +220,17 @@ export function WorksWheel({
     [last],
   );
 
+  const select = React.useCallback(
+    (index: number) => {
+      const nextIndex = clamp(index, 0, last);
+      setActive(nextIndex);
+      const item = items[nextIndex];
+      if (item) onActiveChange?.(item, nextIndex);
+      to(nextIndex + 1);
+    },
+    [items, last, onActiveChange, to],
+  );
+
   const drag = React.useRef<number | null>(null);
   const settling = React.useRef(0);
 
@@ -355,7 +366,7 @@ export function WorksWheel({
                 }}
                 className="group absolute border-0 bg-transparent p-0 text-left [backface-visibility:hidden]"
                 style={cardStyle}
-                onClick={() => to(i + 1)}
+                onClick={() => select(i)}
               >
                 {face}
               </button>
@@ -391,7 +402,7 @@ export function WorksWheel({
           <li key={item.title}>
             <button
               type="button"
-              onClick={() => to(i + 1)}
+              onClick={() => select(i)}
               className={cn(
                 "focus-visible:outline-foreground cursor-pointer transition-colors outline-none focus-visible:outline-1",
                 i === active && "text-foreground font-medium",
