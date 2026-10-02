@@ -1,4 +1,4 @@
-// Verification revision: intended wheel selection sync.
+// Verification revision: project index selection sync.
 import { chromium } from "playwright";
 
 const browser = await chromium.launch({ headless: true });
@@ -70,8 +70,8 @@ assert(
   "Initial GitHub source link is wrong.",
 );
 
-const options = page.locator('.projectArchiveWheel button[role="option"]');
-await options.nth(3).click({ force: true });
+const rakshaIndex = page.locator(".projectArchiveWheel ol button", { hasText: "RAKSHA GRID" });
+await rakshaIndex.click();
 await page.waitForTimeout(300);
 assert((await panel.locator("h3").innerText()).includes("RAKSHA GRID"), "Raksha Grid detail did not sync from the wheel.");
 assert(
