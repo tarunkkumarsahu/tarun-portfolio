@@ -2688,3 +2688,1209 @@ body {
 @keyframes thoughtPathFlow {
   to { stroke-dashoffset: -50; }
 }
+
+
+/* =========================================================
+   FINAL CHAPTER PASS
+   ========================================================= */
+
+/* Liquid metal CTA */
+
+.liquidMetalButton {
+  position: relative;
+  display: inline-block;
+}
+
+.liquidMetalPerspective {
+  position: relative;
+  perspective: 1000px;
+  perspective-origin: 50% 50%;
+  transform-style: preserve-3d;
+}
+
+.liquidMetalLabel,
+.liquidMetalInner,
+.liquidMetalShaderShell,
+.liquidMetalHitbox {
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+}
+
+.liquidMetalLabel {
+  z-index: 30;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+  transform: translateZ(20px);
+  color: #888b91;
+}
+
+.liquidMetalLabel span {
+  font: 500 8px/1 var(--mono);
+  letter-spacing: .14em;
+}
+
+.liquidMetalInner {
+  z-index: 20;
+  margin: 2px;
+  background: linear-gradient(180deg, #202225, #050607);
+  transition: transform .2s ease;
+}
+
+.liquidMetalShaderShell {
+  z-index: 10;
+  overflow: hidden;
+  transition: transform .2s ease, box-shadow .25s ease;
+}
+
+.shader-container-exploded {
+  position: relative;
+  overflow: hidden;
+  border-radius: 999px;
+}
+
+.liquidMetalHitbox {
+  z-index: 40;
+  border: 0;
+  background: transparent;
+  overflow: hidden;
+  outline: none;
+}
+
+.liquidMetalRipple {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(255,255,255,.42), transparent 70%);
+  animation: ripple-animation .6s ease-out;
+}
+
+/* Page 1 — real model socket */
+
+.heroPrimaryCta {
+  margin-top: 30px;
+}
+
+.heroModelCanvas,
+.heroModelLoading,
+.heroFallback {
+  position: absolute;
+  inset: 0;
+}
+
+.heroModelCanvas canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.heroModelLoading {
+  display: grid;
+  place-content: center;
+  gap: 12px;
+  text-align: center;
+  font: 500 7px/1 var(--mono);
+  letter-spacing: .14em;
+}
+
+.heroModelLoading span {
+  width: 130px;
+  height: 1px;
+  background: rgba(8,9,11,.16);
+  overflow: hidden;
+}
+
+.heroModelLoading span::after {
+  content: "";
+  display: block;
+  width: 38%;
+  height: 100%;
+  background: rgba(8,9,11,.85);
+  animation: loadingSlide 1.4s ease-in-out infinite;
+}
+
+.heroFallback {
+  display: grid;
+  place-items: center;
+  filter: drop-shadow(0 35px 50px rgba(15,20,29,.2));
+}
+
+.heroFallbackHead {
+  position: absolute;
+  top: 13%;
+  width: 108px;
+  height: 136px;
+  border-radius: 48% 48% 42% 42%;
+  background: linear-gradient(145deg, #20242d, #090a0c 68%);
+}
+
+.heroFallbackHead::before {
+  content: "";
+  position: absolute;
+  inset: -17px -10px auto -8px;
+  height: 61px;
+  border-radius: 60% 58% 25% 30%;
+  background: #050607;
+  transform: rotate(-5deg);
+}
+
+.heroFallbackBody {
+  position: absolute;
+  top: 31%;
+  width: 58%;
+  height: 50%;
+  clip-path: polygon(24% 0,76% 0,100% 33%,91% 100%,8% 100%,0 33%);
+  border-radius: 44% 44% 12% 12%;
+  background: linear-gradient(150deg, #181b20, #060708 72%);
+}
+
+.heroFallbackLaptop {
+  position: absolute;
+  z-index: 4;
+  left: 50%;
+  bottom: 9%;
+  width: 72%;
+  height: 34%;
+  transform: translateX(-50%) perspective(800px) rotateX(-5deg);
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(255,255,255,.14);
+  background: #090a0c;
+  box-shadow: 0 24px 44px rgba(0,0,0,.24);
+}
+
+.heroFallbackLaptop span {
+  color: rgba(233,238,245,.4);
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: .2em;
+}
+
+.heroFallback > small {
+  position: absolute;
+  bottom: -2px;
+  font: 500 6px/1 var(--mono);
+  letter-spacing: .12em;
+  opacity: .48;
+}
+
+@keyframes loadingSlide {
+  0%,100% { transform: translateX(-20%); }
+  50% { transform: translateX(180%); }
+}
+
+/* Page 3 — problem-solving machine */
+
+.methodMachine {
+  position: relative;
+  min-height: 390svh;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 70% 20%, rgba(255,74,56,.06), transparent 28%),
+    var(--paper);
+  color: var(--ink);
+}
+
+.methodSticky {
+  position: sticky;
+  top: 0;
+  min-height: 100svh;
+  display: grid;
+  grid-template-columns: minmax(300px, .9fr) minmax(520px, 1.6fr);
+  grid-template-rows: 1fr auto;
+  gap: 20px 5vw;
+  align-items: center;
+  padding: 88px clamp(26px, 6vw, 100px) 38px;
+  overflow: hidden;
+}
+
+.methodHeadline {
+  align-self: center;
+  max-width: 650px;
+}
+
+.methodHeadline h2 {
+  margin: 24px 0 12px;
+  font-size: clamp(74px, 9.5vw, 168px);
+  line-height: .72;
+  letter-spacing: -.09em;
+}
+
+.methodHeadline > p {
+  margin: 0;
+  font: italic 500 clamp(44px, 5vw, 86px)/.86 var(--serif);
+  color: var(--signal);
+}
+
+.methodMechanism {
+  position: relative;
+  height: min(72vh, 720px);
+  perspective: 1100px;
+}
+
+.methodAxis {
+  position: absolute;
+  left: 50%;
+  top: 5%;
+  bottom: 5%;
+  width: 1px;
+  transform: translateX(-50%);
+  background:
+    linear-gradient(180deg, transparent, rgba(8,9,11,.25) 14%, rgba(8,9,11,.25) 86%, transparent);
+}
+
+.methodNode {
+  position: absolute;
+  left: 50%;
+  top: calc(7% + var(--method-index) * 13.8%);
+  width: min(92%, 620px);
+  min-height: 62px;
+  display: grid;
+  grid-template-columns: 48px minmax(140px, .7fr) 1fr 18px;
+  gap: 18px;
+  align-items: center;
+  transform: translateX(-50%) translateZ(-80px) scale(.92);
+  border: 0;
+  padding: 0;
+  color: rgba(8,9,11,.26);
+  background: transparent;
+  text-align: left;
+  transition:
+    color .45s ease,
+    transform .55s cubic-bezier(.2,.8,.2,1),
+    opacity .4s ease;
+}
+
+.methodNode::before {
+  content: "";
+  position: absolute;
+  left: 48px;
+  right: 0;
+  bottom: -9px;
+  height: 1px;
+  background: rgba(8,9,11,.09);
+  transform-origin: left;
+  transform: scaleX(.25);
+  transition: transform .5s ease, background .4s ease;
+}
+
+.methodNode > span,
+.methodNode small {
+  font: 500 7px/1.25 var(--mono);
+  letter-spacing: .12em;
+}
+
+.methodNode strong {
+  font-size: clamp(24px, 2.2vw, 42px);
+  line-height: .88;
+  letter-spacing: -.055em;
+}
+
+.methodNode i {
+  width: 9px;
+  height: 9px;
+  justify-self: end;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  box-shadow: 0 0 0 0 rgba(255,74,56,0);
+  transition: all .45s ease;
+}
+
+.methodNode.active {
+  color: var(--ink);
+  transform: translateX(-50%) translateZ(0) scale(1);
+}
+
+.methodNode.active::before {
+  transform: scaleX(1);
+  background: rgba(8,9,11,.3);
+}
+
+.methodNode.active i {
+  border-color: var(--signal);
+  background: var(--signal);
+  box-shadow: 0 0 0 7px rgba(255,74,56,.08), 0 0 24px rgba(255,74,56,.26);
+}
+
+.methodCurrent {
+  position: absolute;
+  right: clamp(26px, 6vw, 100px);
+  bottom: 78px;
+  width: min(360px, 32vw);
+  padding-top: 14px;
+  border-top: 1px solid rgba(8,9,11,.18);
+}
+
+.methodCurrent span {
+  color: var(--signal);
+  font: 500 7px/1 var(--mono);
+  letter-spacing: .14em;
+}
+
+.methodCurrent strong {
+  display: block;
+  margin-top: 10px;
+  font-size: 28px;
+  letter-spacing: -.05em;
+}
+
+.methodCurrent p {
+  margin: 8px 0 0;
+  color: rgba(8,9,11,.55);
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.methodReject {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: rgba(8,9,11,.2);
+  font: 500 6px/1 var(--mono);
+  letter-spacing: .12em;
+  transform: rotate(-8deg);
+}
+
+.methodReject i {
+  width: 42px;
+  height: 1px;
+  background: rgba(255,74,56,.35);
+}
+
+.rejectA { left: 9%; top: 34%; }
+.rejectB { right: 4%; top: 55%; transform: rotate(7deg); }
+.rejectC { left: 15%; bottom: 12%; transform: rotate(5deg); }
+
+.methodSignature {
+  grid-column: 1 / -1;
+  align-self: end;
+  overflow: hidden;
+  padding-top: 14px;
+  border-top: 1px solid rgba(8,9,11,.16);
+  font-size: clamp(28px, 4vw, 70px);
+  line-height: .86;
+  font-weight: 700;
+  letter-spacing: -.06em;
+  white-space: nowrap;
+}
+
+.methodSignature i {
+  color: var(--signal);
+  font-family: var(--serif);
+  font-weight: 400;
+  font-style: italic;
+}
+
+/* Page 4 — Side Quests */
+
+.sideQuestWorld {
+  position: relative;
+  min-height: 130svh;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 62% 43%, rgba(143,163,192,.08), transparent 26%),
+    #090a0d;
+  color: var(--ivory);
+}
+
+.sideQuestHeading {
+  position: absolute;
+  z-index: 8;
+  left: clamp(24px, 5vw, 84px);
+  top: 13vh;
+  width: min(560px, 42vw);
+  pointer-events: none;
+}
+
+.sideQuestHeading h2 {
+  margin: 22px 0 14px;
+  font-size: clamp(96px, 13vw, 220px);
+  line-height: .65;
+  letter-spacing: -.1em;
+}
+
+.sideQuestHeading h2 em {
+  font-family: var(--serif);
+  font-weight: 400;
+  color: var(--signal);
+}
+
+.sideQuestHeading p {
+  margin: 0;
+  font: italic 500 clamp(22px, 2.4vw, 40px)/1 var(--serif);
+  color: rgba(243,240,232,.55);
+}
+
+.sideQuestStage {
+  position: absolute;
+  inset: 0;
+  cursor: grab;
+  perspective: 1400px;
+  touch-action: none;
+}
+
+.sideQuestStage:active {
+  cursor: grabbing;
+}
+
+.sideQuestRoom {
+  position: absolute;
+  left: 54%;
+  top: 53%;
+  width: min(64vw, 980px);
+  height: min(58vw, 760px);
+  transform-style: preserve-3d;
+  transform-origin: center;
+  transition: transform .08s linear;
+}
+
+.roomFloor,
+.roomBack {
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgba(233,238,245,.06);
+  background:
+    linear-gradient(rgba(233,238,245,.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(233,238,245,.025) 1px, transparent 1px);
+  background-size: 42px 42px;
+}
+
+.roomFloor {
+  transform: rotateX(90deg) translateZ(-250px);
+  background-color: rgba(255,255,255,.008);
+}
+
+.roomBack {
+  transform: translateZ(-360px);
+}
+
+.roomLight {
+  position: absolute;
+  left: 46%;
+  top: 42%;
+  width: 340px;
+  aspect-ratio: 1;
+  transform: translate(-50%,-50%) translateZ(-260px);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(143,163,192,.18), transparent 68%);
+  filter: blur(16px);
+}
+
+.questObject {
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  background: transparent;
+  transform-style: preserve-3d;
+  color: var(--ivory);
+  transition: transform .45s cubic-bezier(.2,.8,.2,1), filter .35s ease;
+}
+
+.questObject:hover,
+.questObject.active {
+  filter: drop-shadow(0 0 28px rgba(143,163,192,.22));
+}
+
+.questObject-1 { left: 9%; top: 18%; transform: translateZ(120px) rotateY(-18deg); }
+.questObject-2 { right: 12%; top: 12%; transform: translateZ(-20px) rotateY(22deg); }
+.questObject-3 { left: 18%; bottom: 8%; transform: translateZ(40px) rotateX(8deg); }
+.questObject-4 { right: 8%; bottom: 12%; transform: translateZ(130px) rotateY(-12deg); }
+
+.questObject.active {
+  transform: translateZ(180px) scale(1.16);
+}
+
+.questObject small {
+  position: absolute;
+  bottom: -8px;
+  font: 500 6px/1 var(--mono);
+  letter-spacing: .14em;
+  color: rgba(243,240,232,.46);
+}
+
+.questShape {
+  position: relative;
+  width: 104px;
+  height: 104px;
+  display: block;
+  transform-style: preserve-3d;
+}
+
+.questShape-orb {
+  border-radius: 50%;
+  border: 1px solid rgba(233,238,245,.32);
+  background:
+    radial-gradient(circle at 34% 28%, rgba(233,238,245,.28), rgba(143,163,192,.05) 28%, transparent 64%);
+  box-shadow:
+    inset -18px -22px 30px rgba(0,0,0,.35),
+    0 0 45px rgba(143,163,192,.12);
+}
+
+.questShape-orb i {
+  position: absolute;
+  inset: 14%;
+  border: 1px solid rgba(233,238,245,.18);
+  border-radius: 50%;
+}
+
+.questShape-orb i:nth-child(2) {
+  transform: rotateX(66deg);
+}
+
+.questShape-orb i:nth-child(3) {
+  transform: rotateY(66deg);
+}
+
+.questShape-frame {
+  border: 1px solid rgba(255,74,56,.5);
+  transform: rotate(7deg);
+}
+
+.questShape-frame::before,
+.questShape-frame::after {
+  content: "";
+  position: absolute;
+  border: 1px solid rgba(233,238,245,.18);
+}
+
+.questShape-frame::before { inset: 14px -14px -14px 14px; }
+.questShape-frame::after { inset: -12px 12px 12px -12px; }
+
+.questShape-controller {
+  border: 1px solid rgba(233,238,245,.28);
+  border-radius: 42% 42% 36% 36%;
+  transform: perspective(400px) rotateX(22deg);
+}
+
+.questShape-controller::before,
+.questShape-controller::after {
+  content: "";
+  position: absolute;
+  top: 42%;
+  width: 20px;
+  height: 20px;
+  border: 1px solid rgba(233,238,245,.42);
+  border-radius: 50%;
+}
+
+.questShape-controller::before { left: 18%; }
+.questShape-controller::after { right: 18%; }
+
+.questShape-timeline {
+  width: 130px;
+  height: 74px;
+  border-top: 1px solid rgba(233,238,245,.34);
+  border-bottom: 1px solid rgba(233,238,245,.18);
+}
+
+.questShape-timeline i {
+  position: absolute;
+  left: 0;
+  height: 10px;
+  background: rgba(143,163,192,.22);
+}
+
+.questShape-timeline i:nth-child(1) { top: 14px; width: 62%; }
+.questShape-timeline i:nth-child(2) { top: 31px; width: 88%; background: rgba(255,74,56,.28); }
+.questShape-timeline i:nth-child(3) { top: 48px; width: 44%; }
+
+.sideQuestReadout {
+  position: absolute;
+  z-index: 8;
+  right: clamp(24px, 5vw, 84px);
+  bottom: 10vh;
+  width: min(420px, 34vw);
+  padding-top: 14px;
+  border-top: 1px solid rgba(243,240,232,.16);
+}
+
+.sideQuestReadout > span {
+  color: var(--signal);
+  font: 500 7px/1 var(--mono);
+  letter-spacing: .14em;
+}
+
+.sideQuestReadout h3 {
+  margin: 12px 0 8px;
+  font-size: clamp(28px, 3vw, 54px);
+  line-height: .85;
+  letter-spacing: -.06em;
+}
+
+.sideQuestReadout p {
+  margin: 0;
+  color: rgba(243,240,232,.48);
+  font-size: 11px;
+  line-height: 1.55;
+}
+
+/* Page 5 — System File */
+
+.systemFile {
+  position: relative;
+  min-height: 150svh;
+  overflow: hidden;
+  background:
+    linear-gradient(rgba(8,9,11,.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(8,9,11,.045) 1px, transparent 1px),
+    #d9d4c9;
+  background-size: 34px 34px;
+  color: var(--ink);
+}
+
+.systemFileDesk {
+  position: relative;
+  min-height: 150svh;
+  max-width: 1540px;
+  margin: 0 auto;
+  perspective: 1600px;
+}
+
+.systemPaper,
+.paperShadow {
+  position: absolute;
+  background: #f3efe6;
+  box-shadow: 0 28px 65px rgba(28,21,15,.14);
+}
+
+.paperShadow {
+  width: min(58vw, 820px);
+  height: 880px;
+  left: 9%;
+  top: 17%;
+  background: #c8c1b5;
+}
+
+.paperShadowA { transform: rotate(3.5deg) translate(18px,12px); opacity: .6; }
+.paperShadowB { transform: rotate(-5deg) translate(-14px,24px); opacity: .38; }
+
+.mainPaper {
+  left: 8%;
+  top: 14%;
+  width: min(58vw, 820px);
+  min-height: 900px;
+  padding: clamp(30px, 4vw, 58px);
+  transform: rotate(-1.8deg);
+  border: 1px solid rgba(8,9,11,.12);
+}
+
+.mainPaper header small,
+.systemPaper > small,
+.paperProfile > span,
+.paperSystems > span,
+.paperFooter > span,
+.capabilityPaper span {
+  font: 600 7px/1 var(--mono);
+  letter-spacing: .15em;
+  color: rgba(8,9,11,.5);
+}
+
+.mainPaper header h2 {
+  margin: 62px 0 22px;
+  font-size: clamp(72px, 8.5vw, 138px);
+  line-height: .68;
+  letter-spacing: -.09em;
+}
+
+.mainPaper header p {
+  margin: 0;
+  font: italic 500 clamp(24px, 2.7vw, 44px)/1 var(--serif);
+  color: var(--signal);
+}
+
+.paperProfile {
+  width: min(520px, 90%);
+  margin-top: 74px;
+}
+
+.paperProfile p {
+  margin: 10px 0 0;
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.paperSystems {
+  margin-top: 58px;
+}
+
+.paperSystems ol {
+  list-style: none;
+  margin: 14px 0 0;
+  padding: 0;
+}
+
+.paperSystems li {
+  display: grid;
+  grid-template-columns: 34px 1fr;
+  align-items: baseline;
+  padding: 11px 0;
+  border-top: 1px solid rgba(8,9,11,.12);
+}
+
+.paperSystems li i {
+  font: 500 7px/1 var(--mono);
+  font-style: normal;
+  color: var(--signal);
+}
+
+.paperSystems li strong {
+  font-size: 21px;
+  letter-spacing: -.035em;
+}
+
+.paperFooter {
+  position: absolute;
+  left: clamp(30px, 4vw, 58px);
+  right: clamp(30px, 4vw, 58px);
+  bottom: 34px;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(8,9,11,.18);
+}
+
+.paperFooter strong {
+  font-size: 9px;
+  letter-spacing: .08em;
+}
+
+.paperClip {
+  position: absolute;
+  right: 80px;
+  top: -22px;
+  width: 28px;
+  height: 90px;
+  border: 3px solid rgba(40,43,47,.45);
+  border-bottom: 0;
+  border-radius: 16px 16px 0 0;
+  transform: rotate(8deg);
+}
+
+.paperTape {
+  position: absolute;
+  width: 100px;
+  height: 30px;
+  background: rgba(255,239,185,.48);
+  box-shadow: 0 1px 1px rgba(0,0,0,.04);
+}
+
+.tapeA { left: 16%; top: -15px; transform: rotate(-4deg); }
+.tapeB { left: 34%; top: -14px; transform: rotate(3deg); }
+
+.paperStamp {
+  position: absolute;
+  right: 34px;
+  top: 92px;
+  padding: 9px 12px;
+  border: 2px solid rgba(255,74,56,.5);
+  color: rgba(255,74,56,.66);
+  font: 700 9px/1 var(--mono);
+  letter-spacing: .14em;
+  transform: rotate(7deg);
+}
+
+.capabilityPaper {
+  right: 7%;
+  top: 21%;
+  width: min(31vw, 410px);
+  min-height: 470px;
+  padding: 34px;
+  transform: rotate(3.6deg);
+  border: 1px solid rgba(8,9,11,.12);
+}
+
+.capabilityPaper > div {
+  padding: 18px 0;
+  border-top: 1px solid rgba(8,9,11,.12);
+}
+
+.capabilityPaper > div:first-of-type {
+  margin-top: 28px;
+}
+
+.capabilityPaper p {
+  margin: 7px 0 0;
+  color: rgba(8,9,11,.62);
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.currentlyPaper {
+  right: 10%;
+  bottom: 12%;
+  width: min(34vw, 470px);
+  min-height: 300px;
+  padding: 38px;
+  transform: rotate(-3deg);
+  border: 1px solid rgba(8,9,11,.12);
+}
+
+.currentlyPaper h3 {
+  margin: 34px 0 14px;
+  font-size: clamp(32px, 3vw, 54px);
+  line-height: .88;
+  letter-spacing: -.06em;
+}
+
+.currentlyPaper p {
+  margin: 0 0 28px;
+  color: rgba(8,9,11,.58);
+  font-size: 11px;
+  line-height: 1.55;
+}
+
+/* Page 6 — trace */
+
+.traceResponse {
+  position: relative;
+  min-height: 130svh;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: minmax(340px, 1fr) minmax(420px, .9fr);
+  gap: 6vw;
+  align-items: center;
+  padding: 100px clamp(28px, 6vw, 110px);
+  background:
+    radial-gradient(circle at 20% 40%, rgba(143,163,192,.08), transparent 30%),
+    #050607;
+  color: var(--ivory);
+}
+
+.traceRain {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.traceRain span {
+  position: absolute;
+  left: var(--fall-x);
+  top: -22%;
+  color: rgba(143,163,192,.075);
+  font: 800 clamp(72px, 11vw, 190px)/1 var(--mono);
+  transform: rotate(var(--fall-rotate));
+  animation: traceFall var(--fall-duration) var(--fall-delay) linear infinite;
+}
+
+.traceCopy,
+.traceForm {
+  position: relative;
+  z-index: 3;
+}
+
+.traceCopy h2 {
+  margin: 28px 0 20px;
+  font-size: clamp(88px, 10vw, 170px);
+  line-height: .68;
+  letter-spacing: -.095em;
+}
+
+.traceCopy p {
+  width: min(460px, 100%);
+  margin: 0;
+  color: rgba(243,240,232,.5);
+  font: italic 500 clamp(21px, 2vw, 34px)/1.1 var(--serif);
+}
+
+.traceForm {
+  display: grid;
+  gap: 30px;
+  transition: transform .7s cubic-bezier(.2,.8,.2,1), opacity .5s ease;
+}
+
+.traceForm label {
+  display: grid;
+  gap: 9px;
+}
+
+.traceForm label > span {
+  font: 500 7px/1 var(--mono);
+  letter-spacing: .15em;
+  color: rgba(243,240,232,.46);
+}
+
+.traceForm input,
+.traceForm textarea {
+  width: 100%;
+  border: 0;
+  border-bottom: 1px solid rgba(243,240,232,.2);
+  border-radius: 0;
+  padding: 8px 0 14px;
+  outline: none;
+  resize: vertical;
+  color: var(--ivory);
+  background: transparent;
+  font-size: clamp(18px, 2vw, 30px);
+  letter-spacing: -.025em;
+  transition: border-color .25s ease;
+}
+
+.traceForm input:focus,
+.traceForm textarea:focus {
+  border-color: rgba(243,240,232,.75);
+}
+
+.traceForm input::placeholder,
+.traceForm textarea::placeholder {
+  color: rgba(243,240,232,.2);
+}
+
+.traceSubmit {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.traceSubmit small {
+  max-width: 290px;
+  color: rgba(243,240,232,.28);
+  font: 500 6px/1.45 var(--mono);
+  letter-spacing: .08em;
+}
+
+.tracePacket {
+  position: absolute;
+  left: 50%;
+  bottom: 5%;
+  width: 110px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  transform: translate(-50%, 80px) scale(.6);
+  opacity: 0;
+  border: 1px solid rgba(233,238,245,.45);
+  background: rgba(143,163,192,.08);
+  box-shadow: 0 0 42px rgba(143,163,192,.18);
+  font: 600 7px/1 var(--mono);
+  letter-spacing: .12em;
+  transition: transform .6s cubic-bezier(.2,.8,.2,1), opacity .3s ease;
+}
+
+.traceForm.is-packing .tracePacket {
+  transform: translate(-50%, -120px) scale(1);
+  opacity: 1;
+}
+
+.traceForm.is-ready {
+  opacity: .28;
+  transform: scale(.98);
+}
+
+.traceRecorded {
+  position: absolute;
+  z-index: 6;
+  left: 50%;
+  bottom: 12vh;
+  transform: translateX(-50%);
+  color: rgba(243,240,232,.8);
+  font: 600 9px/1 var(--mono);
+  letter-spacing: .18em;
+}
+
+@keyframes traceFall {
+  to {
+    transform: translateY(155vh) rotate(calc(var(--fall-rotate) + 12deg));
+  }
+}
+
+/* Responsive final chapters */
+
+@media (max-width: 980px) {
+  .methodSticky {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr auto;
+    gap: 20px;
+  }
+
+  .methodHeadline {
+    max-width: 100%;
+  }
+
+  .methodMechanism {
+    height: 54vh;
+  }
+
+  .methodCurrent {
+    display: none;
+  }
+
+  .sideQuestHeading {
+    width: 54vw;
+  }
+
+  .sideQuestRoom {
+    left: 48%;
+    width: 80vw;
+    height: 68vw;
+  }
+
+  .sideQuestReadout {
+    width: 42vw;
+  }
+
+  .systemFileDesk {
+    min-height: 175svh;
+  }
+
+  .mainPaper {
+    width: min(72vw, 820px);
+  }
+
+  .capabilityPaper {
+    width: min(38vw, 400px);
+  }
+
+  .currentlyPaper {
+    width: min(44vw, 450px);
+  }
+
+  .traceResponse {
+    grid-template-columns: 1fr;
+    min-height: 145svh;
+    align-content: center;
+  }
+
+  .traceCopy {
+    max-width: 760px;
+  }
+}
+
+@media (max-width: 760px) {
+  .heroFallback > small {
+    display: none;
+  }
+
+  .methodMachine {
+    min-height: 330svh;
+  }
+
+  .methodSticky {
+    padding: 76px 16px 24px;
+  }
+
+  .methodHeadline h2 {
+    font-size: 18vw;
+  }
+
+  .methodHeadline > p {
+    font-size: 11vw;
+  }
+
+  .methodMechanism {
+    height: 58vh;
+  }
+
+  .methodNode {
+    width: 100%;
+    grid-template-columns: 28px 1fr 12px;
+  }
+
+  .methodNode small {
+    display: none;
+  }
+
+  .methodSignature {
+    font-size: 8vw;
+    white-space: normal;
+  }
+
+  .sideQuestWorld {
+    min-height: 120svh;
+  }
+
+  .sideQuestHeading {
+    left: 16px;
+    top: 10vh;
+    width: calc(100% - 32px);
+  }
+
+  .sideQuestHeading h2 {
+    font-size: 24vw;
+  }
+
+  .sideQuestStage {
+    top: 26%;
+  }
+
+  .sideQuestRoom {
+    left: 50%;
+    top: 45%;
+    width: 110vw;
+    height: 96vw;
+  }
+
+  .sideQuestReadout {
+    left: 16px;
+    right: 16px;
+    bottom: 6vh;
+    width: auto;
+  }
+
+  .systemFile {
+    min-height: 210svh;
+  }
+
+  .systemFileDesk {
+    min-height: 210svh;
+  }
+
+  .paperShadow {
+    display: none;
+  }
+
+  .mainPaper,
+  .capabilityPaper,
+  .currentlyPaper {
+    left: 16px;
+    right: 16px;
+    width: auto;
+  }
+
+  .mainPaper {
+    top: 9%;
+    min-height: 860px;
+    transform: rotate(-1deg);
+  }
+
+  .mainPaper header h2 {
+    font-size: 20vw;
+  }
+
+  .capabilityPaper {
+    top: 54%;
+    transform: rotate(2deg);
+  }
+
+  .currentlyPaper {
+    top: 76%;
+    bottom: auto;
+    transform: rotate(-2deg);
+  }
+
+  .paperFooter {
+    flex-direction: column;
+  }
+
+  .traceResponse {
+    min-height: 135svh;
+    padding: 86px 16px 54px;
+    gap: 70px;
+  }
+
+  .traceCopy h2 {
+    font-size: 22vw;
+  }
+
+  .traceSubmit {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
