@@ -21,7 +21,7 @@ The portfolio first looks for:
 /public/resume/Tarun-Kumar-Sahu-Resume.pdf
 ```
 
-If that verified resume is not present, the Download Resume button generates a clearly labelled portfolio snapshot from the public information already shown on the site. This avoids inventing education, employment dates, achievements, or contact details.
+The Download Resume button is wired only to this canonical PDF. There is no generated fallback resume.
 
 ## Personal media
 
