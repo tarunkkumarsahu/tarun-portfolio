@@ -1,3 +1,5 @@
+const MEDIA_SPRITE = "/media/portfolio-media-sprite.webp";
+
 const INTERESTS = [
   {
     id: "01",
@@ -7,6 +9,7 @@ const INTERESTS = [
     thought: "I like turning flat ideas into spaces you can almost enter.",
     action: "EXPLORE",
     kind: "blender",
+    spriteIndex: 10,
   },
   {
     id: "02",
@@ -16,6 +19,7 @@ const INTERESTS = [
     thought: "I notice light before I notice the subject.",
     action: "VIEW",
     kind: "photo",
+    spriteIndex: 11,
   },
   {
     id: "03",
@@ -25,6 +29,7 @@ const INTERESTS = [
     thought: "Where ideas exist before they need to make sense.",
     action: "VIEW",
     kind: "sketch",
+    spriteIndex: 12,
   },
   {
     id: "04",
@@ -34,6 +39,7 @@ const INTERESTS = [
     thought: "Finding rhythm inside raw footage.",
     action: "PLAY",
     kind: "edit",
+    spriteIndex: 13,
   },
   {
     id: "05",
@@ -43,6 +49,7 @@ const INTERESTS = [
     thought: "I study systems even when I am supposed to be playing.",
     action: "EXPLORE",
     kind: "gaming",
+    spriteIndex: 14,
   },
   {
     id: "06",
@@ -52,8 +59,24 @@ const INTERESTS = [
     thought: "Interfaces should respond, not just exist.",
     action: "PLAY",
     kind: "motion",
+    spriteIndex: 15,
   },
 ] as const;
+
+function mediaStyle(index: number): React.CSSProperties {
+  const col = index % 4;
+  const row = Math.floor(index / 4);
+  return {
+    position: "absolute",
+    inset: 0,
+    backgroundImage: `linear-gradient(90deg, rgba(5,5,6,.18), rgba(5,5,6,.58)), url(${MEDIA_SPRITE})`,
+    backgroundSize: "100% 100%, 400% 400%",
+    backgroundPosition: `center, ${(col / 3) * 100}% ${(row / 3) * 100}%`,
+    backgroundRepeat: "no-repeat",
+    filter: "brightness(.72) saturate(.92) contrast(1.04)",
+    zIndex: 0,
+  };
+}
 
 export function SideQuests() {
   return (
@@ -88,6 +111,7 @@ export function SideQuests() {
               className={`interestVisual interestVisual-${interest.kind}`}
               aria-hidden="true"
             >
+              <div className="interestMedia" style={mediaStyle(interest.spriteIndex)} />
               <span />
               <span />
               <span />
