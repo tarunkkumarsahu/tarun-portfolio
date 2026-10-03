@@ -12,10 +12,13 @@ type Project = WorksWheelItem & {
   role: string;
 };
 
+const MEDIA_SPRITE = "/media/portfolio-media-sprite.webp";
+
 const PROJECTS: Project[] = [
   {
     title: "JARVIS OS",
-    image: "https://opengraph.githubassets.com/1/tarunkkumarsahu/Jarvis-OS",
+    image: MEDIA_SPRITE,
+    spriteIndex: 0,
     href: "https://github.com/tarunkkumarsahu/Jarvis-OS",
     summary: "A personal AI operating layer built around memory, tools, automation and computer control.",
     detail: "The project explores an assistant that can move beyond chat into persistent context, tool execution, desktop control and connected-device workflows.",
@@ -25,7 +28,8 @@ const PROJECTS: Project[] = [
   },
   {
     title: "EXOCORTEX",
-    image: "https://opengraph.githubassets.com/1/tarunkkumarsahu/EXOCROTEX",
+    image: MEDIA_SPRITE,
+    spriteIndex: 1,
     href: "https://github.com/tarunkkumarsahu/EXOCROTEX",
     summary: "An experimental cognitive extension architecture for memory, reasoning, planning and action.",
     detail: "A systems experiment around augmenting human cognition with explicit memory, attention, simulation and action layers.",
@@ -35,7 +39,8 @@ const PROJECTS: Project[] = [
   },
   {
     title: "FRESHFUSION",
-    image: "https://opengraph.githubassets.com/1/tarunkkumarsahu/Fresh-Fusion-",
+    image: MEDIA_SPRITE,
+    spriteIndex: 2,
     href: "https://github.com/tarunkkumarsahu/Fresh-Fusion-",
     summary: "Multimodal fruit freshness detection using sensor data, computer vision and real-time monitoring.",
     detail: "ESP32 sensor readings and image analysis are fused into a freshness workflow designed for practical post-harvest inspection.",
@@ -45,7 +50,8 @@ const PROJECTS: Project[] = [
   },
   {
     title: "RAKSHA GRID",
-    image: "https://opengraph.githubassets.com/1/tarunkkumarsahu/raksha-grid",
+    image: MEDIA_SPRITE,
+    spriteIndex: 3,
     href: "https://github.com/tarunkkumarsahu/raksha-grid",
     summary: "Adaptive disaster-response intelligence for safe routes, shelter allocation and live coordination.",
     detail: "The platform connects incident state, road closures, community risk and shelter capacity so response teams can reroute and coordinate under changing conditions.",
@@ -55,7 +61,8 @@ const PROJECTS: Project[] = [
   },
   {
     title: "PRECISION WEEDING",
-    image: "https://opengraph.githubassets.com/1/tarunkkumarsahu/smart-precision-weeding-robot",
+    image: MEDIA_SPRITE,
+    spriteIndex: 4,
     href: "https://github.com/tarunkkumarsahu/smart-precision-weeding-robot",
     summary: "Autonomous agricultural robotics for real-time weed detection and selective mechanical removal.",
     detail: "The concept combines crop-safe computer vision, navigation and a mechanical removal system designed to target weeds without damaging crops.",
@@ -65,7 +72,8 @@ const PROJECTS: Project[] = [
   },
   {
     title: "AGRINEXUS",
-    image: "https://opengraph.githubassets.com/1/tarunkkumarsahu/agrinexus-ai",
+    image: MEDIA_SPRITE,
+    spriteIndex: 5,
     href: "https://github.com/tarunkkumarsahu/agrinexus-ai",
     summary: "AI-first agricultural decision intelligence powered by digital twins and evidence-driven reasoning.",
     detail: "A farm decision platform exploring scenario simulation, verified outcomes and explainable recommendations instead of one-shot AI answers.",
@@ -75,7 +83,8 @@ const PROJECTS: Project[] = [
   },
   {
     title: "AWR BOT",
-    image: "https://opengraph.githubassets.com/1/tarunkkumarsahu/AWR-Bot-",
+    image: MEDIA_SPRITE,
+    spriteIndex: 6,
     href: "https://github.com/tarunkkumarsahu/AWR-Bot-",
     summary: "A robotics experiment focused on joining sensing, control and software-hardware behavior.",
     detail: "A practical build used to explore how software decisions move through sensors, control logic and physical actuation.",
@@ -85,7 +94,8 @@ const PROJECTS: Project[] = [
   },
   {
     title: "SAKTI BAND",
-    image: "https://opengraph.githubassets.com/1/tarunkkumarsahu/Smart-Safety-Wristband",
+    image: MEDIA_SPRITE,
+    spriteIndex: 7,
     href: "https://github.com/tarunkkumarsahu/Smart-Safety-Wristband",
     summary: "A connected safety wristband concept built around emergency sensing, location and SOS response.",
     detail: "The system explores wearable safety workflows that combine embedded hardware, connectivity and a software response layer.",
@@ -95,7 +105,8 @@ const PROJECTS: Project[] = [
   },
   {
     title: "PLAY WITH YOUR MIND",
-    image: "https://opengraph.githubassets.com/1/tarunkkumarsahu/PLAY-WITH-YOUR-MIND-",
+    image: MEDIA_SPRITE,
+    spriteIndex: 8,
     href: "https://github.com/tarunkkumarsahu/PLAY-WITH-YOUR-MIND-",
     summary: "A lightweight experimental web build made for playful interaction rather than utility.",
     detail: "A small side experiment kept in the archive as part of the broader pattern of testing interfaces, interaction and ideas quickly.",
@@ -105,7 +116,8 @@ const PROJECTS: Project[] = [
   },
   {
     title: "TRAVEX",
-    image: "https://opengraph.githubassets.com/1/tarunkkumarsahu/ai-first-startup-hackathon-build-a-startup-using-ai-only-team-travex",
+    image: MEDIA_SPRITE,
+    spriteIndex: 9,
     href: "https://github.com/tarunkkumarsahu/ai-first-startup-hackathon-build-a-startup-using-ai-only-team-travex",
     summary: "A HackIndia team repository created for an AI-first startup build.",
     detail: "A time-boxed hackathon system shaped around rapid product decisions, agentic AI and shipping a working startup concept under competition constraints.",
