@@ -75,6 +75,7 @@ function mediaStyle(index: number): React.CSSProperties {
     backgroundRepeat: "no-repeat",
     filter: "brightness(.72) saturate(.92) contrast(1.04)",
     zIndex: 0,
+    pointerEvents: "none",
   };
 }
 
