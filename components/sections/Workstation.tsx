@@ -1,9 +1,9 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { WorksWheel, type WorksWheelItem } from "@/components/ui/works-wheel";
 import { ProjectGlassGate } from "@/components/ProjectGlassGate";
-import { projectCover } from "@/lib/portfolio-media";
+import { useGeneratedMediaSprite } from "@/lib/use-generated-media-sprite";
 
 type Project = WorksWheelItem & {
   summary: string;
@@ -13,10 +13,11 @@ type Project = WorksWheelItem & {
   role: string;
 };
 
-const PROJECTS: Project[] = [
+type ProjectMeta = Omit<Project, "image" | "spriteIndex">;
+
+const PROJECT_META: ProjectMeta[] = [
   {
     title: "JARVIS OS",
-    image: projectCover("JARVIS OS", "PERSONAL AI OPERATING LAYER", "jarvis"),
     href: "https://github.com/tarunkkumarsahu/Jarvis-OS",
     summary: "A personal AI operating layer built around memory, tools, automation and computer control.",
     detail: "The project explores an assistant that can move beyond chat into persistent context, tool execution, desktop control and connected-device workflows.",
@@ -26,7 +27,6 @@ const PROJECTS: Project[] = [
   },
   {
     title: "EXOCORTEX",
-    image: projectCover("EXOCORTEX", "COGNITIVE EXTENSION ARCHITECTURE", "exocortex"),
     href: "https://github.com/tarunkkumarsahu/EXOCROTEX",
     summary: "An experimental cognitive extension architecture for memory, reasoning, planning and action.",
     detail: "A systems experiment around augmenting human cognition with explicit memory, attention, simulation and action layers.",
@@ -36,7 +36,6 @@ const PROJECTS: Project[] = [
   },
   {
     title: "FRESHFUSION",
-    image: projectCover("FRESHFUSION", "MULTIMODAL FRESHNESS INTELLIGENCE", "freshfusion"),
     href: "https://github.com/tarunkkumarsahu/Fresh-Fusion-",
     summary: "Multimodal fruit freshness detection using sensor data, computer vision and real-time monitoring.",
     detail: "ESP32 sensor readings and image analysis are fused into a freshness workflow designed for practical post-harvest inspection.",
@@ -46,7 +45,6 @@ const PROJECTS: Project[] = [
   },
   {
     title: "RAKSHA GRID",
-    image: projectCover("RAKSHA GRID", "DISASTER RESPONSE INTELLIGENCE", "raksha"),
     href: "https://github.com/tarunkkumarsahu/raksha-grid",
     summary: "Adaptive disaster-response intelligence for safe routes, shelter allocation and live coordination.",
     detail: "The platform connects incident state, road closures, community risk and shelter capacity so response teams can reroute and coordinate under changing conditions.",
@@ -56,7 +54,6 @@ const PROJECTS: Project[] = [
   },
   {
     title: "PRECISION WEEDING",
-    image: projectCover("PRECISION WEEDING", "AUTONOMOUS SELECTIVE REMOVAL", "weeding"),
     href: "https://github.com/tarunkkumarsahu/smart-precision-weeding-robot",
     summary: "Autonomous agricultural robotics for real-time weed detection and selective mechanical removal.",
     detail: "The concept combines crop-safe computer vision, navigation and a mechanical removal system designed to target weeds without damaging crops.",
@@ -66,7 +63,6 @@ const PROJECTS: Project[] = [
   },
   {
     title: "AGRINEXUS",
-    image: projectCover("AGRINEXUS", "AI-FIRST AGRICULTURAL INTELLIGENCE", "agrinexus"),
     href: "https://github.com/tarunkkumarsahu/agrinexus-ai",
     summary: "AI-first agricultural decision intelligence powered by digital twins and evidence-driven reasoning.",
     detail: "A farm decision platform exploring scenario simulation, verified outcomes and explainable recommendations instead of one-shot AI answers.",
@@ -76,7 +72,6 @@ const PROJECTS: Project[] = [
   },
   {
     title: "AWR BOT",
-    image: projectCover("AWR BOT", "SENSING / CONTROL / ROBOTIC BEHAVIOR", "awr"),
     href: "https://github.com/tarunkkumarsahu/AWR-Bot-",
     summary: "A robotics experiment focused on joining sensing, control and software-hardware behavior.",
     detail: "A practical build used to explore how software decisions move through sensors, control logic and physical actuation.",
@@ -86,7 +81,6 @@ const PROJECTS: Project[] = [
   },
   {
     title: "SAKTI BAND",
-    image: projectCover("SAKTI BAND", "CONNECTED SAFETY WRISTBAND", "sakti"),
     href: "https://github.com/tarunkkumarsahu/Smart-Safety-Wristband",
     summary: "A connected safety wristband concept built around emergency sensing, location and SOS response.",
     detail: "The system explores wearable safety workflows that combine embedded hardware, connectivity and a software response layer.",
@@ -96,7 +90,6 @@ const PROJECTS: Project[] = [
   },
   {
     title: "PLAY WITH YOUR MIND",
-    image: projectCover("PLAY WITH YOUR MIND", "PLAYFUL WEB INTERACTION", "mind"),
     href: "https://github.com/tarunkkumarsahu/PLAY-WITH-YOUR-MIND-",
     summary: "A lightweight experimental web build made for playful interaction rather than utility.",
     detail: "A small side experiment kept in the archive as part of the broader pattern of testing interfaces, interaction and ideas quickly.",
@@ -106,7 +99,6 @@ const PROJECTS: Project[] = [
   },
   {
     title: "TRAVEX",
-    image: projectCover("TRAVEX", "AI-FIRST STARTUP HACKATHON BUILD", "travex"),
     href: "https://github.com/tarunkkumarsahu/ai-first-startup-hackathon-build-a-startup-using-ai-only-team-travex",
     summary: "A HackIndia team repository created for an AI-first startup build.",
     detail: "A time-boxed hackathon system shaped around rapid product decisions, agentic AI and shipping a working startup concept under competition constraints.",
@@ -119,23 +111,23 @@ const PROJECTS: Project[] = [
 export function Workstation() {
   const [open, setOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
-  const activeProject = activeIndex === null ? null : (PROJECTS[activeIndex] ?? null);
+  const mediaSprite = useGeneratedMediaSprite();
 
-  const syncActiveProject = useCallback(
-    (_item: WorksWheelItem, index: number) => setActiveIndex(index),
-    [],
+  const projects = useMemo<Project[]>(
+    () =>
+      PROJECT_META.map((project, index) => ({
+        ...project,
+        image: mediaSprite,
+        spriteIndex: index,
+      })),
+    [mediaSprite],
   );
 
-  const closeArchive = useCallback(() => {
-    setOpen(false);
-    setActiveIndex(null);
-  }, []);
+  const activeProject = activeIndex === null ? null : (projects[activeIndex] ?? null);
+  const syncActiveProject = useCallback((_item: WorksWheelItem, index: number) => setActiveIndex(index), []);
 
   useEffect(() => {
-    const openArchive = () => {
-      setActiveIndex(null);
-      setOpen(true);
-    };
+    const openArchive = () => setOpen(true);
     window.addEventListener("open-projects", openArchive);
     return () => window.removeEventListener("open-projects", openArchive);
   }, []);
@@ -144,31 +136,29 @@ export function Workstation() {
     if (!open) return;
     const previous = document.body.style.overflow;
     document.body.style.overflow = "hidden";
-
     const onKey = (event: KeyboardEvent) => {
-      if (event.key === "Escape") closeArchive();
+      if (event.key === "Escape") {
+        setOpen(false);
+        setActiveIndex(null);
+      }
     };
-
     window.addEventListener("keydown", onKey);
     return () => {
       document.body.style.overflow = previous;
       window.removeEventListener("keydown", onKey);
     };
-  }, [open, closeArchive]);
+  }, [open]);
 
   return (
     <section className="projectsGateway" id="workstation" data-chapter>
       <div className="pageChrome lightChrome">
         <span>06 / PROJECT ARCHIVE</span>
-        <span>{PROJECTS.length} SYSTEMS / ONE DOOR</span>
+        <span>{PROJECT_META.length} SYSTEMS / ONE DOOR</span>
       </div>
 
       <div className="projectGatewayGhost" aria-hidden="true">
-        {PROJECTS.slice(0, 6).map((project, index) => (
-          <span
-            key={project.title}
-            style={{ "--ghost-index": index } as React.CSSProperties}
-          >
+        {PROJECT_META.slice(0, 6).map((project, index) => (
+          <span key={project.title} style={{ "--ghost-index": index } as React.CSSProperties}>
             {project.title}
           </span>
         ))}
@@ -181,11 +171,8 @@ export function Workstation() {
           <br />
           <em>PROJECT ARCHIVE.</em>
         </h2>
-        <p>
-          Ten builds. One interaction. Turn the wheel, bring a system to the
-          front, then inspect the story behind it.
-        </p>
-        <ProjectGlassGate onEnter={() => { setActiveIndex(null); setOpen(true); }} />
+        <p>Ten builds. One interaction. Turn the wheel, bring a system to the front, then inspect the story behind it.</p>
+        <ProjectGlassGate onEnter={() => setOpen(true)} />
       </div>
 
       <div className="projectGatewayFooter">
@@ -194,22 +181,24 @@ export function Workstation() {
       </div>
 
       {open ? (
-        <div
-          className="projectArchive"
-          role="dialog"
-          aria-modal="true"
-          aria-label="Project archive"
-        >
+        <div className="projectArchive" role="dialog" aria-modal="true" aria-label="Project archive">
           <div className="projectArchiveChrome">
-            <span>PROJECT ARCHIVE / {PROJECTS.length}</span>
-            <button type="button" onClick={closeArchive} data-cursor-hot>
+            <span>PROJECT ARCHIVE / {PROJECT_META.length}</span>
+            <button
+              type="button"
+              onClick={() => {
+                setOpen(false);
+                setActiveIndex(null);
+              }}
+              data-cursor-hot
+            >
               CLOSE / ESC
             </button>
           </div>
 
           <div className="projectArchiveWheel">
             <WorksWheel
-              items={PROJECTS}
+              items={projects}
               label="WORKS '26"
               action="SELECT"
               linkCards={false}
@@ -221,9 +210,7 @@ export function Workstation() {
 
           {activeProject && activeIndex !== null ? (
             <aside className="projectDetailPanel" aria-live="polite">
-              <div className="projectDetailIndex">
-                SELECTED / {String(activeIndex + 1).padStart(2, "0")}
-              </div>
+              <div className="projectDetailIndex">SELECTED / {String(activeIndex + 1).padStart(2, "0")}</div>
               <h3>{activeProject.title}</h3>
               <p className="projectDetailSummary">{activeProject.summary}</p>
               <p className="projectDetailBody">{activeProject.detail}</p>
