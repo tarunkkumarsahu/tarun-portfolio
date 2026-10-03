@@ -1,27 +1,15 @@
 "use client";
 
-// A portfolio index built as a wheel you turn.
-//
-// At rest the work sits in a ring around a title, each card tangent to the
-// circle. The first notch of scroll blows the ring open into a vertical drum:
-// the card at the front lies flat and full size, the ones above and below
-// rotate away into hard perspective and run off the top and bottom of the
-// frame. Keep turning and the drum carries the next piece round to the front.
-//
-// The whole thing is one number - `turn` - read by a single rAF pass that writes
-// transforms straight to the DOM. 0 is the ring, 1 is the drum with item 0 at
-// the front, and every whole number after that is one more item turned past.
 import * as React from "react";
 
 import { cn } from "@/lib/utils";
 
 export interface WorksWheelItem {
-  /** Project name. Shown beside the front card and in the index. */
   title: string;
-  /** Cover art. Any src an <img> takes. */
   image: string;
-  /** Where the card links to. Omit for a wheel that only browses. */
   href?: string;
+  /** Optional cell index inside a 4x4 sprite sheet. */
+  spriteIndex?: number;
 }
 
 export interface WorksWheelProps extends Omit<
@@ -29,26 +17,14 @@ export interface WorksWheelProps extends Omit<
   "children"
 > {
   items: WorksWheelItem[];
-  /** Sits in the middle of the ring. @default undefined */
   label?: string;
-  /** Label on the card's hover affordance. Omit to drop it. @default undefined */
   action?: string;
-  /** Called whenever the wheel settles nearest a different item. */
   onActiveChange?: (item: WorksWheelItem, index: number) => void;
-  /** Keep cards as outbound links. Set false when an external detail panel owns navigation. */
   linkCards?: boolean;
-  /** Show the built-in active project title at the left edge. */
   showActiveTitle?: boolean;
-  /** Keep the ring neutral until the user actually turns or selects the wheel. */
   deferActiveUntilEngaged?: boolean;
 }
 
-/* Geometry. The card is measured against the stage; everything else is measured
-   against the card, so a narrow stage - where the card is capped by width, not
-   height - scales the whole wheel down with it instead of leaving a small card
-   swinging on a huge drum. The three that matter are tuned together: STEP
-   against DRUM sets how hard the neighbours rotate away, and DRUM against LENS
-   decides whether they land inside the frame or run off it. */
 const CARD_H = 0.38;
 const CARD_MAX_W = 0.34;
 const CARD_RATIO = 1.45;
@@ -56,10 +32,6 @@ const STEP = 40;
 const DRUM = 2.22;
 const LENS = 2.7;
 const RING_R = 1.14;
-/* The drum alone hangs the work on a plumb line. It isn't one: the strip curves
-   away round an arc whose centre sits off to the LEFT, so the piece at the front
-   is at the arc's near point - dead centre - and its neighbours have already
-   swung back left as well as up and down. */
 const BOW = 1.82;
 const TITLE = 0.124;
 const INDEX = 0.04;
@@ -77,7 +49,6 @@ const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 type Stage = { w: number; h: number };
 
 const rad = (deg: number) => (deg * Math.PI) / 180;
-
 const bowAt = (drumDeg: number, bow: number) =>
   -bow * (1 - Math.cos(rad(drumDeg)));
 
@@ -94,6 +65,18 @@ function place(
     ` rotateZ(${(1 - m) * ringDeg}deg) translateY(${-(1 - m) * ringR}px)` +
     ` rotateX(${m * drumDeg}deg) translateZ(${m * drumR}px)`
   );
+}
+
+function spriteStyle(item: WorksWheelItem): React.CSSProperties | undefined {
+  if (item.spriteIndex === undefined) return undefined;
+  const col = item.spriteIndex % 4;
+  const row = Math.floor(item.spriteIndex / 4);
+  return {
+    backgroundImage: `url(${item.image})`,
+    backgroundSize: "400% 400%",
+    backgroundPosition: `${(col / 3) * 100}% ${(row / 3) * 100}%`,
+    backgroundRepeat: "no-repeat",
+  };
 }
 
 export function WorksWheel({
@@ -320,12 +303,21 @@ export function WorksWheel({
 
             const face = (
               <span className="bg-muted shadow-foreground/12 relative block size-full overflow-hidden rounded-lg shadow-[0_18px_40px_-18px_var(--tw-shadow-color)]">
-                <img
-                  src={item.image}
-                  alt={item.title}
-                  draggable={false}
-                  className="size-full object-cover"
-                />
+                {item.spriteIndex === undefined ? (
+                  <img
+                    src={item.image}
+                    alt={item.title}
+                    draggable={false}
+                    className="size-full object-cover"
+                  />
+                ) : (
+                  <span
+                    role="img"
+                    aria-label={item.title}
+                    className="block size-full"
+                    style={spriteStyle(item)}
+                  />
+                )}
                 {action ? (
                   <span className="bg-background/80 text-foreground pointer-events-none absolute right-3 bottom-3 flex translate-y-1 items-center gap-1 rounded-full px-2.5 py-1 text-[0.7rem] opacity-0 backdrop-blur-sm transition group-hover:translate-y-0 group-hover:opacity-100">
                     <svg
