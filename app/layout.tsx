@@ -7,6 +7,7 @@ import "./portfolio-interactions.css";
 import "./portfolio-fixes.css";
 import "./display-scale-fixes.css";
 import "./portfolio-motion-v2.css";
+import "./hero-composition-v2.css";
 
 const interTight = Inter_Tight({
   subsets: ["latin"],
