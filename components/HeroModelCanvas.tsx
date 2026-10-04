@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useEffect, useRef } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import { useGLTF } from "@react-three/drei";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { MathUtils, PerspectiveCamera, type Group } from "three";
@@ -33,9 +33,13 @@ function ModelScene() {
   const gltf = useGLTF(MODEL_PATH);
 
   useEffect(() => {
-    reducedMotion.current = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    ).matches;
+    const query = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const read = () => {
+      reducedMotion.current = query.matches;
+    };
+    read();
+    query.addEventListener("change", read);
+    return () => query.removeEventListener("change", read);
   }, []);
 
   useEffect(() => {
@@ -100,11 +104,51 @@ function ModelScene() {
 }
 
 export default function HeroModelCanvas() {
+  const hostRef = useRef<HTMLDivElement>(null);
+  const inView = useRef(true);
+  const [active, setActive] = useState(true);
+  const [compactGpu, setCompactGpu] = useState(false);
+
+  useEffect(() => {
+    const host = hostRef.current;
+    if (!host) return;
+
+    const coarse = window.matchMedia("(pointer: coarse)");
+    const compact = window.matchMedia("(max-width: 760px)");
+    const readDevice = () => setCompactGpu(coarse.matches || compact.matches);
+    readDevice();
+    coarse.addEventListener("change", readDevice);
+    compact.addEventListener("change", readDevice);
+
+    const syncActivity = () => setActive(inView.current && !document.hidden);
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        inView.current = entry.isIntersecting;
+        syncActivity();
+      },
+      { rootMargin: "160px 0px", threshold: 0.01 },
+    );
+    observer.observe(host);
+    document.addEventListener("visibilitychange", syncActivity);
+
+    return () => {
+      observer.disconnect();
+      document.removeEventListener("visibilitychange", syncActivity);
+      coarse.removeEventListener("change", readDevice);
+      compact.removeEventListener("change", readDevice);
+    };
+  }, []);
+
   return (
-    <div className="heroModelCanvas" aria-label="Interactive 3D model of Tarun">
+    <div
+      ref={hostRef}
+      className="heroModelCanvas"
+      aria-label="Interactive 3D model of Tarun"
+    >
       <Canvas
         flat
-        dpr={[1, 1.4]}
+        frameloop={active ? "always" : "never"}
+        dpr={compactGpu ? [1, 1.15] : [1, 1.35]}
         camera={{
           position: [...CAMERA_POSITION],
           fov: BASE_FOV,
@@ -112,7 +156,7 @@ export default function HeroModelCanvas() {
           far: 100,
         }}
         gl={{
-          antialias: true,
+          antialias: !compactGpu,
           alpha: true,
           powerPreference: "high-performance",
         }}
