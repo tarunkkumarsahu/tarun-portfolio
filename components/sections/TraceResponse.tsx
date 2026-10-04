@@ -8,9 +8,21 @@ const FALLING = ["01", "{}", "<>", "&&", "!=", "//", "API", "SIG", "101", "[]", 
 
 type Status = "idle" | "sending" | "sent" | "fallback" | "error";
 
+type TraceFormState = {
+  name: string;
+  response: string;
+  link: string;
+  website: string;
+};
+
 export function TraceResponse() {
   const [status, setStatus] = useState<Status>("idle");
-  const [form, setForm] = useState({ name: "", response: "", link: "" });
+  const [form, setForm] = useState<TraceFormState>({
+    name: "",
+    response: "",
+    link: "",
+    website: "",
+  });
 
   const payload = useMemo(
     () =>
@@ -21,16 +33,22 @@ export function TraceResponse() {
       ]
         .filter(Boolean)
         .join("\n"),
-    [form],
+    [form.name, form.response, form.link],
   );
 
   const copyFallback = async () => {
     try {
+      if (!navigator.clipboard?.writeText) {
+        setStatus("error");
+        return false;
+      }
       await navigator.clipboard.writeText(payload);
+      setStatus("fallback");
+      return true;
     } catch {
-      // The message remains visible in the form if clipboard access is blocked.
+      setStatus("error");
+      return false;
     }
-    setStatus("fallback");
   };
 
   const submit = async (event: FormEvent) => {
@@ -43,10 +61,7 @@ export function TraceResponse() {
       const response = await fetch("/api/trace", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({
-          ...form,
-          website: "",
-        }),
+        body: JSON.stringify(form),
       });
 
       const result = (await response.json().catch(() => null)) as
@@ -78,7 +93,7 @@ export function TraceResponse() {
       : status === "fallback"
         ? "DELIVERY CHANNEL IS NOT CONFIGURED YET — TRACE COPIED TO CLIPBOARD."
         : status === "error"
-          ? "TRACE COULD NOT BE PACKED. YOUR TEXT IS STILL HERE."
+          ? "TRACE COULD NOT BE DELIVERED OR COPIED. YOUR TEXT IS STILL HERE."
           : "NOTHING IS SILENTLY STORED.";
 
   return (
@@ -128,6 +143,8 @@ export function TraceResponse() {
           autoComplete="off"
           aria-hidden="true"
           name="website"
+          value={form.website}
+          onChange={(event) => setForm({ ...form, website: event.target.value })}
         />
 
         <label>
