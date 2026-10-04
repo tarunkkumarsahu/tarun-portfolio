@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useEffect, useState } from "react";
+import { Component, type ReactNode, useEffect, useState } from "react";
 
 const MODEL_PATH = "/models/tarun_hero_web.glb";
 const FALLBACK_PHOTO = "https://avatars.githubusercontent.com/u/220187164?v=4";
@@ -35,31 +35,53 @@ function HeroFallback() {
           decoding="async"
         />
       </div>
-      <small className="heroModelComing">3D CHARACTER / COMING NEXT</small>
+      <small className="heroModelComing">3D FALLBACK / PORTRAIT MODE</small>
     </div>
   );
+}
+
+class HeroModelErrorBoundary extends Component<
+  { children: ReactNode },
+  { failed: boolean }
+> {
+  state = { failed: false };
+
+  static getDerivedStateFromError() {
+    return { failed: true };
+  }
+
+  render() {
+    if (this.state.failed) return <HeroFallback />;
+    return this.props.children;
+  }
 }
 
 export function HeroModel() {
   const [available, setAvailable] = useState<boolean | null>(null);
 
   useEffect(() => {
-    let cancelled = false;
-    fetch(MODEL_PATH, { method: "HEAD", cache: "no-store" })
-      .then((response) => {
-        if (!cancelled) setAvailable(response.ok);
-      })
-      .catch(() => {
-        if (!cancelled) setAvailable(false);
+    const controller = new AbortController();
+
+    fetch(MODEL_PATH, {
+      method: "HEAD",
+      cache: "force-cache",
+      signal: controller.signal,
+    })
+      .then((response) => setAvailable(response.ok))
+      .catch((error: unknown) => {
+        if (error instanceof DOMException && error.name === "AbortError") return;
+        setAvailable(false);
       });
 
-    return () => {
-      cancelled = true;
-    };
+    return () => controller.abort();
   }, []);
 
   if (available === null) return <LoadingModel />;
   if (!available) return <HeroFallback />;
 
-  return <LazyHeroModelCanvas />;
+  return (
+    <HeroModelErrorBoundary>
+      <LazyHeroModelCanvas />
+    </HeroModelErrorBoundary>
+  );
 }
