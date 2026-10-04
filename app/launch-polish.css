@@ -1,0 +1,238 @@
+/* Final launch safety layer.
+   Keep the authored visual language intact while making compact laptop,
+   tablet and phone viewports predictable in production. */
+
+html,
+body {
+  max-width: 100%;
+  overflow-x: clip;
+}
+
+body {
+  min-width: 320px;
+}
+
+button,
+a,
+input,
+textarea {
+  -webkit-tap-highlight-color: transparent;
+}
+
+:where(a, button, input, textarea, [tabindex]):focus-visible {
+  outline: 1px solid currentColor;
+  outline-offset: 4px;
+}
+
+.projectArchive {
+  overscroll-behavior: contain;
+}
+
+.projectArchiveWheel [role="listbox"] {
+  touch-action: pan-x;
+}
+
+.projectArchiveWheel button[role="option"][aria-selected="true"] > span,
+.projectArchiveWheel a[role="option"][aria-selected="true"] > span {
+  border-color: rgba(255, 86, 67, 0.5) !important;
+  box-shadow:
+    0 30px 90px -34px rgba(0, 0, 0, 0.98),
+    0 0 0 1px rgba(255, 86, 67, 0.14),
+    0 0 42px rgba(255, 74, 56, 0.08) !important;
+}
+
+.projectDetailPanel,
+.projectArchiveWheel ol,
+.projectArchiveChrome,
+.projectArchiveHint {
+  box-sizing: border-box;
+}
+
+/* Compact desktop / Windows 125–150% scaling. */
+@media (min-width: 900px) and (max-height: 760px) {
+  .projectDetailPanel {
+    top: 72px !important;
+    bottom: 54px !important;
+    max-height: none !important;
+    width: clamp(238px, 20vw, 292px) !important;
+  }
+
+  .projectDetailPanel h3 {
+    font-size: clamp(30px, 2.7vw, 42px) !important;
+    line-height: 0.92 !important;
+  }
+
+  .projectDetailBody {
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .projectDetailStack {
+    gap: 5px !important;
+  }
+
+  .projectArchiveWheel ol {
+    top: 9% !important;
+    line-height: 1.6 !important;
+  }
+}
+
+/* Tablet: preserve the wheel as the dominant interaction while keeping the
+   dossier readable without overlapping the project index. */
+@media (min-width: 761px) and (max-width: 1050px) {
+  .projectDetailPanel {
+    left: 18px !important;
+    width: clamp(220px, 28vw, 268px) !important;
+    padding-right: 18px !important;
+  }
+
+  .projectArchiveWheel ol {
+    right: 14px !important;
+    max-width: 150px;
+  }
+
+  .projectArchiveHint {
+    font-size: 7px !important;
+  }
+
+  .projectGatewayCenter {
+    width: min(720px, 86vw) !important;
+  }
+}
+
+/* Phone layout: the selected dossier becomes a compact bottom sheet. The
+   project-name index is hidden because the wheel itself remains keyboard/touch
+   selectable and the index would compete with the sheet for the same width. */
+@media (max-width: 760px) {
+  .pageChrome {
+    left: 12px !important;
+    right: 12px !important;
+  }
+
+  .projectArchiveChrome {
+    top: 12px !important;
+    left: 12px !important;
+    right: 12px !important;
+    font-size: 7px !important;
+  }
+
+  .projectArchiveChrome button {
+    min-height: 34px;
+    padding-inline: 8px;
+  }
+
+  .projectArchiveWheel ol {
+    display: none !important;
+  }
+
+  .projectArchiveWheel [role="listbox"] {
+    inset: 42px 0 0 !important;
+  }
+
+  .projectDetailPanel {
+    position: absolute !important;
+    z-index: 80 !important;
+    left: 12px !important;
+    right: 12px !important;
+    top: auto !important;
+    bottom: 50px !important;
+    width: auto !important;
+    max-height: min(40dvh, 360px) !important;
+    overflow-y: auto !important;
+    padding: 16px 18px 18px !important;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(5, 6, 7, 0.93) !important;
+    box-shadow: 0 26px 70px rgba(0, 0, 0, 0.48);
+    backdrop-filter: blur(18px);
+    scrollbar-width: thin;
+  }
+
+  .projectDetailPanel::after {
+    display: none !important;
+  }
+
+  .projectDetailPanel h3 {
+    margin-top: 7px !important;
+    font-size: clamp(30px, 10vw, 46px) !important;
+    line-height: 0.92 !important;
+  }
+
+  .projectDetailSummary {
+    margin-top: 10px !important;
+    font-size: 13px !important;
+    line-height: 1.28 !important;
+  }
+
+  .projectDetailBody {
+    margin-top: 9px !important;
+    font-size: 11px !important;
+    line-height: 1.42 !important;
+  }
+
+  .projectDetailMeta {
+    margin-top: 12px !important;
+  }
+
+  .projectDetailStack {
+    margin-top: 10px !important;
+    gap: 5px !important;
+  }
+
+  .projectDetailStack span {
+    font-size: 8px !important;
+  }
+
+  .projectDetailLink {
+    display: inline-flex;
+    align-items: center;
+    min-height: 36px;
+    margin-top: 10px !important;
+  }
+
+  .projectArchiveHint {
+    left: 12px !important;
+    right: 12px !important;
+    bottom: 12px !important;
+    font-size: 6px !important;
+  }
+
+  .projectArchiveHint span:last-child {
+    display: none;
+  }
+
+  .projectGatewayCenter {
+    width: min(92vw, 620px) !important;
+  }
+
+  .projectGatewayCenter p {
+    max-width: 36rem;
+  }
+
+  .projectGlassGate {
+    max-width: min(92vw, 330px);
+    margin-inline: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .projectDetailBody {
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .projectDetailMeta {
+    grid-template-columns: 1fr 1fr !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+  }
+}
