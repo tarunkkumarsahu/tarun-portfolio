@@ -1,0 +1,268 @@
+/* Cinematic motion layer v2.
+   Transform-only effects so the portfolio remains stable at 100–150% display scaling. */
+
+/* Keep pointer motion expressive without changing card geometry. */
+.interestTile {
+  --tilt-x: 0deg;
+  --tilt-y: 0deg;
+  --media-x: 0px;
+  --media-y: 0px;
+  --spot-x: 50%;
+  --spot-y: 50%;
+}
+
+.interestTile:hover,
+.interestTile:focus-within {
+  transform:
+    perspective(1100px)
+    translateY(-9px)
+    rotateX(var(--tilt-x))
+    rotateY(var(--tilt-y)) !important;
+}
+
+.interestTile:nth-child(even):hover,
+.interestTile:nth-child(even):focus-within {
+  transform:
+    perspective(1100px)
+    translateY(-9px)
+    rotateX(var(--tilt-x))
+    rotateY(var(--tilt-y)) !important;
+}
+
+.interestTile::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  opacity: 0;
+  background:
+    radial-gradient(
+      circle at var(--spot-x) var(--spot-y),
+      rgba(255, 93, 72, .16),
+      rgba(255, 93, 72, .045) 18%,
+      transparent 42%
+    );
+  transition: opacity 280ms ease;
+}
+
+.interestTile:hover::after,
+.interestTile:focus-within::after {
+  opacity: 1;
+}
+
+.interestMediaImg {
+  --scroll-media-y: 0px;
+  transform:
+    translate3d(var(--media-x), calc(var(--media-y) + var(--scroll-media-y)), 0)
+    scale(1.055) !important;
+  will-change: transform;
+}
+
+.interestTile:hover .interestMediaImg,
+.interestTile:focus-within .interestMediaImg {
+  transform:
+    translate3d(var(--media-x), calc(var(--media-y) + var(--scroll-media-y)), 0)
+    scale(1.085) !important;
+}
+
+/* Signal lanes receive a visible travelling spark while active. */
+.signalLane > i {
+  position: relative;
+  overflow: visible;
+}
+
+.signalLane > i::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 20px;
+  height: 2px;
+  border-radius: 999px;
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  background: linear-gradient(90deg, transparent, #ff4a38 42%, #fff 68%, transparent);
+  box-shadow: 0 0 14px rgba(255, 74, 56, .7);
+  pointer-events: none;
+}
+
+.signalLane.is-active > i::after {
+  animation: laneSparkTravel 760ms cubic-bezier(.22,1,.36,1) both;
+}
+
+@keyframes laneSparkTravel {
+  0% { left: 0; opacity: 0; transform: translate(-50%, -50%) scaleX(.45); }
+  18% { opacity: 1; }
+  82% { opacity: 1; }
+  100% { left: 100%; opacity: 0; transform: translate(-50%, -50%) scaleX(1.25); }
+}
+
+/* The input / state / action footer breathes only when the section is engaged. */
+.signalWorld:hover .signalWorldFooter > span,
+.signalWorld:focus-within .signalWorldFooter > span {
+  animation: footerSignalBreath 1.8s ease-in-out infinite alternate;
+}
+
+.signalWorld:hover .signalWorldFooter > span:nth-of-type(2),
+.signalWorld:focus-within .signalWorldFooter > span:nth-of-type(2) {
+  animation-delay: .14s;
+}
+
+.signalWorld:hover .signalWorldFooter > span:nth-of-type(3),
+.signalWorld:focus-within .signalWorldFooter > span:nth-of-type(3) {
+  animation-delay: .28s;
+}
+
+@keyframes footerSignalBreath {
+  from { opacity: .76; transform: translateY(0); }
+  to { opacity: 1; transform: translateY(-3px); }
+}
+
+/* Method arrows draw in instead of simply existing. */
+.methodSignature i {
+  display: inline-block;
+  transform-origin: left center;
+  will-change: transform, opacity;
+}
+
+/* Resume papers gain a quiet tactile response after the entrance animation. */
+.systemFileV4 .mainPaper,
+.systemFileV4 .capabilityPaper,
+.systemFileV4 .currentlyPaper {
+  transition:
+    transform 420ms cubic-bezier(.22,1,.36,1),
+    box-shadow 420ms ease,
+    filter 300ms ease;
+}
+
+.systemFileV4 .mainPaper:hover {
+  transform: rotate(-1deg) translateY(-9px) !important;
+  box-shadow: 0 30px 65px -42px rgba(8,9,11,.52);
+}
+
+.systemFileV4 .capabilityPaper:hover {
+  transform: rotate(1.1deg) translateY(-7px) !important;
+  box-shadow: 0 26px 58px -42px rgba(8,9,11,.42);
+}
+
+.systemFileV4 .currentlyPaper:hover {
+  transform: rotate(-1.4deg) translateY(-7px) !important;
+  box-shadow: 0 26px 58px -42px rgba(8,9,11,.42);
+}
+
+/* Glass project doorway follows the pointer by only a few degrees. */
+.projectGlassGate {
+  --gate-rx: 0deg;
+  --gate-ry: 0deg;
+  perspective: 1000px;
+}
+
+.projectGlassGate:hover .projectGlassGateEffect,
+.projectGlassGate:focus-within .projectGlassGateEffect {
+  transform:
+    translateY(-5px)
+    rotateX(var(--gate-rx))
+    rotateY(var(--gate-ry))
+    scale(1.018) !important;
+}
+
+/* Once a project is selected, let the wheel establish a focal point. */
+.projectArchiveWheel:has([aria-selected="true"]) [role="option"] > span {
+  opacity: .56;
+  filter: brightness(.72) saturate(.78);
+}
+
+.projectArchiveWheel [aria-selected="true"] > span {
+  opacity: 1 !important;
+  filter: brightness(1.12) saturate(1.08) !important;
+  transform: scale(1.045) !important;
+  transition:
+    transform 340ms cubic-bezier(.22,1,.36,1),
+    filter 260ms ease,
+    opacity 260ms ease,
+    box-shadow 320ms ease;
+}
+
+.projectArchiveWheel ol button {
+  transition:
+    color 220ms ease,
+    transform 260ms cubic-bezier(.22,1,.36,1),
+    opacity 220ms ease;
+}
+
+.projectArchiveWheel ol button:hover,
+.projectArchiveWheel ol button:focus-visible {
+  transform: translateX(-6px);
+  color: #f3f0e8;
+}
+
+.projectArchiveWheel ol button[aria-current="true"] {
+  color: #ff4a38;
+}
+
+/* Small living details for the final trace. */
+.traceForm label:focus-within > span {
+  color: #ff4a38;
+  transform: translateX(4px);
+}
+
+.traceForm label > span {
+  display: inline-block;
+  transition: color 220ms ease, transform 220ms cubic-bezier(.22,1,.36,1);
+}
+
+.traceSubmit .editorialButton:hover,
+.traceSubmit .editorialButton:focus-visible {
+  box-shadow: 0 0 0 1px rgba(255,74,56,.24), 0 0 28px rgba(255,74,56,.08);
+}
+
+/* Never let cinematic transforms become a scaling/layout regression. */
+@media (max-width: 1180px), (max-height: 760px) {
+  .interestTile:hover,
+  .interestTile:focus-within,
+  .interestTile:nth-child(even):hover,
+  .interestTile:nth-child(even):focus-within {
+    transform:
+      perspective(1000px)
+      translateY(-5px)
+      rotateX(calc(var(--tilt-x) * .55))
+      rotateY(calc(var(--tilt-y) * .55)) !important;
+  }
+
+  .projectArchiveWheel [aria-selected="true"] > span {
+    transform: scale(1.025) !important;
+  }
+}
+
+@media (pointer: coarse) {
+  .interestTile::after {
+    display: none;
+  }
+
+  .interestTile:hover,
+  .interestTile:focus-within,
+  .interestTile:nth-child(even):hover,
+  .interestTile:nth-child(even):focus-within,
+  .projectGlassGate:hover .projectGlassGateEffect,
+  .projectGlassGate:focus-within .projectGlassGateEffect {
+    transform: none !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .interestTile,
+  .interestMediaImg,
+  .signalLane > i::after,
+  .signalWorldFooter > span,
+  .systemFileV4 .mainPaper,
+  .systemFileV4 .capabilityPaper,
+  .systemFileV4 .currentlyPaper,
+  .projectGlassGateEffect,
+  .projectArchiveWheel [role="option"] > span,
+  .projectArchiveWheel ol button,
+  .traceForm label > span {
+    animation: none !important;
+    transition: none !important;
+  }
+}
