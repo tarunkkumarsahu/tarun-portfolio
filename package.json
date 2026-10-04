@@ -5,7 +5,9 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "predeploy:check": "node scripts/predeploy-check.mjs",
+    "verify:browser": "node .github/verify-portfolio-browser.mjs"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.0",
