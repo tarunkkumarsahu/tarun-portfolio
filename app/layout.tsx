@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import { Inter_Tight, Cormorant_Garamond, IBM_Plex_Mono } from "next/font/google";
 import { MotionRuntime } from "@/components/MotionRuntime";
+import { CinematicMotionV2 } from "@/components/CinematicMotionV2";
 import "./globals.css";
 import "./portfolio-interactions.css";
 import "./portfolio-fixes.css";
 import "./display-scale-fixes.css";
+import "./portfolio-motion-v2.css";
 
 const interTight = Inter_Tight({
   subsets: ["latin"],
@@ -52,6 +54,7 @@ export default function RootLayout({
       </head>
       <body>
         <MotionRuntime />
+        <CinematicMotionV2 />
         {children}
       </body>
     </html>
