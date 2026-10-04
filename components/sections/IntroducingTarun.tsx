@@ -126,8 +126,8 @@ export function IntroducingTarun() {
                 },
                 {
                   label: "LINKEDIN",
-                  href: "https://www.linkedin.com/in/tarunnsahuu/",
-                  meta: "/in/tarunnsahuu",
+                  href: "https://www.linkedin.com/in/tarunkkumarsahu/",
+                  meta: "/in/tarunkkumarsahu",
                 },
                 {
                   label: "INSTAGRAM",
