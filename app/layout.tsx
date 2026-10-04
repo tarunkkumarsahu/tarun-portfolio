@@ -4,6 +4,7 @@ import { MotionRuntime } from "@/components/MotionRuntime";
 import "./globals.css";
 import "./portfolio-interactions.css";
 import "./portfolio-fixes.css";
+import "./display-scale-fixes.css";
 
 const interTight = Inter_Tight({
   subsets: ["latin"],
