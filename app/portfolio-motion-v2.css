@@ -197,10 +197,6 @@
   color: #f3f0e8;
 }
 
-.projectArchiveWheel ol button[aria-current="true"] {
-  color: #ff4a38;
-}
-
 /* Small living details for the final trace. */
 .traceForm label:focus-within > span {
   color: #ff4a38;
@@ -226,8 +222,8 @@
     transform:
       perspective(1000px)
       translateY(-5px)
-      rotateX(calc(var(--tilt-x) * .55))
-      rotateY(calc(var(--tilt-y) * .55)) !important;
+      rotateX(var(--tilt-x))
+      rotateY(var(--tilt-y)) !important;
   }
 
   .projectArchiveWheel [aria-selected="true"] > span {
