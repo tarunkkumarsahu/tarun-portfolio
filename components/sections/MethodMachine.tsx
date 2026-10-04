@@ -73,6 +73,10 @@ export function MethodMachine() {
   const signatureClass = (step: Exclude<SignatureStep, null>) =>
     activeSignature === step ? "is-active" : "";
 
+  const toggleStage = (title: string) => {
+    setActiveStage((current) => (current === title ? null : title));
+  };
+
   return (
     <section className="methodMachine methodV3" id="method" data-chapter>
       <div className="pageChrome">
@@ -116,11 +120,12 @@ export function MethodMachine() {
                 onPointerLeave={() => setActiveStage(null)}
                 onFocus={() => setActiveStage(stage.title)}
                 onBlur={() => setActiveStage(null)}
-                onClick={() =>
-                  setActiveStage((current) =>
-                    current === stage.title ? null : stage.title,
-                  )
-                }
+                onClick={() => toggleStage(stage.title)}
+                onKeyDown={(event) => {
+                  if (event.key !== "Enter" && event.key !== " ") return;
+                  event.preventDefault();
+                  toggleStage(stage.title);
+                }}
               >
                 <span>{stage.index}</span>
                 <strong>{stage.title}</strong>
