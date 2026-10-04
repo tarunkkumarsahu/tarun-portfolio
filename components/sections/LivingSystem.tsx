@@ -49,6 +49,10 @@ export function LivingSystem() {
     );
   };
 
+  const toggleLane = (title: string) => {
+    setActiveLane((current) => (current === title ? null : title));
+  };
+
   return (
     <section className="livingSystem signalWorld" id="system" data-chapter>
       <div className="pageChrome lightChrome">
@@ -110,11 +114,12 @@ export function LivingSystem() {
               onPointerEnter={() => setActiveLane(lane.title)}
               onFocus={() => setActiveLane(lane.title)}
               onBlur={() => setActiveLane(null)}
-              onClick={() =>
-                setActiveLane((current) =>
-                  current === lane.title ? null : lane.title,
-                )
-              }
+              onClick={() => toggleLane(lane.title)}
+              onKeyDown={(event) => {
+                if (event.key !== "Enter" && event.key !== " ") return;
+                event.preventDefault();
+                toggleLane(lane.title);
+              }}
             >
               <span>{String(index + 1).padStart(2, "0")}</span>
               <strong>{lane.title}</strong>
