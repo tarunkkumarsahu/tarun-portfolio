@@ -229,10 +229,12 @@ export function WorksWheel({
   const select = React.useCallback(
     (index: number) => {
       const nextIndex = clamp(index, 0, last);
+      const item = items[nextIndex];
       setActive(nextIndex);
       to(nextIndex + 1);
+      if (item) onActiveChange?.(item, nextIndex);
     },
-    [last, to],
+    [items, last, onActiveChange, to],
   );
 
   const drag = React.useRef<number | null>(null);
