@@ -1,140 +1,190 @@
 /* Final 3D hero composition pass.
-   Inspired by editorial portfolio layouts where oversized typography sits
-   behind the subject and a light outline layer crosses the portrait.
-   All changes are transform/layout-safe at 100–150% Windows display scaling. */
+   The first fold is intentionally bold: readable TARUN typography behind the
+   subject, a larger centered GLB, and a crisp outline title crossing the hero.
+   All transforms are layout-safe at 100–150% Windows display scaling. */
 
 .introducingBackTitle {
-  inset: 9.5% 0 auto !important;
-  opacity: .46 !important;
-  line-height: .72 !important;
+  inset: 8.2% 0 auto !important;
+  opacity: .54 !important;
+  line-height: .7 !important;
   pointer-events: none;
 }
 
 .introducingBackTitle span {
-  font-size: clamp(64px, 7.45vw, 132px) !important;
-  letter-spacing: -.065em !important;
+  font-size: clamp(70px, 8vw, 142px) !important;
+  letter-spacing: -.06em !important;
 }
 
 .introducingBackTitle strong {
-  margin-top: .01em !important;
-  font-size: clamp(96px, 10.9vw, 188px) !important;
-  line-height: .72 !important;
-  letter-spacing: -.065em !important;
-  color: rgba(9, 11, 15, .64) !important;
+  margin-top: .015em !important;
+  font-size: clamp(118px, 12.35vw, 218px) !important;
+  line-height: .7 !important;
+  letter-spacing: -.035em !important;
+  color: rgba(9, 11, 15, .69) !important;
+  transform: translateX(-1.2vw);
 }
 
 .modelDock {
-  min-height: 610px !important;
+  min-height: 640px !important;
   overflow: visible;
+  z-index: 4;
 }
 
 .modelDock .modelHalo {
-  width: 66% !important;
-  opacity: .72;
+  width: 72% !important;
+  opacity: .64;
 }
 
-/* Pull the authored GLB back slightly and lower it into the composition.
-   This keeps the laptop comfortably inside the middle column and lets the
-   background TARUN remain legible around the head and shoulders. */
+/* Make Tarun the visual hero. The GLB stays centered, grows ~18% from the
+   previous pass, and sits slightly lower so the head and laptop feel balanced. */
 .modelDock .heroModelCanvas {
   z-index: 4;
-  transform: translate3d(0, 28px, 0) scale(.9);
-  transform-origin: 50% 54%;
-  filter: drop-shadow(0 34px 38px rgba(20, 25, 36, .18));
+  transform: translate3d(-1.5%, 42px, 0) scale(1.08);
+  transform-origin: 50% 55%;
+  filter: drop-shadow(0 40px 44px rgba(20, 25, 36, .22));
 }
 
-/* Editorial outline pass in front of the model — similar to the reference
-   treatment where outlined display type remains readable across the subject. */
+/* Readable editorial outline across the subject. This is intentionally serif
+   so it visually belongs to the solid TARUN title behind the model. */
 .modelDock::after {
   content: "TARUN";
   position: absolute;
-  z-index: 6;
-  left: 50%;
-  top: 46%;
-  width: 116%;
+  z-index: 7;
+  left: 49%;
+  top: 42%;
+  width: 128%;
   transform: translate(-50%, -50%);
   color: transparent;
-  -webkit-text-stroke: 1px rgba(8, 9, 11, .28);
+  -webkit-text-stroke: 1.35px rgba(8, 9, 11, .48);
   paint-order: stroke fill;
   text-align: center;
   white-space: nowrap;
-  font-family: var(--font-display), var(--sans);
-  font-size: clamp(72px, 7.2vw, 126px);
-  font-weight: 760;
-  line-height: .8;
-  letter-spacing: -.065em;
+  font-family: var(--font-editorial), Georgia, serif;
+  font-size: clamp(92px, 9.3vw, 164px);
+  font-weight: 500;
+  line-height: .82;
+  letter-spacing: -.04em;
   pointer-events: none;
   mix-blend-mode: multiply;
-}
-
-/* Keep the foreground outline subtle until the viewer is actually over the
-   portrait; this prevents the page from becoming typographically noisy. */
-.modelDock::after {
-  opacity: .38;
-  transition: opacity 280ms ease, -webkit-text-stroke-color 280ms ease;
+  opacity: .72;
+  transition: opacity 240ms ease, -webkit-text-stroke-color 240ms ease;
 }
 
 .modelDock:hover::after {
-  opacity: .58;
-  -webkit-text-stroke-color: rgba(8, 9, 11, .38);
+  opacity: .9;
+  -webkit-text-stroke-color: rgba(8, 9, 11, .62);
 }
 
-@media (max-width: 1280px), (max-height: 820px) {
+/* Keep the right copy visually secondary and away from the larger model. */
+.aboutPanel {
+  position: relative;
+  z-index: 8;
+  padding-left: clamp(10px, 1.2vw, 22px);
+}
+
+@media (max-width: 1440px), (max-height: 860px) {
   .introducingBackTitle {
-    inset: 8.6% 0 auto !important;
+    inset: 7.8% 0 auto !important;
   }
 
   .introducingBackTitle span {
-    font-size: clamp(58px, 7.15vw, 112px) !important;
+    font-size: clamp(64px, 7.6vw, 122px) !important;
   }
 
   .introducingBackTitle strong {
-    font-size: clamp(88px, 10.4vw, 164px) !important;
+    font-size: clamp(108px, 11.8vw, 190px) !important;
+    transform: translateX(-1vw);
   }
 
   .modelDock {
-    min-height: 540px !important;
+    min-height: 565px !important;
   }
 
   .modelDock .heroModelCanvas {
-    transform: translate3d(0, 20px, 0) scale(.84);
+    transform: translate3d(-1%, 30px, 0) scale(1.02);
   }
 
   .modelDock::after {
-    top: 45%;
-    width: 110%;
-    font-size: clamp(62px, 6.8vw, 104px);
+    top: 41.5%;
+    width: 122%;
+    font-size: clamp(82px, 8.6vw, 138px);
+  }
+}
+
+@media (max-width: 1180px), (max-height: 760px) {
+  .introducingBackTitle {
+    inset: 7.2% 0 auto !important;
+  }
+
+  .introducingBackTitle span {
+    font-size: clamp(58px, 7.2vw, 104px) !important;
+  }
+
+  .introducingBackTitle strong {
+    font-size: clamp(94px, 11vw, 158px) !important;
+    letter-spacing: -.025em !important;
+  }
+
+  .modelDock {
+    min-height: 520px !important;
+  }
+
+  .modelDock .heroModelCanvas {
+    transform: translate3d(-1%, 24px, 0) scale(.98);
+  }
+
+  .modelDock::after {
+    top: 41%;
+    width: 116%;
+    font-size: clamp(70px, 8vw, 116px);
+    opacity: .68;
   }
 }
 
 @media (max-width: 980px) {
   .modelDock .heroModelCanvas {
-    transform: translate3d(0, 14px, 0) scale(.88);
+    transform: translate3d(0, 18px, 0) scale(.96);
   }
 
   .modelDock::after {
-    width: 100%;
-    font-size: clamp(58px, 10vw, 92px);
+    width: 108%;
+    top: 43%;
+    font-size: clamp(64px, 10.5vw, 100px);
   }
 }
 
 @media (max-width: 760px) {
   .introducingBackTitle {
-    opacity: .34 !important;
+    inset: 8% 0 auto !important;
+    opacity: .38 !important;
+  }
+
+  .introducingBackTitle span {
+    font-size: 15.5vw !important;
+  }
+
+  .introducingBackTitle strong {
+    font-size: 23vw !important;
+    transform: none;
   }
 
   .modelDock {
-    min-height: 480px !important;
+    min-height: 500px !important;
   }
 
   .modelDock .heroModelCanvas {
-    transform: translate3d(0, 8px, 0) scale(.9);
+    transform: translate3d(0, 12px, 0) scale(.98);
   }
 
   .modelDock::after {
-    top: 47%;
-    font-size: clamp(54px, 17vw, 90px);
-    opacity: .28;
+    top: 46%;
+    width: 102%;
+    font-size: clamp(58px, 17vw, 94px);
+    opacity: .52;
+  }
+
+  .aboutPanel {
+    padding-left: 0;
   }
 }
 
