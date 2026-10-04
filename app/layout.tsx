@@ -31,13 +31,36 @@ const ibmPlexMono = IBM_Plex_Mono({
   display: "swap",
 });
 
-const title = "Tarun Kumar Sahu — Software, Intelligence & Machines";
+const title = "Tarun Kumar Sahu — Software Engineer, AI & Backend Developer";
 const description =
-  "Interactive portfolio of Tarun Kumar Sahu — AI, backend systems, robotics, connected hardware and experimental software.";
+  "Official portfolio of Tarun Kumar Sahu, a software engineer focused on AI, backend systems, robotics, computer vision, connected hardware and experimental software.";
 const deploymentHost = process.env.VERCEL_PROJECT_PRODUCTION_URL;
 const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL ||
   (deploymentHost ? `https://${deploymentHost}` : "http://localhost:3000");
+
+const personJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Tarun Kumar Sahu",
+  url: siteUrl,
+  image: `${siteUrl}/opengraph-image`,
+  jobTitle: "Software Engineer, AI & Backend Developer",
+  description,
+  sameAs: [
+    "https://github.com/tarunkkumarsahu",
+    "https://www.linkedin.com/in/tarunnsahuu/",
+    "https://www.instagram.com/tarunnsahuu/",
+  ],
+  knowsAbout: [
+    "Software Engineering",
+    "Artificial Intelligence",
+    "Backend Development",
+    "Computer Vision",
+    "Robotics",
+    "Connected Hardware",
+  ],
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -49,6 +72,8 @@ export const metadata: Metadata = {
   description,
   keywords: [
     "Tarun Kumar Sahu",
+    "Tarun Sahu",
+    "Tarun Kumar Sahu portfolio",
     "software engineer",
     "AI developer",
     "backend developer",
@@ -56,7 +81,7 @@ export const metadata: Metadata = {
     "computer vision",
     "interactive portfolio",
   ],
-  authors: [{ name: "Tarun Kumar Sahu" }],
+  authors: [{ name: "Tarun Kumar Sahu", url: "/" }],
   creator: "Tarun Kumar Sahu",
   publisher: "Tarun Kumar Sahu",
   category: "technology",
@@ -76,7 +101,7 @@ export const metadata: Metadata = {
     title,
     description,
     url: "/",
-    type: "website",
+    type: "profile",
     siteName: "Tarun's World",
     locale: "en_IN",
   },
@@ -100,6 +125,12 @@ export default function RootLayout({
         <link rel="stylesheet" href="/vendor/threeui.css" />
       </head>
       <body>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(personJsonLd).replace(/</g, "\\u003c"),
+          }}
+        />
         <MotionRuntime />
         <CinematicMotionV2 />
         {children}
