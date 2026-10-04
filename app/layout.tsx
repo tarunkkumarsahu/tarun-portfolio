@@ -34,10 +34,8 @@ const ibmPlexMono = IBM_Plex_Mono({
 const title = "Tarun Kumar Sahu — Software Engineer, AI & Backend Developer";
 const description =
   "Official portfolio of Tarun Kumar Sahu, a software engineer focused on AI, backend systems, robotics, computer vision, connected hardware and experimental software.";
-const deploymentHost = process.env.VERCEL_PROJECT_PRODUCTION_URL;
 const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL ||
-  (deploymentHost ? `https://${deploymentHost}` : "http://localhost:3000");
+  process.env.NEXT_PUBLIC_SITE_URL || "https://tarunkumarsahu.vercel.app";
 
 const personJsonLd = {
   "@context": "https://schema.org",
