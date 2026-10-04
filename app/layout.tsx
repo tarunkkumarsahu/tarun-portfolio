@@ -49,7 +49,7 @@ const personJsonLd = {
   description,
   sameAs: [
     "https://github.com/tarunkkumarsahu",
-    "https://www.linkedin.com/in/tarunnsahuu/",
+    "https://www.linkedin.com/in/tarunkkumarsahu/",
     "https://www.instagram.com/tarunnsahuu/",
   ],
   knowsAbout: [
