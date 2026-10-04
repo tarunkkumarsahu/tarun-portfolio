@@ -33,8 +33,6 @@ export function MotionRuntime() {
         });
       };
 
-      // A single transition language across every chapter: a thin signal line
-      // travels across the top edge instead of fading entire pages to black.
       gsap.utils.toArray<HTMLElement>("[data-chapter]").forEach((section) => {
         gsap.fromTo(
           section,
@@ -318,7 +316,6 @@ export function MotionRuntime() {
 
     return () => {
       ctx.revert();
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
     };
   }, []);
 
