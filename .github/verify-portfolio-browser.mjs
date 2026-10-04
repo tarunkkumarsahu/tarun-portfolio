@@ -50,6 +50,24 @@ async function assertViewportSafety(page, label) {
   }
 }
 
+async function activateArchive(page) {
+  const gate = page.locator(".projectGlassGate");
+  await gate.scrollIntoViewIfNeeded();
+
+  const glassHost = page.locator('.glass-ai-button[data-state="ready"]');
+  await glassHost.waitFor({ state: "visible", timeout: 20000 });
+
+  const activate = page
+    .frameLocator('iframe[title="Glass project archive button"]')
+    .locator("#activate");
+  await activate.waitFor({ state: "visible", timeout: 20000 });
+  await activate.click();
+
+  const archive = page.locator(".projectArchive");
+  await archive.waitFor({ state: "visible", timeout: 10000 });
+  return archive;
+}
+
 const page = await openPortfolio({ width: 1440, height: 1000 });
 
 const resumeResponse = await page.request.get(`${BASE}/resume/Tarun-Kumar-Sahu-Resume.pdf`);
@@ -97,15 +115,14 @@ assert(gateBox && gateBox.width <= 330, "Glass gateway is too large for the proj
 
 const iframe = page.frameLocator('iframe[title="Glass project archive button"]');
 const activate = iframe.locator("#activate");
+await page.locator('.glass-ai-button[data-state="ready"]').waitFor({ state: "visible", timeout: 20000 });
 await activate.waitFor({ state: "visible", timeout: 20000 });
 assert(
   (await activate.getAttribute("aria-label"))?.includes("TAP HERE"),
   "Portfolio glass button label was not adapted to TAP HERE.",
 );
 
-await activate.click();
-await page.waitForTimeout(500);
-assert(await page.locator(".projectArchive").count(), "Project archive did not open.");
+await activateArchive(page);
 
 const panel = page.locator(".projectDetailPanel");
 const wheel = page.locator(".projectArchiveWheel");
@@ -123,12 +140,16 @@ assert(
 
 const rakshaIndex = page.locator(".projectArchiveWheel ol button", { hasText: "RAKSHA GRID" });
 await rakshaIndex.click();
-await page.waitForTimeout(360);
-await panel.waitFor({ state: "visible" });
+await panel.waitFor({ state: "visible", timeout: 10000 });
 assert((await panel.locator("h3").innerText()).includes("RAKSHA GRID"), "Raksha Grid detail did not sync from the wheel.");
 assert(
   (await panel.locator(".projectDetailLink").getAttribute("href"))?.includes("github.com/tarunkkumarsahu/raksha-grid"),
   "Raksha Grid GitHub source link is wrong.",
+);
+await page.waitForFunction(
+  () => document.querySelector('#works-wheel-3')?.getAttribute("aria-selected") === "true",
+  undefined,
+  { timeout: 10000 },
 );
 assert(
   (await page.locator('#works-wheel-3').getAttribute("aria-selected")) === "true",
@@ -136,8 +157,7 @@ assert(
 );
 
 await page.keyboard.press("Escape");
-await page.waitForTimeout(180);
-assert((await page.locator(".projectArchive").count()) === 0, "ESC did not close the project archive.");
+await page.locator(".projectArchive").waitFor({ state: "detached", timeout: 5000 });
 
 await assertViewportSafety(page, "desktop-1440");
 await page.screenshot({ path: "portfolio-browser-check.png", fullPage: false });
@@ -155,12 +175,7 @@ await tablet.close();
 
 const mobile = await openPortfolio({ width: 390, height: 844 });
 await assertViewportSafety(mobile, "mobile-390x844");
-const mobileGate = mobile.locator(".projectGlassGate");
-await mobileGate.scrollIntoViewIfNeeded();
-const mobileActivate = mobile.frameLocator('iframe[title="Glass project archive button"]').locator("#activate");
-await mobileActivate.waitFor({ state: "visible", timeout: 20000 });
-await mobileActivate.click();
-await mobile.waitForTimeout(420);
+await activateArchive(mobile);
 
 // On a phone the text index is intentionally hidden. Trigger the visible
 // front-card button's authored click handler directly; this avoids Playwright
