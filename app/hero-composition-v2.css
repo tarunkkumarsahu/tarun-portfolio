@@ -1,0 +1,145 @@
+/* Final 3D hero composition pass.
+   Inspired by editorial portfolio layouts where oversized typography sits
+   behind the subject and a light outline layer crosses the portrait.
+   All changes are transform/layout-safe at 100–150% Windows display scaling. */
+
+.introducingBackTitle {
+  inset: 9.5% 0 auto !important;
+  opacity: .46 !important;
+  line-height: .72 !important;
+  pointer-events: none;
+}
+
+.introducingBackTitle span {
+  font-size: clamp(64px, 7.45vw, 132px) !important;
+  letter-spacing: -.065em !important;
+}
+
+.introducingBackTitle strong {
+  margin-top: .01em !important;
+  font-size: clamp(96px, 10.9vw, 188px) !important;
+  line-height: .72 !important;
+  letter-spacing: -.065em !important;
+  color: rgba(9, 11, 15, .64) !important;
+}
+
+.modelDock {
+  min-height: 610px !important;
+  overflow: visible;
+}
+
+.modelDock .modelHalo {
+  width: 66% !important;
+  opacity: .72;
+}
+
+/* Pull the authored GLB back slightly and lower it into the composition.
+   This keeps the laptop comfortably inside the middle column and lets the
+   background TARUN remain legible around the head and shoulders. */
+.modelDock .heroModelCanvas {
+  z-index: 4;
+  transform: translate3d(0, 28px, 0) scale(.9);
+  transform-origin: 50% 54%;
+  filter: drop-shadow(0 34px 38px rgba(20, 25, 36, .18));
+}
+
+/* Editorial outline pass in front of the model — similar to the reference
+   treatment where outlined display type remains readable across the subject. */
+.modelDock::after {
+  content: "TARUN";
+  position: absolute;
+  z-index: 6;
+  left: 50%;
+  top: 46%;
+  width: 116%;
+  transform: translate(-50%, -50%);
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(8, 9, 11, .28);
+  paint-order: stroke fill;
+  text-align: center;
+  white-space: nowrap;
+  font-family: var(--font-display), var(--sans);
+  font-size: clamp(72px, 7.2vw, 126px);
+  font-weight: 760;
+  line-height: .8;
+  letter-spacing: -.065em;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+}
+
+/* Keep the foreground outline subtle until the viewer is actually over the
+   portrait; this prevents the page from becoming typographically noisy. */
+.modelDock::after {
+  opacity: .38;
+  transition: opacity 280ms ease, -webkit-text-stroke-color 280ms ease;
+}
+
+.modelDock:hover::after {
+  opacity: .58;
+  -webkit-text-stroke-color: rgba(8, 9, 11, .38);
+}
+
+@media (max-width: 1280px), (max-height: 820px) {
+  .introducingBackTitle {
+    inset: 8.6% 0 auto !important;
+  }
+
+  .introducingBackTitle span {
+    font-size: clamp(58px, 7.15vw, 112px) !important;
+  }
+
+  .introducingBackTitle strong {
+    font-size: clamp(88px, 10.4vw, 164px) !important;
+  }
+
+  .modelDock {
+    min-height: 540px !important;
+  }
+
+  .modelDock .heroModelCanvas {
+    transform: translate3d(0, 20px, 0) scale(.84);
+  }
+
+  .modelDock::after {
+    top: 45%;
+    width: 110%;
+    font-size: clamp(62px, 6.8vw, 104px);
+  }
+}
+
+@media (max-width: 980px) {
+  .modelDock .heroModelCanvas {
+    transform: translate3d(0, 14px, 0) scale(.88);
+  }
+
+  .modelDock::after {
+    width: 100%;
+    font-size: clamp(58px, 10vw, 92px);
+  }
+}
+
+@media (max-width: 760px) {
+  .introducingBackTitle {
+    opacity: .34 !important;
+  }
+
+  .modelDock {
+    min-height: 480px !important;
+  }
+
+  .modelDock .heroModelCanvas {
+    transform: translate3d(0, 8px, 0) scale(.9);
+  }
+
+  .modelDock::after {
+    top: 47%;
+    font-size: clamp(54px, 17vw, 90px);
+    opacity: .28;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .modelDock::after {
+    transition: none;
+  }
+}
