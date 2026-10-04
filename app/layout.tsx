@@ -34,8 +34,13 @@ const ibmPlexMono = IBM_Plex_Mono({
 const title = "Tarun Kumar Sahu — Software, Intelligence & Machines";
 const description =
   "Interactive portfolio of Tarun Kumar Sahu — AI, backend systems, robotics, connected hardware and experimental software.";
+const deploymentHost = process.env.VERCEL_PROJECT_PRODUCTION_URL;
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ||
+  (deploymentHost ? `https://${deploymentHost}` : "http://localhost:3000");
 
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   applicationName: "Tarun's World",
   title: {
     default: title,
@@ -55,6 +60,7 @@ export const metadata: Metadata = {
   creator: "Tarun Kumar Sahu",
   publisher: "Tarun Kumar Sahu",
   category: "technology",
+  alternates: { canonical: "/" },
   robots: {
     index: true,
     follow: true,
@@ -69,6 +75,7 @@ export const metadata: Metadata = {
   openGraph: {
     title,
     description,
+    url: "/",
     type: "website",
     siteName: "Tarun's World",
     locale: "en_IN",
