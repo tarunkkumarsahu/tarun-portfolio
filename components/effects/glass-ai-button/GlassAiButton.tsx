@@ -62,6 +62,7 @@ export function GlassAiButton({
     if (!onActivate) return undefined;
 
     const onMessage = (event: MessageEvent) => {
+      if (event.source !== frameRef.current?.contentWindow) return;
       if (event.data?.source !== "threeui-glass-ai-button") return;
       if (event.data?.type !== "threeui-glass-activate") return;
       onActivate();
