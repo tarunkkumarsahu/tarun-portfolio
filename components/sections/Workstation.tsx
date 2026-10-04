@@ -1,9 +1,8 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { WorksWheel, type WorksWheelItem } from "@/components/ui/works-wheel";
 import { ProjectGlassGate } from "@/components/ProjectGlassGate";
-import { useGeneratedMediaSprite } from "@/lib/use-generated-media-sprite";
 
 type Project = WorksWheelItem & {
   summary: string;
@@ -13,11 +12,10 @@ type Project = WorksWheelItem & {
   role: string;
 };
 
-type ProjectMeta = Omit<Project, "image" | "spriteIndex">;
-
-const PROJECT_META: ProjectMeta[] = [
+const PROJECTS: Project[] = [
   {
     title: "JARVIS OS",
+    image: "/media/projects/jarvis-os.webp",
     href: "https://github.com/tarunkkumarsahu/Jarvis-OS",
     summary: "A personal AI operating layer built around memory, tools, automation and computer control.",
     detail: "The project explores an assistant that can move beyond chat into persistent context, tool execution, desktop control and connected-device workflows.",
@@ -27,6 +25,7 @@ const PROJECT_META: ProjectMeta[] = [
   },
   {
     title: "EXOCORTEX",
+    image: "/media/projects/exocortex.webp",
     href: "https://github.com/tarunkkumarsahu/EXOCROTEX",
     summary: "An experimental cognitive extension architecture for memory, reasoning, planning and action.",
     detail: "A systems experiment around augmenting human cognition with explicit memory, attention, simulation and action layers.",
@@ -36,6 +35,7 @@ const PROJECT_META: ProjectMeta[] = [
   },
   {
     title: "FRESHFUSION",
+    image: "/media/projects/freshfusion.webp",
     href: "https://github.com/tarunkkumarsahu/Fresh-Fusion-",
     summary: "Multimodal fruit freshness detection using sensor data, computer vision and real-time monitoring.",
     detail: "ESP32 sensor readings and image analysis are fused into a freshness workflow designed for practical post-harvest inspection.",
@@ -45,6 +45,7 @@ const PROJECT_META: ProjectMeta[] = [
   },
   {
     title: "RAKSHA GRID",
+    image: "/media/projects/raksha-grid.webp",
     href: "https://github.com/tarunkkumarsahu/raksha-grid",
     summary: "Adaptive disaster-response intelligence for safe routes, shelter allocation and live coordination.",
     detail: "The platform connects incident state, road closures, community risk and shelter capacity so response teams can reroute and coordinate under changing conditions.",
@@ -54,6 +55,7 @@ const PROJECT_META: ProjectMeta[] = [
   },
   {
     title: "PRECISION WEEDING",
+    image: "/media/projects/precision-weeding.webp",
     href: "https://github.com/tarunkkumarsahu/smart-precision-weeding-robot",
     summary: "Autonomous agricultural robotics for real-time weed detection and selective mechanical removal.",
     detail: "The concept combines crop-safe computer vision, navigation and a mechanical removal system designed to target weeds without damaging crops.",
@@ -63,6 +65,7 @@ const PROJECT_META: ProjectMeta[] = [
   },
   {
     title: "AGRINEXUS",
+    image: "/media/projects/agrinexus.webp",
     href: "https://github.com/tarunkkumarsahu/agrinexus-ai",
     summary: "AI-first agricultural decision intelligence powered by digital twins and evidence-driven reasoning.",
     detail: "A farm decision platform exploring scenario simulation, verified outcomes and explainable recommendations instead of one-shot AI answers.",
@@ -72,6 +75,7 @@ const PROJECT_META: ProjectMeta[] = [
   },
   {
     title: "AWR BOT",
+    image: "/media/projects/awr-bot.webp",
     href: "https://github.com/tarunkkumarsahu/AWR-Bot-",
     summary: "A robotics experiment focused on joining sensing, control and software-hardware behavior.",
     detail: "A practical build used to explore how software decisions move through sensors, control logic and physical actuation.",
@@ -81,6 +85,7 @@ const PROJECT_META: ProjectMeta[] = [
   },
   {
     title: "SAKTI BAND",
+    image: "/media/projects/sakti-band.webp",
     href: "https://github.com/tarunkkumarsahu/Smart-Safety-Wristband",
     summary: "A connected safety wristband concept built around emergency sensing, location and SOS response.",
     detail: "The system explores wearable safety workflows that combine embedded hardware, connectivity and a software response layer.",
@@ -90,6 +95,7 @@ const PROJECT_META: ProjectMeta[] = [
   },
   {
     title: "PLAY WITH YOUR MIND",
+    image: "/media/projects/play-with-your-mind.webp",
     href: "https://github.com/tarunkkumarsahu/PLAY-WITH-YOUR-MIND-",
     summary: "A lightweight experimental web build made for playful interaction rather than utility.",
     detail: "A small side experiment kept in the archive as part of the broader pattern of testing interfaces, interaction and ideas quickly.",
@@ -99,6 +105,7 @@ const PROJECT_META: ProjectMeta[] = [
   },
   {
     title: "TRAVEX",
+    image: "/media/projects/travex.webp",
     href: "https://github.com/tarunkkumarsahu/ai-first-startup-hackathon-build-a-startup-using-ai-only-team-travex",
     summary: "A HackIndia team repository created for an AI-first startup build.",
     detail: "A time-boxed hackathon system shaped around rapid product decisions, agentic AI and shipping a working startup concept under competition constraints.",
@@ -111,19 +118,7 @@ const PROJECT_META: ProjectMeta[] = [
 export function Workstation() {
   const [open, setOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
-  const mediaSprite = useGeneratedMediaSprite();
-
-  const projects = useMemo<Project[]>(
-    () =>
-      PROJECT_META.map((project, index) => ({
-        ...project,
-        image: mediaSprite,
-        spriteIndex: index,
-      })),
-    [mediaSprite],
-  );
-
-  const activeProject = activeIndex === null ? null : (projects[activeIndex] ?? null);
+  const activeProject = activeIndex === null ? null : (PROJECTS[activeIndex] ?? null);
   const syncActiveProject = useCallback((_item: WorksWheelItem, index: number) => setActiveIndex(index), []);
 
   useEffect(() => {
@@ -153,11 +148,11 @@ export function Workstation() {
     <section className="projectsGateway" id="workstation" data-chapter>
       <div className="pageChrome lightChrome">
         <span>06 / PROJECT ARCHIVE</span>
-        <span>{PROJECT_META.length} SYSTEMS / ONE DOOR</span>
+        <span>{PROJECTS.length} SYSTEMS / ONE DOOR</span>
       </div>
 
       <div className="projectGatewayGhost" aria-hidden="true">
-        {PROJECT_META.slice(0, 6).map((project, index) => (
+        {PROJECTS.slice(0, 6).map((project, index) => (
           <span key={project.title} style={{ "--ghost-index": index } as React.CSSProperties}>
             {project.title}
           </span>
@@ -183,7 +178,7 @@ export function Workstation() {
       {open ? (
         <div className="projectArchive" role="dialog" aria-modal="true" aria-label="Project archive">
           <div className="projectArchiveChrome">
-            <span>PROJECT ARCHIVE / {PROJECT_META.length}</span>
+            <span>PROJECT ARCHIVE / {PROJECTS.length}</span>
             <button
               type="button"
               onClick={() => {
@@ -198,7 +193,7 @@ export function Workstation() {
 
           <div className="projectArchiveWheel">
             <WorksWheel
-              items={projects}
+              items={PROJECTS}
               label="WORKS '26"
               action="SELECT"
               linkCards={false}
