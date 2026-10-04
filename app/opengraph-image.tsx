@@ -1,10 +1,7 @@
 import { ImageResponse } from "next/og";
 
-export const size = {
-  width: 1200,
-  height: 630,
-};
-
+export const alt = "Tarun's World — Software, Intelligence & Machines";
+export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
 export default function OpenGraphImage() {
@@ -17,77 +14,103 @@ export default function OpenGraphImage() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          padding: "70px",
-          background: "#08090b",
-          color: "#f3f0e8",
+          padding: "58px 64px",
+          background: "#050607",
+          color: "#f2efe8",
           fontFamily: "Arial, sans-serif",
+          position: "relative",
+          overflow: "hidden",
         }}
       >
         <div
           style={{
+            position: "absolute",
+            width: 520,
+            height: 520,
+            border: "1px solid rgba(255,74,56,.28)",
+            borderRadius: 999,
+            right: -90,
+            top: -170,
+          }}
+        />
+        <div
+          style={{
+            position: "absolute",
+            width: 340,
+            height: 340,
+            border: "1px solid rgba(242,239,232,.12)",
+            borderRadius: 999,
+            right: 35,
+            top: -80,
+          }}
+        />
+
+        <div
+          style={{
             display: "flex",
             justifyContent: "space-between",
-            fontSize: 24,
-            letterSpacing: "0.16em",
-            color: "#8fa3c0",
+            alignItems: "center",
+            fontSize: 16,
+            letterSpacing: "0.22em",
+            textTransform: "uppercase",
           }}
         >
           <span>TARUN KUMAR SAHU</span>
-          <span>2026</span>
+          <span style={{ color: "#ff4a38" }}>PORTFOLIO / 2026</span>
         </div>
 
         <div style={{ display: "flex", flexDirection: "column" }}>
           <div
             style={{
-              fontSize: 108,
-              fontWeight: 800,
-              lineHeight: 0.8,
-              letterSpacing: "-0.07em",
+              fontSize: 112,
+              fontWeight: 700,
+              lineHeight: 0.82,
+              letterSpacing: "-0.065em",
             }}
           >
-            SOFTWARE.
+            TARUN&apos;S
           </div>
           <div
             style={{
-              fontSize: 108,
-              fontWeight: 800,
-              lineHeight: 0.8,
-              letterSpacing: "-0.07em",
-              color: "#8fa3c0",
+              marginTop: 10,
+              fontSize: 120,
+              lineHeight: 0.82,
+              letterSpacing: "-0.055em",
+              color: "#ff4a38",
+              fontFamily: "Georgia, serif",
+              fontStyle: "italic",
             }}
           >
-            INTELLIGENCE.
+            WORLD.
           </div>
           <div
             style={{
-              fontSize: 108,
-              fontWeight: 800,
-              lineHeight: 0.8,
-              letterSpacing: "-0.07em",
+              marginTop: 30,
+              maxWidth: 820,
+              fontSize: 28,
+              lineHeight: 1.2,
+              color: "rgba(242,239,232,.72)",
             }}
           >
-            MACHINES.
+            Software engineering, AI systems, robotics, computer vision and connected hardware.
           </div>
         </div>
 
         <div
           style={{
             display: "flex",
-            alignItems: "center",
-            gap: 16,
-            fontSize: 24,
-            color: "#b7b4ad",
+            justifyContent: "space-between",
+            alignItems: "flex-end",
+            borderTop: "1px solid rgba(242,239,232,.16)",
+            paddingTop: 20,
+            fontSize: 15,
+            letterSpacing: "0.16em",
+            textTransform: "uppercase",
+            color: "rgba(242,239,232,.62)",
           }}
         >
-          <span
-            style={{
-              width: 14,
-              height: 14,
-              borderRadius: 999,
-              background: "#ff4a38",
-            }}
-          />
-          AI / BACKEND / COMPUTER VISION / ROBOTICS
+          <span>AI / BACKEND / SYSTEMS / MACHINES</span>
+          <span>BUILD → BREAK → REBUILD</span>
         </div>
       </div>
     ),
