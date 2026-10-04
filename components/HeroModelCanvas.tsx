@@ -1,35 +1,101 @@
 "use client";
 
-import { Suspense, useRef } from "react";
-import { Bounds, Center, useGLTF } from "@react-three/drei";
+import { Suspense, useEffect, useRef } from "react";
+import { useGLTF } from "@react-three/drei";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import type { Group } from "three";
+import { MathUtils, PerspectiveCamera, type Group } from "three";
 
 const MODEL_PATH = "/models/tarun_hero_web.glb";
 
+// Values exported with the final Blender hero. The asset is a front-optimized
+// relief, so we preserve its authored camera and keep interaction deliberately
+// restrained instead of treating it like a 360-degree character.
+const CAMERA_POSITION = [-0.02230785, 0.18909504, 2.08321691] as const;
+const CAMERA_QUATERNION = [
+  -0.04375459,
+  -0.00057454,
+  -0.01311701,
+  0.99895602,
+] as const;
+const BASE_FOV = 31.9423017;
+const PROJECTION_OFFSET = [-0.01924867, -0.07713816] as const;
+
+// Bounds of the exported front relief. Rotating around this point keeps the
+// face/laptop composition anchored while the mouse supplies a small parallax.
+const MODEL_CENTER = [-0.0264088, -0.0386458, 0.14690975] as const;
+const MAX_YAW = MathUtils.degToRad(3.2);
+const MAX_PITCH = MathUtils.degToRad(2.2);
+
 function ModelScene() {
-  const group = useRef<Group>(null);
-  const { pointer } = useThree();
+  const pivot = useRef<Group>(null);
+  const reducedMotion = useRef(false);
+  const { pointer, camera, size } = useThree();
   const gltf = useGLTF(MODEL_PATH);
 
+  useEffect(() => {
+    reducedMotion.current = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+  }, []);
+
+  useEffect(() => {
+    if (!(camera instanceof PerspectiveCamera)) return;
+
+    camera.position.set(...CAMERA_POSITION);
+    camera.quaternion.set(...CAMERA_QUATERNION);
+    camera.near = 0.01;
+    camera.far = 100;
+
+    // The authored projection is square. On narrower hero containers, increase
+    // vertical FOV just enough to preserve the same horizontal crop.
+    const aspect = Math.max(0.25, size.width / Math.max(1, size.height));
+    const baseTan = Math.tan(MathUtils.degToRad(BASE_FOV) / 2) * 1.035;
+    const framedTan = aspect < 1 ? baseTan / aspect : baseTan;
+    camera.fov = MathUtils.radToDeg(2 * Math.atan(framedTan));
+    camera.aspect = aspect;
+
+    const width = Math.max(1, size.width);
+    const height = Math.max(1, size.height);
+    camera.setViewOffset(
+      width,
+      height,
+      (PROJECTION_OFFSET[0] * width) / 2,
+      (-PROJECTION_OFFSET[1] * height) / 2,
+      width,
+      height,
+    );
+    camera.updateProjectionMatrix();
+
+    return () => camera.clearViewOffset();
+  }, [camera, size.height, size.width]);
+
   useFrame((state) => {
-    if (!group.current) return;
-    const targetY = pointer.x * 0.085;
-    const targetX = -pointer.y * 0.04;
-    group.current.rotation.y += (targetY - group.current.rotation.y) * 0.11;
-    group.current.rotation.x += (targetX - group.current.rotation.x) * 0.11;
-    group.current.position.y =
-      Math.sin(state.clock.elapsedTime * 0.72) * 0.012 - 0.02;
+    const node = pivot.current;
+    if (!node) return;
+
+    const reduced = reducedMotion.current;
+    const targetY = reduced ? 0 : MathUtils.clamp(pointer.x, -1, 1) * MAX_YAW;
+    const targetX = reduced ? 0 : -MathUtils.clamp(pointer.y, -1, 1) * MAX_PITCH;
+
+    node.rotation.y += (targetY - node.rotation.y) * 0.075;
+    node.rotation.x += (targetX - node.rotation.x) * 0.075;
+
+    const idle = reduced ? 0 : Math.sin(state.clock.elapsedTime * 0.68) * 0.0045;
+    node.position.set(
+      MODEL_CENTER[0],
+      MODEL_CENTER[1] + idle,
+      MODEL_CENTER[2],
+    );
   });
 
   return (
-    <Bounds fit clip observe margin={1.08}>
-      <Center>
-        <group ref={group}>
-          <primitive object={gltf.scene} />
-        </group>
-      </Center>
-    </Bounds>
+    <group ref={pivot} position={MODEL_CENTER}>
+      <group
+        position={[-MODEL_CENTER[0], -MODEL_CENTER[1], -MODEL_CENTER[2]]}
+      >
+        <primitive object={gltf.scene} />
+      </group>
+    </group>
   );
 }
 
@@ -37,14 +103,33 @@ export default function HeroModelCanvas() {
   return (
     <div className="heroModelCanvas" aria-label="Interactive 3D model of Tarun">
       <Canvas
-        dpr={[1, 1.25]}
-        camera={{ position: [0, 0.2, 4.5], fov: 32 }}
-        gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
+        flat
+        dpr={[1, 1.4]}
+        camera={{
+          position: [...CAMERA_POSITION],
+          fov: BASE_FOV,
+          near: 0.01,
+          far: 100,
+        }}
+        gl={{
+          antialias: true,
+          alpha: true,
+          powerPreference: "high-performance",
+        }}
       >
-        <ambientLight intensity={1.05} />
-        <directionalLight position={[-3, 4, 4]} intensity={3.2} color="#e9eef5" />
-        <directionalLight position={[4, 1, 3]} intensity={1.35} color="#ffd8bf" />
-        <directionalLight position={[1, 4, -4]} intensity={2.1} color="#8fa3c0" />
+        {/* Most visible lighting is already baked into the reference-derived
+            base color. Keep web relighting quiet so the face stays faithful. */}
+        <ambientLight intensity={0.92} />
+        <directionalLight
+          position={[-3, 4, 4]}
+          intensity={0.34}
+          color="#f3f0e8"
+        />
+        <directionalLight
+          position={[3, 1.4, 3]}
+          intensity={0.12}
+          color="#ffd8bf"
+        />
         <Suspense fallback={null}>
           <ModelScene />
         </Suspense>
@@ -52,3 +137,5 @@ export default function HeroModelCanvas() {
     </div>
   );
 }
+
+useGLTF.preload(MODEL_PATH);
