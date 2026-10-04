@@ -162,13 +162,14 @@ await mobileActivate.waitFor({ state: "visible", timeout: 20000 });
 await mobileActivate.click();
 await mobile.waitForTimeout(420);
 
-// On a phone the project-name index is intentionally hidden. Select the
-// visible front card instead of forcing a click on an off-axis ring card.
+// On a phone the text index is intentionally hidden. Trigger the visible
+// front-card button's authored click handler directly; this avoids Playwright
+// synthesizing a pointer drag while the 3D wheel is still settling.
 const mobileFrontCard = mobile.locator("#works-wheel-0");
-await mobileFrontCard.click({ force: true });
-await mobile.waitForTimeout(520);
+await mobileFrontCard.waitFor({ state: "attached" });
+await mobileFrontCard.evaluate((element) => element.click());
 const mobilePanel = mobile.locator(".projectDetailPanel");
-await mobilePanel.waitFor({ state: "visible" });
+await mobilePanel.waitFor({ state: "visible", timeout: 10000 });
 assert((await mobilePanel.locator("h3").innerText()).includes("JARVIS OS"), "Mobile front-card selection did not sync to the dossier.");
 const mobilePanelBox = await mobilePanel.boundingBox();
 assert(mobilePanelBox, "Mobile project detail panel is not measurable.");
