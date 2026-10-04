@@ -8,6 +8,7 @@ import "./portfolio-fixes.css";
 import "./display-scale-fixes.css";
 import "./portfolio-motion-v2.css";
 import "./hero-composition-v2.css";
+import "./launch-polish.css";
 
 const interTight = Inter_Tight({
   subsets: ["latin"],
@@ -30,15 +31,52 @@ const ibmPlexMono = IBM_Plex_Mono({
   display: "swap",
 });
 
+const title = "Tarun Kumar Sahu — Software, Intelligence & Machines";
+const description =
+  "Interactive portfolio of Tarun Kumar Sahu — AI, backend systems, robotics, connected hardware and experimental software.";
+
 export const metadata: Metadata = {
-  title: "Tarun Kumar Sahu — Software, Intelligence & Machines",
-  description:
-    "Interactive portfolio of Tarun Kumar Sahu — AI, backend systems, robotics, connected hardware and experimental software.",
+  applicationName: "Tarun's World",
+  title: {
+    default: title,
+    template: "%s — Tarun Kumar Sahu",
+  },
+  description,
+  keywords: [
+    "Tarun Kumar Sahu",
+    "software engineer",
+    "AI developer",
+    "backend developer",
+    "robotics",
+    "computer vision",
+    "interactive portfolio",
+  ],
+  authors: [{ name: "Tarun Kumar Sahu" }],
+  creator: "Tarun Kumar Sahu",
+  publisher: "Tarun Kumar Sahu",
+  category: "technology",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
   openGraph: {
-    title: "Tarun Kumar Sahu — Software, Intelligence & Machines",
-    description:
-      "AI, backend systems, robotics, connected hardware and experimental software.",
+    title,
+    description,
     type: "website",
+    siteName: "Tarun's World",
+    locale: "en_IN",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title,
+    description,
   },
 };
 
@@ -51,6 +89,7 @@ export default function RootLayout({
       className={`${interTight.variable} ${cormorant.variable} ${ibmPlexMono.variable}`}
     >
       <head>
+        <meta name="theme-color" content="#050607" />
         <link rel="stylesheet" href="/vendor/threeui.css" />
       </head>
       <body>
