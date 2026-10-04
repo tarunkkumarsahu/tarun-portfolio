@@ -152,6 +152,325 @@
   opacity: 0.98 !important;
 }
 
+/* =========================================================
+   CINEMATIC MOTION PASS
+   Controlled surprise: one strong motion idea per chapter.
+   ========================================================= */
+
+/* Opening sequence — keep the real name in the HUD, but turn the hero card
+   into a doorway: TARUN'S WORLD. */
+.autoPushType span,
+.autoPushType strong {
+  color: transparent !important;
+  font-size: 0 !important;
+  line-height: 0 !important;
+}
+
+.autoPushType span::after,
+.autoPushType strong::after {
+  display: block;
+  color: #ff6a5f;
+  font-family: var(--font-editorial), Georgia, serif;
+  font-weight: 400;
+  font-size: clamp(72px, 9vw, 170px);
+  line-height: .72;
+  letter-spacing: -.055em;
+  text-transform: uppercase;
+  transform-origin: 50% 100%;
+  animation: introWorldTypeIn 900ms cubic-bezier(.22,1,.36,1) both;
+}
+
+.autoPushType span::after {
+  content: "TARUN'S";
+  animation-delay: 540ms;
+}
+
+.autoPushType strong::after {
+  content: "WORLD";
+  animation-delay: 660ms;
+}
+
+.intro-push-active .autoPushBoy img {
+  transform-origin: 72% 78%;
+  animation: introSketchWalk 1320ms cubic-bezier(.45,.05,.25,1) 1 both;
+  will-change: transform, filter;
+}
+
+.intro-push-active .autoPushBoy::before {
+  content: "";
+  position: absolute;
+  left: 9%;
+  bottom: 9%;
+  width: 46%;
+  height: 2px;
+  pointer-events: none;
+  background: linear-gradient(90deg, transparent, rgba(8,9,11,.34), transparent);
+  transform-origin: left;
+  animation: introFootTrace 1180ms steps(5,end) both;
+}
+
+.intro-push-active .autoPushDivider i {
+  animation: introPushImpact 1180ms 1120ms cubic-bezier(.22,1,.36,1) both;
+}
+
+.autoPushWhite::after {
+  animation: introPaperBreathe 4.4s ease-in-out infinite;
+}
+
+@keyframes introSketchWalk {
+  0%   { transform: translate3d(-34px, 3px, 0) rotate(-2deg) scaleY(.985); filter: blur(.2px); }
+  12%  { transform: translate3d(-27px, -7px, 0) rotate(1.6deg) scaleY(1.01); }
+  24%  { transform: translate3d(-20px, 2px, 0) rotate(-1.5deg) scaleY(.99); }
+  36%  { transform: translate3d(-13px, -6px, 0) rotate(1.25deg) scaleY(1.012); }
+  48%  { transform: translate3d(-6px, 1px, 0) rotate(-1deg) scaleY(.994); }
+  60%  { transform: translate3d(0, -5px, 0) rotate(.8deg) scaleY(1.008); }
+  72%  { transform: translate3d(4px, 0, 0) rotate(-.6deg) scaleY(.996); }
+  84%  { transform: translate3d(2px, -2px, 0) rotate(-1.2deg) scaleY(.99); }
+  100% { transform: translate3d(0, 0, 0) rotate(0) scaleY(1); filter: none; }
+}
+
+@keyframes introFootTrace {
+  0% { transform: scaleX(.08); opacity: 0; }
+  18% { transform: scaleX(.24); opacity: .45; }
+  42% { transform: scaleX(.46); opacity: .22; }
+  66% { transform: scaleX(.72); opacity: .4; }
+  100% { transform: scaleX(1); opacity: 0; }
+}
+
+@keyframes introPushImpact {
+  0%, 55% { box-shadow: none; filter: none; }
+  68% { box-shadow: 0 0 0 1px rgba(255,74,56,.18), 0 0 28px rgba(255,74,56,.28); filter: brightness(1.35); }
+  100% { box-shadow: none; filter: none; }
+}
+
+@keyframes introWorldTypeIn {
+  0% { opacity: 0; transform: translateY(34px) skewY(2deg); clip-path: inset(100% 0 0 0); }
+  55% { opacity: 1; }
+  100% { opacity: 1; transform: translateY(0) skewY(0); clip-path: inset(0 0 0 0); }
+}
+
+@keyframes introPaperBreathe {
+  0%, 100% { opacity: .12; transform: scale(1); }
+  50% { opacity: .22; transform: scale(1.025); }
+}
+
+/* SENSE / THINK / ROUTE / ACT — active lane becomes a live electrical path. */
+.signalLane {
+  transition: transform 260ms cubic-bezier(.22,1,.36,1), opacity 220ms ease;
+}
+
+.signalLane.is-active {
+  transform: translateX(8px);
+}
+
+.signalLane.is-active > i b {
+  animation: signalTracer 720ms cubic-bezier(.22,1,.36,1) both;
+  box-shadow: 0 0 18px rgba(255,74,56,.7);
+}
+
+.signalLane.is-active strong {
+  text-shadow: 0 0 24px rgba(243,240,232,.12);
+}
+
+.signalWorldStage[data-active-lane="sense"] .echoA,
+.signalWorldStage[data-active-lane="think"] .echoA,
+.signalWorldStage[data-active-lane="route"] .echoA,
+.signalWorldStage[data-active-lane="act"] .echoA {
+  animation: fieldEchoPulse 900ms cubic-bezier(.22,1,.36,1) both;
+}
+
+.signalWorldStage[data-active-lane="think"] .echoB {
+  animation: fieldEchoThink 1200ms ease-out both;
+}
+
+.signalWorldStage[data-active-lane="route"] .signalWorldSpine {
+  filter: drop-shadow(0 0 9px rgba(255,74,56,.28));
+}
+
+.signalWorldStage[data-active-lane="act"] .echoB {
+  animation: fieldEchoAct 820ms cubic-bezier(.22,1,.36,1) both;
+}
+
+@keyframes signalTracer {
+  0% { transform: translateX(-34px) scale(.55); opacity: 0; }
+  45% { opacity: 1; }
+  100% { transform: translateX(0) scale(1.18); opacity: 1; }
+}
+
+@keyframes fieldEchoPulse {
+  0% { opacity: 0; transform: scale(.35); }
+  52% { opacity: .55; }
+  100% { opacity: 0; transform: scale(1.45); }
+}
+
+@keyframes fieldEchoThink {
+  0% { opacity: 0; transform: scale(.55); }
+  35% { opacity: .26; transform: scale(.85); }
+  70% { opacity: .12; transform: scale(1.18); }
+  100% { opacity: 0; transform: scale(1.55); }
+}
+
+@keyframes fieldEchoAct {
+  0% { opacity: .5; transform: scale(.45); }
+  100% { opacity: 0; transform: scale(1.9); }
+}
+
+/* HOW I BUILD — keep the scroll-driven reveal, but make hover feel authored. */
+.methodNode {
+  transition: transform 260ms cubic-bezier(.22,1,.36,1), background 260ms ease;
+}
+
+.methodNode:hover,
+.methodNode:focus-within {
+  transform: translateX(10px);
+  background: linear-gradient(90deg, rgba(255,74,56,.035), transparent 58%);
+}
+
+.methodNode:hover .methodNodeHoverNote,
+.methodNode:focus-within .methodNodeHoverNote {
+  filter: drop-shadow(0 10px 28px rgba(255,74,56,.08));
+}
+
+.methodSignature > span {
+  transition: transform 300ms cubic-bezier(.22,1,.36,1), color 220ms ease;
+}
+
+.methodSignature > span:hover {
+  transform: translateY(-5px);
+  color: #ff4a38;
+}
+
+/* OFF THE CLOCK — card motion without turning the grid into a circus. */
+.interestTile {
+  transform-style: preserve-3d;
+  transition:
+    transform 420ms cubic-bezier(.22,1,.36,1),
+    border-color 260ms ease,
+    box-shadow 420ms ease;
+}
+
+.interestTile:hover,
+.interestTile:focus-within {
+  transform: perspective(1000px) translateY(-8px) rotateX(.7deg) rotateY(-.7deg);
+  border-color: rgba(255,74,56,.24);
+  box-shadow: 0 28px 80px -48px rgba(0,0,0,.9);
+}
+
+.interestTile:nth-child(even):hover,
+.interestTile:nth-child(even):focus-within {
+  transform: perspective(1000px) translateY(-8px) rotateX(.7deg) rotateY(.7deg);
+}
+
+.interestTile:hover .interestThought,
+.interestTile:focus-within .interestThought {
+  animation: interestThoughtWrite 420ms cubic-bezier(.22,1,.36,1) both;
+}
+
+@keyframes interestThoughtWrite {
+  0% { opacity: 0; transform: translateY(9px) skewX(-3deg); filter: blur(2px); }
+  100% { opacity: 1; transform: translateY(0) skewX(0); filter: none; }
+}
+
+/* Resume / system file — paper remains calm until the user asks for it. */
+.systemFileV4 .editorialButton {
+  transition: transform 220ms cubic-bezier(.22,1,.36,1), box-shadow 280ms ease, letter-spacing 220ms ease;
+}
+
+.systemFileV4 .editorialButton:hover,
+.systemFileV4 .editorialButton:focus-visible {
+  transform: translateY(-3px);
+  letter-spacing: .12em;
+  box-shadow: 0 12px 26px -18px rgba(8,9,11,.55), inset 0 0 0 1px rgba(255,74,56,.24);
+}
+
+/* Project gateway — slow atmospheric drift and a brighter activation moment. */
+.projectGatewayGhost span {
+  animation: projectGhostDrift 9s ease-in-out infinite alternate;
+  animation-delay: calc(var(--ghost-index, 0) * -1.1s);
+}
+
+.projectGatewayGhost span:nth-child(even) {
+  animation-direction: alternate-reverse;
+}
+
+.projectGlassGateEffect {
+  transition: transform 360ms cubic-bezier(.22,1,.36,1), box-shadow 360ms ease, filter 300ms ease;
+}
+
+.projectGlassGate:hover .projectGlassGateEffect,
+.projectGlassGate:focus-within .projectGlassGateEffect {
+  transform: translateY(-5px) scale(1.018);
+  filter: brightness(1.08) saturate(1.08);
+  box-shadow: 0 28px 70px -30px rgba(35,71,145,.62), 0 0 0 1px rgba(255,255,255,.12);
+}
+
+@keyframes projectGhostDrift {
+  0% { transform: translate3d(-7px, -2px, 0); }
+  50% { transform: translate3d(3px, 4px, 0); }
+  100% { transform: translate3d(9px, -3px, 0); }
+}
+
+/* Archive — selected card glows, details assemble instead of simply appearing. */
+.projectArchiveWheel [aria-selected="true"] > span {
+  filter: brightness(1.12) saturate(1.06);
+  border-color: rgba(255,74,56,.32) !important;
+  box-shadow:
+    0 30px 86px -30px rgba(0,0,0,.98),
+    0 0 0 1px rgba(255,74,56,.18),
+    0 0 40px rgba(255,74,56,.08) !important;
+}
+
+.projectArchiveWheel [role="option"] > span {
+  transition: filter 260ms ease, border-color 260ms ease, box-shadow 320ms ease;
+}
+
+.projectDetailPanel {
+  animation: projectDetailAssemble 520ms cubic-bezier(.22,1,.36,1) both;
+}
+
+.projectDetailPanel h3 {
+  animation: projectDetailTitle 520ms 70ms cubic-bezier(.22,1,.36,1) both;
+}
+
+.projectDetailSummary,
+.projectDetailBody,
+.projectDetailMeta,
+.projectDetailStack,
+.projectDetailLink {
+  animation: projectDetailBody 460ms cubic-bezier(.22,1,.36,1) both;
+}
+
+.projectDetailSummary { animation-delay: 110ms; }
+.projectDetailBody { animation-delay: 150ms; }
+.projectDetailMeta { animation-delay: 190ms; }
+.projectDetailStack { animation-delay: 230ms; }
+.projectDetailLink { animation-delay: 270ms; }
+
+.projectDetailLink span {
+  display: inline-block;
+  transition: transform 220ms cubic-bezier(.22,1,.36,1);
+}
+
+.projectDetailLink:hover span,
+.projectDetailLink:focus-visible span {
+  transform: translate(4px, -4px);
+}
+
+@keyframes projectDetailAssemble {
+  0% { opacity: 0; transform: translate(-18px, -50%); filter: blur(5px); }
+  100% { opacity: 1; transform: translate(0, -50%); filter: none; }
+}
+
+@keyframes projectDetailTitle {
+  0% { opacity: 0; transform: translateY(18px); clip-path: inset(100% 0 0 0); }
+  100% { opacity: 1; transform: translateY(0); clip-path: inset(0 0 0 0); }
+}
+
+@keyframes projectDetailBody {
+  0% { opacity: 0; transform: translateY(9px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
 @media (max-width: 760px) {
   .projectArchive {
     height: 100svh !important;
@@ -168,15 +487,51 @@
     border: 1px solid rgba(255, 255, 255, 0.1);
     background: rgba(5, 6, 7, 0.88) !important;
     backdrop-filter: blur(14px);
+    animation-name: projectDetailAssembleMobile;
   }
 
   .projectArchiveWheel ol {
     right: 12px !important;
   }
+
+  .autoPushType span::after,
+  .autoPushType strong::after {
+    font-size: clamp(58px, 17vw, 100px);
+  }
+}
+
+@keyframes projectDetailAssembleMobile {
+  0% { opacity: 0; transform: translateY(16px); filter: blur(4px); }
+  100% { opacity: 1; transform: translateY(0); filter: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .interestMediaImg {
+  .interestMediaImg,
+  .interestTile,
+  .signalLane,
+  .methodNode,
+  .projectGlassGateEffect,
+  .projectArchiveWheel [role="option"] > span,
+  .systemFileV4 .editorialButton {
     transition: none !important;
+  }
+
+  .autoPushType span::after,
+  .autoPushType strong::after,
+  .autoPushBoy img,
+  .autoPushBoy::before,
+  .autoPushDivider i,
+  .autoPushWhite::after,
+  .signalLane.is-active > i b,
+  .signalFieldEcho,
+  .projectGatewayGhost span,
+  .projectDetailPanel,
+  .projectDetailPanel h3,
+  .projectDetailSummary,
+  .projectDetailBody,
+  .projectDetailMeta,
+  .projectDetailStack,
+  .projectDetailLink {
+    animation: none !important;
   }
 }
