@@ -41,6 +41,7 @@ const WHEEL_UNITS = 900;
 const DRAG_UNITS = 420;
 const SETTLE = 140;
 const EASE = 0.12;
+const DRAG_THRESHOLD = 4;
 
 const clamp = (v: number, lo: number, hi: number) =>
   Math.min(hi, Math.max(lo, v));
@@ -220,6 +221,11 @@ export function WorksWheel({
     [deferActiveUntilEngaged, last],
   );
 
+  const settleToNearest = React.useCallback(() => {
+    const current = target.current;
+    to(current < 0.45 ? 0 : Math.round(current));
+  }, [to]);
+
   const select = React.useCallback(
     (index: number) => {
       const nextIndex = clamp(index, 0, last);
@@ -230,6 +236,8 @@ export function WorksWheel({
   );
 
   const drag = React.useRef<number | null>(null);
+  const dragOrigin = React.useRef<number | null>(null);
+  const dragged = React.useRef(false);
   const settling = React.useRef(0);
 
   React.useEffect(() => {
@@ -240,17 +248,20 @@ export function WorksWheel({
       if (next > 0 && next < last + 1) event.preventDefault();
       to(next);
       window.clearTimeout(settling.current);
-      settling.current = window.setTimeout(
-        () => to(Math.round(target.current)),
-        SETTLE,
-      );
+      settling.current = window.setTimeout(settleToNearest, SETTLE);
     };
     el.addEventListener("wheel", onWheel, { passive: false });
     return () => {
       el.removeEventListener("wheel", onWheel);
       window.clearTimeout(settling.current);
     };
-  }, [to, last]);
+  }, [to, last, settleToNearest]);
+
+  const endDrag = React.useCallback(() => {
+    drag.current = null;
+    dragOrigin.current = null;
+    settleToNearest();
+  }, [settleToNearest]);
 
   return (
     <section
@@ -271,20 +282,32 @@ export function WorksWheel({
         style={{ perspective: `${metrics.depth}px` }}
         onPointerDown={(event) => {
           drag.current = event.clientY;
+          dragOrigin.current = event.clientY;
+          dragged.current = false;
+          event.currentTarget.focus({ preventScroll: true });
           event.currentTarget.setPointerCapture(event.pointerId);
         }}
         onPointerMove={(event) => {
           if (drag.current === null) return;
+          if (
+            dragOrigin.current !== null &&
+            Math.abs(event.clientY - dragOrigin.current) > DRAG_THRESHOLD
+          ) {
+            dragged.current = true;
+          }
           to(target.current + (drag.current - event.clientY) / DRAG_UNITS);
           drag.current = event.clientY;
         }}
-        onPointerUp={() => {
-          drag.current = null;
-          if (target.current > 1) to(Math.round(target.current));
+        onPointerUp={endDrag}
+        onPointerCancel={endDrag}
+        onLostPointerCapture={() => {
+          if (drag.current !== null) endDrag();
         }}
         onKeyDown={(event) => {
           if (event.key === "ArrowDown") to(Math.round(target.current) + 1);
           else if (event.key === "ArrowUp") to(Math.round(target.current) - 1);
+          else if (event.key === "Home") to(0);
+          else if (event.key === "End") to(last + 1);
           else return;
           event.preventDefault();
         }}
@@ -309,6 +332,8 @@ export function WorksWheel({
                     alt={item.title}
                     draggable={false}
                     className="size-full object-cover"
+                    loading="lazy"
+                    decoding="async"
                   />
                 ) : (
                   <span
@@ -373,7 +398,10 @@ export function WorksWheel({
                 }}
                 className="group absolute border-0 bg-transparent p-0 text-left [backface-visibility:hidden]"
                 style={cardStyle}
-                onClick={() => select(i)}
+                onClick={() => {
+                  if (dragged.current) return;
+                  select(i);
+                }}
               >
                 {face}
               </button>
