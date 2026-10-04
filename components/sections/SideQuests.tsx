@@ -55,6 +55,8 @@ export function SideQuests() {
                 src={interest.image}
                 alt=""
                 draggable={false}
+                loading="lazy"
+                decoding="async"
                 className="interestMediaImg"
                 style={mediaStyle}
               />
