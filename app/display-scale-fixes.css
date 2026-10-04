@@ -1,0 +1,330 @@
+/*
+  Desktop display-scale pass.
+  Windows 125–150% scaling reduces the CSS viewport even on a physically large
+  monitor (for example ~1365x720 on a 2048px-wide display). The original art
+  direction was tuned around a much taller viewport, so large vw-driven type
+  could be clipped vertically. These rules keep the same composition while
+  giving compact desktop viewports more breathing room and allowing chapters
+  to become taller than one screen instead of cropping content.
+*/
+
+@media (min-width: 900px) and (max-width: 1600px),
+       (min-width: 900px) and (max-height: 900px) {
+  .pageChrome {
+    top: 14px;
+    left: 20px;
+    right: 20px;
+    font-size: 7px;
+  }
+
+  .siteRail {
+    right: 10px;
+    gap: 6px;
+  }
+
+  /* Intro / introducing */
+  .autoPushType span::after,
+  .autoPushType strong::after {
+    font-size: clamp(58px, min(7.4vw, 12vh), 118px);
+  }
+
+  .introducing {
+    min-height: 780px;
+    overflow: visible;
+  }
+
+  .introducingGrid {
+    min-height: 780px;
+    grid-template-columns: minmax(180px, .82fr) minmax(330px, 1.12fr) minmax(250px, .86fr);
+    gap: clamp(18px, 2.8vw, 38px);
+    padding: 66px clamp(24px, 3vw, 44px) 52px;
+  }
+
+  .thoughtField {
+    min-height: 360px;
+  }
+
+  .thoughtCloud {
+    height: 230px;
+  }
+
+  .modelDock {
+    min-height: 520px;
+  }
+
+  .modelProxy {
+    height: 500px;
+    max-width: 440px;
+  }
+
+  .aboutPanel {
+    gap: 38px;
+  }
+
+  /* SOFTWARE -> HARDWARE */
+  .signalWorld {
+    min-height: 840px !important;
+    padding: 72px clamp(24px, 3.2vw, 48px) 46px !important;
+    overflow: visible !important;
+  }
+
+  .signalWorldHeading {
+    width: min(1180px, 93vw);
+    margin-bottom: 34px;
+  }
+
+  .signalWorldHeading h2 {
+    margin: 14px 0 18px;
+    font-size: clamp(58px, min(6.9vw, 11.5vh), 108px) !important;
+    line-height: .76 !important;
+  }
+
+  .signalWorldHeading p {
+    font-size: clamp(17px, 1.55vw, 24px);
+  }
+
+  .signalWorldStage {
+    width: min(1180px, 93vw);
+    padding: 4px 0;
+  }
+
+  .signalLane {
+    grid-template-columns: 32px minmax(118px, .3fr) 1fr minmax(150px, .43fr);
+    gap: 12px;
+    padding: 15px 0;
+  }
+
+  .signalLane strong {
+    font-size: clamp(38px, 4.2vw, 64px) !important;
+  }
+
+  .signalLaneMeta small,
+  .signalLaneMeta em {
+    font-size: 7px;
+  }
+
+  .signalWorldFooter {
+    width: min(1180px, 93vw);
+    margin-top: 24px;
+  }
+
+  .signalWorldFooter span {
+    font-size: clamp(50px, 6vw, 88px) !important;
+  }
+
+  /* HOW I BUILD */
+  .methodV3 {
+    min-height: 840px !important;
+    padding: 72px clamp(24px, 3.2vw, 48px) 44px !important;
+    overflow: visible !important;
+  }
+
+  .methodV3Layout {
+    width: min(1220px, 94vw);
+    margin-inline: auto;
+    grid-template-columns: minmax(360px, .88fr) minmax(520px, 1.12fr);
+    gap: clamp(28px, 3.2vw, 52px);
+    align-items: start;
+  }
+
+  .methodV3 .methodHeadline h2 {
+    font-size: clamp(58px, min(6.35vw, 10.5vh), 96px) !important;
+    line-height: .76 !important;
+  }
+
+  .methodV3 .methodHeadline p {
+    font-size: clamp(38px, 4vw, 58px) !important;
+    line-height: .92;
+  }
+
+  .methodSideNote {
+    margin-top: 34px;
+  }
+
+  .methodNode {
+    min-height: 66px;
+    padding: 12px 0;
+  }
+
+  .methodNode strong {
+    font-size: clamp(27px, 2.35vw, 38px) !important;
+  }
+
+  .methodNode small {
+    font-size: 8px;
+  }
+
+  .methodSignature {
+    width: min(1220px, 94vw);
+    margin: 26px auto 0;
+    font-size: clamp(38px, 4.7vw, 68px) !important;
+    line-height: .9;
+  }
+
+  /* OFF THE CLOCK */
+  .sideQuestWorld {
+    min-height: auto !important;
+    overflow: visible !important;
+    padding-top: 72px;
+    padding-bottom: 64px;
+  }
+
+  .interestsHeader {
+    width: min(1220px, 94vw);
+    margin-inline: auto;
+  }
+
+  .interestsHeader h2 {
+    margin-top: 14px;
+    font-size: clamp(68px, min(8.5vw, 13.5vh), 132px) !important;
+    line-height: .68 !important;
+  }
+
+  .interestsHeader p {
+    font-size: clamp(18px, 1.85vw, 28px);
+  }
+
+  .interestOrbit {
+    width: min(1220px, 94vw);
+    margin-inline: auto;
+  }
+
+  .interestTileCopy h3 {
+    font-size: clamp(38px, 4.1vw, 62px) !important;
+  }
+
+  /* SYSTEM FILE / RESUME */
+  .systemFileV4 {
+    min-height: 900px !important;
+    padding: 72px clamp(24px, 3.2vw, 48px) 70px !important;
+    overflow: visible !important;
+  }
+
+  .systemFileV4 .systemFileGrid {
+    width: min(1180px, 92vw) !important;
+    grid-template-columns: minmax(0, 1.12fr) minmax(290px, .72fr) !important;
+    gap: clamp(24px, 3vw, 42px) !important;
+    padding-bottom: 0;
+  }
+
+  .systemFileV4 .systemPaper {
+    padding: clamp(24px, 2.7vw, 38px) !important;
+  }
+
+  .systemFileV4 .mainPaper header h2 {
+    margin: 38px 0 16px !important;
+    font-size: clamp(58px, min(6.2vw, 10.5vh), 92px) !important;
+    line-height: .8 !important;
+  }
+
+  .systemFileV4 .mainPaper header p {
+    font-size: clamp(24px, 2.2vw, 34px) !important;
+    line-height: 1.05;
+  }
+
+  .systemFileV4 .paperProfile {
+    margin-top: 42px !important;
+  }
+
+  .systemFileV4 .paperSystems {
+    margin-top: 34px !important;
+  }
+
+  .systemFileV4 .paperSystems li {
+    min-height: 44px;
+  }
+
+  .systemFileV4 .currentlyPaper h3 {
+    font-size: clamp(32px, 3vw, 46px) !important;
+  }
+
+  /* PROJECT GATEWAY */
+  .projectsGateway {
+    min-height: 760px !important;
+    overflow: hidden;
+  }
+
+  .projectGatewayCenter {
+    width: min(780px, 72vw);
+  }
+
+  .projectGatewayCenter h2 {
+    font-size: clamp(62px, min(7vw, 11vh), 104px) !important;
+    line-height: .76 !important;
+  }
+
+  .projectGatewayCenter p {
+    max-width: 660px;
+    margin-inline: auto;
+  }
+
+  /* FINAL TRACE */
+  .traceFinal {
+    min-height: 920px !important;
+    padding: 72px clamp(24px, 3.2vw, 48px) 54px !important;
+    overflow: visible !important;
+  }
+
+  .traceCopy h2 {
+    font-size: clamp(64px, min(7vw, 11.5vh), 108px) !important;
+    line-height: .74 !important;
+  }
+
+  .traceCopy p {
+    font-size: clamp(22px, 2vw, 30px) !important;
+    line-height: 1.15;
+  }
+
+  .traceForm input,
+  .traceForm textarea {
+    font-size: clamp(22px, 2vw, 30px) !important;
+  }
+
+  /* Project archive should stay comfortably inside compact laptop viewports. */
+  .projectArchiveChrome {
+    top: 14px !important;
+    left: 18px !important;
+    right: 18px !important;
+  }
+
+  .projectArchiveHint {
+    left: 18px !important;
+    right: 18px !important;
+    bottom: 12px !important;
+  }
+
+  .projectDetailPanel {
+    max-height: calc(100dvh - 110px) !important;
+  }
+}
+
+/* Extra-short laptop viewports (common at 150% Windows scaling). */
+@media (min-width: 900px) and (max-height: 760px) {
+  .signalWorld,
+  .methodV3,
+  .systemFileV4,
+  .traceFinal {
+    min-height: 880px !important;
+  }
+
+  .signalWorldHeading h2 {
+    font-size: clamp(54px, 6.2vw, 88px) !important;
+  }
+
+  .methodV3 .methodHeadline h2 {
+    font-size: clamp(54px, 5.9vw, 84px) !important;
+  }
+
+  .interestsHeader h2 {
+    font-size: clamp(62px, 7.6vw, 108px) !important;
+  }
+
+  .systemFileV4 .mainPaper header h2 {
+    font-size: clamp(54px, 5.7vw, 82px) !important;
+  }
+
+  .projectGatewayCenter h2,
+  .traceCopy h2 {
+    font-size: clamp(56px, 6.2vw, 90px) !important;
+  }
+}
