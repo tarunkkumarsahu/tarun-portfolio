@@ -161,10 +161,15 @@ const mobileActivate = mobile.frameLocator('iframe[title="Glass project archive 
 await mobileActivate.waitFor({ state: "visible", timeout: 20000 });
 await mobileActivate.click();
 await mobile.waitForTimeout(420);
-await mobile.locator("#works-wheel-3").click({ force: true });
-await mobile.waitForTimeout(360);
+
+// On a phone the project-name index is intentionally hidden. Select the
+// visible front card instead of forcing a click on an off-axis ring card.
+const mobileFrontCard = mobile.locator("#works-wheel-0");
+await mobileFrontCard.click({ force: true });
+await mobile.waitForTimeout(520);
 const mobilePanel = mobile.locator(".projectDetailPanel");
 await mobilePanel.waitFor({ state: "visible" });
+assert((await mobilePanel.locator("h3").innerText()).includes("JARVIS OS"), "Mobile front-card selection did not sync to the dossier.");
 const mobilePanelBox = await mobilePanel.boundingBox();
 assert(mobilePanelBox, "Mobile project detail panel is not measurable.");
 assert(mobilePanelBox.x >= 8, "Mobile project detail panel spills off the left edge.");
