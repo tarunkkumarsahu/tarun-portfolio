@@ -11,7 +11,6 @@ on:
       - "public/models/**"
       - "public/resume/**"
       - "package.json"
-      - "package-lock.json"
       - "next.config.ts"
       - ".github/verify-portfolio-browser.mjs"
       - ".github/workflows/verify-portfolio-browser.yml"
@@ -25,7 +24,6 @@ on:
       - "public/models/**"
       - "public/resume/**"
       - "package.json"
-      - "package-lock.json"
       - "next.config.ts"
       - ".github/verify-portfolio-browser.mjs"
       - ".github/workflows/verify-portfolio-browser.yml"
@@ -42,8 +40,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: npm
-      - run: npm ci
+      - run: npm install
       - run: npm run build
       - run: npm install --no-save playwright
       - run: npx playwright install --with-deps chromium
