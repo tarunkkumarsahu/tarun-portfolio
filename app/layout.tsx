@@ -31,59 +31,96 @@ const ibmPlexMono = IBM_Plex_Mono({
   display: "swap",
 });
 
-const title = "Tarun Kumar Sahu — Software Engineer, AI & Backend Developer";
-const description =
-  "Official portfolio of Tarun Kumar Sahu, a software engineer focused on AI, backend systems, robotics, computer vision, connected hardware and experimental software.";
 const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL || "https://tarunkumarsahu.vercel.app";
+  process.env.NEXT_PUBLIC_SITE_URL || "https://tarun-portfolio-zeta-teal.vercel.app";
+const githubUrl = "https://github.com/tarunkkumarsahu";
+const linkedinUrl = "https://www.linkedin.com/in/tarunkkumarsahu/";
+const title = "Tarun Kumar Sahu | Software Engineer, AI, Backend & Robotics";
+const description =
+  "Official portfolio of Tarun Kumar Sahu (@tarunkkumarsahu), a software engineer building AI, backend, robotics, computer vision and connected-hardware systems.";
+const personId = `${siteUrl}/#tarun-kumar-sahu`;
+const websiteId = `${siteUrl}/#website`;
+const profilePageId = `${siteUrl}/#profile-page`;
 
-const personJsonLd = {
+const structuredData = {
   "@context": "https://schema.org",
-  "@type": "Person",
-  name: "Tarun Kumar Sahu",
-  url: siteUrl,
-  image: `${siteUrl}/opengraph-image`,
-  jobTitle: "Software Engineer, AI & Backend Developer",
-  description,
-  sameAs: [
-    "https://github.com/tarunkkumarsahu",
-    "https://www.linkedin.com/in/tarunkkumarsahu/",
-    "https://www.instagram.com/tarunnsahuu/",
-  ],
-  knowsAbout: [
-    "Software Engineering",
-    "Artificial Intelligence",
-    "Backend Development",
-    "Computer Vision",
-    "Robotics",
-    "Connected Hardware",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": personId,
+      name: "Tarun Kumar Sahu",
+      alternateName: ["Tarun Sahu", "tarunkkumarsahu", "@tarunkkumarsahu"],
+      url: siteUrl,
+      image: `${siteUrl}/opengraph-image`,
+      jobTitle: "Software Engineer, AI & Backend Developer",
+      description,
+      sameAs: [
+        githubUrl,
+        linkedinUrl,
+        "https://www.instagram.com/tarunnsahuu/",
+      ],
+      knowsAbout: [
+        "Software Engineering",
+        "Artificial Intelligence",
+        "Backend Development",
+        "Computer Vision",
+        "Robotics",
+        "Connected Hardware",
+        "Rust",
+        "Python",
+        "Java",
+      ],
+      mainEntityOfPage: { "@id": profilePageId },
+    },
+    {
+      "@type": "ProfilePage",
+      "@id": profilePageId,
+      url: siteUrl,
+      name: title,
+      description,
+      mainEntity: { "@id": personId },
+      isPartOf: { "@id": websiteId },
+    },
+    {
+      "@type": "WebSite",
+      "@id": websiteId,
+      url: siteUrl,
+      name: "Tarun Kumar Sahu — Portfolio",
+      description,
+      publisher: { "@id": personId },
+    },
   ],
 };
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  applicationName: "Tarun's World",
+  applicationName: "Tarun Kumar Sahu — Portfolio",
   title: {
     default: title,
-    template: "%s — Tarun Kumar Sahu",
+    template: "%s | Tarun Kumar Sahu",
   },
   description,
   keywords: [
     "Tarun Kumar Sahu",
     "Tarun Sahu",
+    "tarunkkumarsahu",
+    "@tarunkkumarsahu",
+    "Tarun Kumar Sahu GitHub",
     "Tarun Kumar Sahu portfolio",
     "software engineer",
     "AI developer",
     "backend developer",
-    "robotics",
-    "computer vision",
-    "interactive portfolio",
+    "robotics developer",
+    "computer vision developer",
+    "Rust developer",
+    "Python developer",
+    "Java developer",
   ],
-  authors: [{ name: "Tarun Kumar Sahu", url: "/" }],
+  authors: [{ name: "Tarun Kumar Sahu", url: siteUrl }],
   creator: "Tarun Kumar Sahu",
   publisher: "Tarun Kumar Sahu",
   category: "technology",
-  alternates: { canonical: "/" },
+  alternates: { canonical: siteUrl },
   robots: {
     index: true,
     follow: true,
@@ -98,15 +135,24 @@ export const metadata: Metadata = {
   openGraph: {
     title,
     description,
-    url: "/",
+    url: siteUrl,
     type: "profile",
-    siteName: "Tarun's World",
+    siteName: "Tarun Kumar Sahu — Portfolio",
     locale: "en_IN",
+    images: [
+      {
+        url: "/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: "Tarun Kumar Sahu — Software Engineer, AI, Backend & Robotics",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title,
     description,
+    images: ["/opengraph-image"],
   },
 };
 
@@ -126,7 +172,7 @@ export default function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify(personJsonLd).replace(/</g, "\\u003c"),
+            __html: JSON.stringify(structuredData).replace(/</g, "\\u003c"),
           }}
         />
         <MotionRuntime />
