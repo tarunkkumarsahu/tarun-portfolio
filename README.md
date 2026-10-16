@@ -9,3 +9,7 @@ Personal developer portfolio showcasing software engineering, AI, backend system
 ## Tech
 
 Next.js · React · TypeScript · Three.js · GSAP · Vercel
+
+## Research Profile
+
+[ResearchGate — Tarun Sahu](https://www.researchgate.net/profile/Tarun-Sahu-5)
