@@ -22,8 +22,7 @@ const title = "Tarun Kumar Sahu | AI & Software Developer";
 const description = "Official portfolio of Tarun Kumar Sahu, an AI and software developer studying Computer Science and Engineering with a specialization in Artificial Intelligence and Edge Computing at MIT ADT University. Exploring multi-agent AI, computer vision, backend systems, IoT and robotics.";
 const personId = `${siteUrl}/#tarun-kumar-sahu`;
 const websiteId = `${siteUrl}/#website`;
-const profilePageUrl = `${siteUrl}/about`;
-const profilePageId = `${profilePageUrl}#profile-page`;
+const profilePageId = `${siteUrl}/#profile-page`;
 
 const structuredData = {
   "@context": "https://schema.org",
@@ -34,7 +33,6 @@ const structuredData = {
       name: "Tarun Kumar Sahu",
       alternateName: ["Tarun Sahu", "tarunkkumarsahu", "@tarunkkumarsahu"],
       url: siteUrl,
-      image: `${siteUrl}/opengraph-image`,
       jobTitle: "AI & Software Developer",
       description,
       sameAs: [githubUrl, linkedinUrl, researchGateUrl, "https://www.instagram.com/tarunnsahuu/"],
@@ -55,8 +53,8 @@ const structuredData = {
     {
       "@type": "ProfilePage",
       "@id": profilePageId,
-      url: profilePageUrl,
-      name: "About Tarun Kumar Sahu",
+      url: siteUrl,
+      name: "Tarun Kumar Sahu — Official Portfolio",
       description,
       mainEntity: { "@id": personId },
       isPartOf: { "@id": websiteId }
