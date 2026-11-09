@@ -147,6 +147,26 @@ export function IntroducingTarun() {
                   href: "https://www.instagram.com/tarunnsahuu/",
                   meta: "@tarunnsahuu",
                 },
+                {
+                  label: "BLUESKY",
+                  href: "https://bsky.app/profile/tarunkkumarsahu.bsky.social",
+                  meta: "TARUNK KUMAR SAHU",
+                },
+                {
+                  label: "X",
+                  href: "https://x.com/Tarunkkumarsahu",
+                  meta: "@Tarunkkumarsahu",
+                },
+                {
+                  label: "HUGGING FACE",
+                  href: "https://huggingface.co/tarunnsahuu",
+                  meta: "@tarunnsahuu",
+                },
+                {
+                  label: "KAGGLE",
+                  href: "https://www.kaggle.com/tarunsahuu",
+                  meta: "@tarunsahuu",
+                },
               ]}
             />
           </div>
