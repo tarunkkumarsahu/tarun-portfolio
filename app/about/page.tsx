@@ -38,7 +38,7 @@ export default function AboutPage() {
       jobTitle: "AI & Software Developer",
       description,
       sameAs: links.map((link) => link.href),
-      alumniOf: {
+      affiliation: {
         "@type": "CollegeOrUniversity",
         name: "MIT Art, Design and Technology University",
         sameAs: "https://mituniversity.ac.in/"
