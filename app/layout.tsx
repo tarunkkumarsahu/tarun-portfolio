@@ -19,6 +19,10 @@ const githubUrl = "https://github.com/tarunkkumarsahu";
 const linkedinUrl = "https://www.linkedin.com/in/tarunkkumarsahu/";
 const researchGateUrl = "https://www.researchgate.net/profile/Tarun-Sahu-5";
 const devToUrl = "https://dev.to/tarunkkumarsahu";
+const blueskyUrl = "https://bsky.app/profile/tarunkkumarsahu.bsky.social";
+const xUrl = "https://x.com/Tarunkkumarsahu";
+const huggingFaceUrl = "https://huggingface.co/tarunnsahuu";
+const kaggleUrl = "https://www.kaggle.com/tarunsahuu";
 const title = "Tarun Kumar Sahu | AI & Software Developer";
 const description = "Official portfolio of Tarun Kumar Sahu, an AI and software developer studying Computer Science and Engineering with a specialization in Artificial Intelligence and Edge Computing at MIT ADT University. Exploring multi-agent AI, computer vision, backend systems, IoT and robotics.";
 const personId = `${siteUrl}/#tarun-kumar-sahu`;
@@ -36,7 +40,7 @@ const structuredData = {
       url: siteUrl,
       jobTitle: "AI & Software Developer",
       description,
-      sameAs: [githubUrl, linkedinUrl, researchGateUrl, devToUrl, "https://www.instagram.com/tarunnsahuu/"],
+      sameAs: [githubUrl, linkedinUrl, researchGateUrl, devToUrl, "https://www.instagram.com/tarunnsahuu/", blueskyUrl, xUrl, huggingFaceUrl, kaggleUrl],
       affiliation: [
         { "@type": "CollegeOrUniversity", name: "MIT Art, Design and Technology University", sameAs: "https://mituniversity.ac.in/" },
         { "@type": "Organization", name: "IEEE MIT-ADT Student Branch" },
