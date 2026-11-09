@@ -138,6 +138,11 @@ export function IntroducingTarun() {
                   meta: "RESEARCH PROFILE",
                 },
                 {
+                  label: "DEV.TO",
+                  href: "https://dev.to/tarunkkumarsahu",
+                  meta: "@tarunkkumarsahu",
+                },
+                {
                   label: "INSTAGRAM",
                   href: "https://www.instagram.com/tarunnsahuu/",
                   meta: "@tarunnsahuu",
