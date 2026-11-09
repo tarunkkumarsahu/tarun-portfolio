@@ -132,7 +132,7 @@ export function IntroducingTarun() {
                   href: "https://www.linkedin.com/in/tarunkkumarsahu/",
                   meta: "/in/tarunkkumarsahu",
                 },
-{
+                {
                   label: "RESEARCHGATE",
                   href: "https://www.researchgate.net/profile/Tarun-Sahu-5",
                   meta: "RESEARCH PROFILE",
