@@ -15,6 +15,11 @@ I explore and build projects across multi-agent AI, computer vision, backend dev
 - [ResearchGate — Tarun Sahu](https://www.researchgate.net/profile/Tarun-Sahu-5)
 - [DEV Community — @tarunkkumarsahu](https://dev.to/tarunkkumarsahu)
 - [Instagram — @tarunnsahuu](https://www.instagram.com/tarunnsahuu/)
+- [Bluesky — tarunkkumarsahu.bsky.social](https://bsky.app/profile/tarunkkumarsahu.bsky.social)
+- [X — @Tarunkkumarsahu](https://x.com/Tarunkkumarsahu)
+- [Hugging Face — @tarunnsahuu](https://huggingface.co/tarunnsahuu)
+- [Kaggle — @tarunsahuu](https://www.kaggle.com/tarunsahuu)
+- [Discord](https://discord.com/users/885519305423339562)
 
 ## Education
 
