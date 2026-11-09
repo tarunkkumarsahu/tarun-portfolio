@@ -38,12 +38,8 @@ const structuredData = {
       jobTitle: "AI & Software Developer",
       description,
       sameAs: [githubUrl, linkedinUrl, researchGateUrl, "https://www.instagram.com/tarunnsahuu/"],
-      alumniOf: {
-        "@type": "CollegeOrUniversity",
-        name: "MIT Art, Design and Technology University",
-        sameAs: "https://mituniversity.ac.in/"
-      },
       affiliation: [
+        { "@type": "CollegeOrUniversity", name: "MIT Art, Design and Technology University", sameAs: "https://mituniversity.ac.in/" },
         { "@type": "Organization", name: "IEEE MIT-ADT Student Branch" },
         { "@type": "Organization", name: "Vidyut Veda Club, MIT ADT University" },
         { "@type": "Organization", name: "Code Verse, MIT ADT University" }
