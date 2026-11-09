@@ -13,6 +13,7 @@ I explore and build projects across multi-agent AI, computer vision, backend dev
 - [LinkedIn — Tarun Kumar Sahu](https://www.linkedin.com/in/tarunkkumarsahu/)
 - [GitHub — tarunkkumarsahu](https://github.com/tarunkkumarsahu)
 - [ResearchGate — Tarun Sahu](https://www.researchgate.net/profile/Tarun-Sahu-5)
+- [DEV Community — @tarunkkumarsahu](https://dev.to/tarunkkumarsahu)
 - [Instagram — @tarunnsahuu](https://www.instagram.com/tarunnsahuu/)
 
 ## Education
