@@ -104,8 +104,11 @@ export function IntroducingTarun() {
             <span className="kicker">ABOUT / 01A</span>
             <h2>I build systems that cross the screen.</h2>
             <p>
-              AI, backend systems and connected hardware — turning real-world
-              inputs into software decisions and physical responses.
+              I’m Tarun Kumar Sahu, a Computer Science and Engineering student
+              at MIT ADT University, specializing in Artificial Intelligence
+              and Edge Computing. I build AI, backend and connected-hardware
+              systems that turn real-world inputs into software decisions and
+              physical responses.
             </p>
 
             <div className="heroPrimaryCta">
